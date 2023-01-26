@@ -1,7 +1,3 @@
-* {  
-    box-sizing: border-box;
-}
-
 body {  
     margin:0;
     font-size:13px;
@@ -48,7 +44,7 @@ input,button {
     background:transparent;
 }
 a {  
-    text-decoration:none;
+    text-decoration:none !important;
 
 }
 body {  
@@ -171,9 +167,9 @@ main .panel .panel-header .panel-header-promote .promoting-switch .switch-button
     background:url("../img/switch.png");
     cursor:pointer;
     top:-7px;
-    right:4px;
+    right:21px;
     position:absolute;
-    transition:filter .2s ease-in-out;
+    transition:all .2s ease-in-out;
 }
 main .panel .panel-header .panel-header-promote .promoting-switch .switch-button:hover {  
     filter:brightness(120%);
@@ -593,6 +589,11 @@ footer {
 }
 .stars .star.star-full {  
     background:url("../img/star-full.png");
+}
+
+.table_filter_button:hover {
+    cursor: pointer !important;
+    filter: brightness(200%);
 }
 
 /*# sourceMappingURL=main.min.css.map */
