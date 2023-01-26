@@ -57,166 +57,7 @@
                             </div>
                             <div class="panel-content">
                                 <div class="promoted-servers-items">
-                                    <div class="promoted-server-item">
-                                        <div class="promoted-server-title">MinecraftServerName</div>
-                                        <div class="promoted-server-players">
-                                            <i class="icon icon-players"></i>
-                                            <div class="server-players-number">1000/1000</div>
-                                            <i class="icon icon-on"></i>
-                                        </div>
-                                        <div class="promoted-server-rate">
-                                            <i class="icon icon-rate"></i>
-                                            <div class="rate-number">5.00</div>
-                                            <div class="stars">
-                                                <div class="star star-full"></div>
-                                                <div class="star star-full"></div>
-                                                <div class="star star-full"></div>
-                                                <div class="star star-full"></div>
-                                                <div class="star star-empty"></div>
-                                            </div>
-                                        </div>
-                                        <div class="promoted-server-mode">
-                                            <i class="icon icon-www"></i>
-                                            <div class="promoted-server-status">
-                                                Online mode: <i class="icon icon-verified"></i>
-                                            </div>
-                                        </div>
-                                        <div class="promoted-server-version">
-                                            <i class="icon icon-version"></i>
-                                            <div class="version-number">Wersja serwera 1.16.1</div>
-                                        </div>
-                                        <div class="promoted-server-web">
-                                            <div class="server-url">www.minecraftservername.pl</div>
-                                        </div>
-                                    </div>
-                                    <div class="promoted-server-item">
-                                        <div class="promoted-server-title">MinecraftServerName</div>
-                                        <div class="promoted-server-players">
-                                            <i class="icon icon-players"></i>
-                                            <div class="server-players-number">1000/1000</div>
-                                            <i class="icon icon-on"></i>
-                                        </div>
-                                        <div class="promoted-server-rate">
-                                            <i class="icon icon-rate"></i>
-                                            <div class="rate-number">5.00</div>
-                                            <div class="stars">
-                                                <div class="star star-full"></div>
-                                                <div class="star star-full"></div>
-                                                <div class="star star-full"></div>
-                                                <div class="star star-full"></div>
-                                                <div class="star star-empty"></div>
-                                            </div>
-                                        </div>
-                                        <div class="promoted-server-mode">
-                                            <i class="icon icon-www"></i>
-                                            <div class="promoted-server-status">
-                                                Online mode: <i class="icon icon-verified"></i>
-                                            </div>
-                                        </div>
-                                        <div class="promoted-server-version">
-                                            <i class="icon icon-version"></i>
-                                            <div class="version-number">Wersja serwera 1.16.1</div>
-                                        </div>
-                                        <div class="promoted-server-web">
-                                            <div class="server-url">www.minecraftservername.pl</div>
-                                        </div>
-                                    </div>
-                                    <div class="promoted-server-item">
-                                        <div class="promoted-server-title">MinecraftServerName</div>
-                                        <div class="promoted-server-players">
-                                            <i class="icon icon-players"></i>
-                                            <div class="server-players-number">1000/1000</div>
-                                            <i class="icon icon-on"></i>
-                                        </div>
-                                        <div class="promoted-server-rate">
-                                            <i class="icon icon-rate"></i>
-                                            <div class="rate-number">5.00</div>
-                                            <div class="stars">
-                                                <div class="star star-full"></div>
-                                                <div class="star star-full"></div>
-                                                <div class="star star-full"></div>
-                                                <div class="star star-full"></div>
-                                                <div class="star star-empty"></div>
-                                            </div>
-                                        </div>
-                                        <div class="promoted-server-mode">
-                                            <i class="icon icon-www"></i>
-                                            <div class="promoted-server-status">
-                                                Online mode: <i class="icon icon-verified"></i>
-                                            </div>
-                                        </div>
-                                        <div class="promoted-server-version">
-                                            <i class="icon icon-version"></i>
-                                            <div class="version-number">Wersja serwera 1.16.1</div>
-                                        </div>
-                                        <div class="promoted-server-web">
-                                            <div class="server-url">www.minecraftservername.pl</div>
-                                        </div>
-                                    </div>
-                                    <div class="promoted-server-item">
-                                        <div class="promoted-server-title">MinecraftServerName</div>
-                                        <div class="promoted-server-players">
-                                            <i class="icon icon-players"></i>
-                                            <div class="server-players-number">1000/1000</div>
-                                            <i class="icon icon-on"></i>
-                                        </div>
-                                        <div class="promoted-server-rate">
-                                            <i class="icon icon-rate"></i>
-                                            <div class="rate-number">5.00</div>
-                                            <div class="stars">
-                                                <div class="star star-full"></div>
-                                                <div class="star star-full"></div>
-                                                <div class="star star-full"></div>
-                                                <div class="star star-full"></div>
-                                                <div class="star star-empty"></div>
-                                            </div>
-                                        </div>
-                                        <div class="promoted-server-mode">
-                                            <i class="icon icon-www"></i>
-                                            <div class="promoted-server-status">
-                                                Online mode: <i class="icon icon-verified"></i>
-                                            </div>
-                                        </div>
-                                        <div class="promoted-server-version">
-                                            <i class="icon icon-version"></i>
-                                            <div class="version-number">Wersja serwera 1.16.1</div>
-                                        </div>
-                                        <div class="promoted-server-web">
-                                            <div class="server-url">www.minecraftservername.pl</div>
-                                        </div>
-                                    </div>
-                                    <div class="promoted-server-item">
-                                        <div class="promoted-server-title">MinecraftServerName</div>
-                                        <div class="promoted-server-players">
-                                            <i class="icon icon-players"></i>
-                                            <div class="server-players-number">1000/1000</div>
-                                            <i class="icon icon-off"></i>
-                                        </div>
-                                        <div class="promoted-server-rate">
-                                            <i class="icon icon-rate"></i>
-                                            <div class="rate-number">5.00</div>
-                                            <div class="stars">
-                                                <div class="star star-full"></div>
-                                                <div class="star star-full"></div>
-                                                <div class="star star-full"></div>
-                                                <div class="star star-full"></div>
-                                                <div class="star star-empty"></div>
-                                            </div>
-                                        </div>
-                                        <div class="promoted-server-mode">
-                                            <i class="icon icon-www"></i>
-                                            <div class="promoted-server-status">
-                                                Online mode: <i class="icon icon-verified"></i>
-                                            </div>
-                                        </div>
-                                        <div class="promoted-server-version">
-                                            <i class="icon icon-version"></i>
-                                            <div class="version-number">Wersja serwera 1.16.1</div>
-                                        </div>
-                                        <div class="promoted-server-web">
-                                            <div class="server-url">www.minecraftservername.pl</div>
-                                        </div>
-                                    </div>
+                                
                                 </div>
                             </div>
                         </div>
@@ -267,336 +108,7 @@
                                         <div class="head-rate table_filter_button" data-filter="rating"><i class="icon icon-rate"></i></div>
                                     </div>
                                     <div class="table-list-content">
-                                        <div class="table-list-row">
-                                            <div class="body-rank">1.</div>
-                                            <div class="body-name">MinecraftServerName</div>
-                                            <div class="body-web">minecraftservername.pl</div>
-                                            <div class="body-players">1000/1000 <i class="icon icon-on"></i></div>
-                                            <div class="body-points">435239</div>
-                                            <div class="body-ratio">50.60%</div>
-                                            <div class="body-mode"><i class="icon icon-verified"></i></div>
-                                            <div class="body-version">1.12.1</div>
-                                            <div class="body-verified"><i class="icon icon-no-verified"></i></div>
-                                            <div class="body-likes">1451</div>
-                                            <div class="body-rate">
-                                                <div class="stars">
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-empty"></div>
-                                                </div>
-                                                <span>5.00</span>
-                                            </div>
-                                        </div>
-                                        <div class="table-list-row">
-                                            <div class="body-rank">2.</div>
-                                            <div class="body-name">MinecraftServerName</div>
-                                            <div class="body-web">minecraftservername.pl</div>
-                                            <div class="body-players">1000/1000 <i class="icon icon-on"></i></div>
-                                            <div class="body-points">435239</div>
-                                            <div class="body-ratio">50.60%</div>
-                                            <div class="body-mode"><i class="icon icon-verified"></i></div>
-                                            <div class="body-version">1.12.1</div>
-                                            <div class="body-verified"><i class="icon icon-no-verified"></i></div>
-                                            <div class="body-likes">1451</div>
-                                            <div class="body-rate">
-                                                <div class="stars">
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-empty"></div>
-                                                </div>
-                                                <span>5.00</span>
-                                            </div>
-                                        </div>
-                                        <div class="table-list-row">
-                                            <div class="body-rank">3.</div>
-                                            <div class="body-name">MinecraftServerName</div>
-                                            <div class="body-web">minecraftservername.pl</div>
-                                            <div class="body-players">1000/1000 <i class="icon icon-off"></i></div>
-                                            <div class="body-points">435239</div>
-                                            <div class="body-ratio">50.60%</div>
-                                            <div class="body-mode"><i class="icon icon-verified"></i></div>
-                                            <div class="body-version">1.12.1</div>
-                                            <div class="body-verified"><i class="icon icon-no-verified"></i></div>
-                                            <div class="body-likes">1451</div>
-                                            <div class="body-rate">
-                                                <div class="stars">
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-empty"></div>
-                                                </div>
-                                                <span>5.00</span>
-                                            </div>
-                                        </div>
-                                        <div class="table-list-row">
-                                            <div class="body-rank">4.</div>
-                                            <div class="body-name">MinecraftServerName</div>
-                                            <div class="body-web">minecraftservername.pl</div>
-                                            <div class="body-players">1000/1000 <i class="icon icon-off"></i></div>
-                                            <div class="body-points">435239</div>
-                                            <div class="body-ratio">50.60%</div>
-                                            <div class="body-mode"><i class="icon icon-verified"></i></div>
-                                            <div class="body-version">1.12.1</div>
-                                            <div class="body-verified"><i class="icon icon-no-verified"></i></div>
-                                            <div class="body-likes">1451</div>
-                                            <div class="body-rate">
-                                                <div class="stars">
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-empty"></div>
-                                                </div>
-                                                <span>5.00</span>
-                                            </div>
-                                        </div>
-                                        <div class="table-list-row">
-                                            <div class="body-rank">5.</div>
-                                            <div class="body-name">MinecraftServerName</div>
-                                            <div class="body-web">minecraftservername.pl</div>
-                                            <div class="body-players">1000/1000 <i class="icon icon-off"></i></div>
-                                            <div class="body-points">435239</div>
-                                            <div class="body-ratio">50.60%</div>
-                                            <div class="body-mode"><i class="icon icon-verified"></i></div>
-                                            <div class="body-version">1.12.1</div>
-                                            <div class="body-verified"><i class="icon icon-no-verified"></i></div>
-                                            <div class="body-likes">1451</div>
-                                            <div class="body-rate">
-                                                <div class="stars">
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-empty"></div>
-                                                </div>
-                                                <span>5.00</span>
-                                            </div>
-                                        </div>
-                                        <div class="table-list-row premium">
-                                            <div class="body-rank">6.</div>
-                                            <div class="body-name">MinecraftServerName</div>
-                                            <div class="body-web">minecraftservername.pl</div>
-                                            <div class="body-players">1000/1000 <i class="icon icon-on"></i></div>
-                                            <div class="body-points">435239</div>
-                                            <div class="body-ratio">50.60%</div>
-                                            <div class="body-mode"><i class="icon icon-verified"></i></div>
-                                            <div class="body-version">1.12.1</div>
-                                            <div class="body-verified"><i class="icon icon-no-verified"></i></div>
-                                            <div class="body-likes">1451</div>
-                                            <div class="body-rate">
-                                                <div class="stars">
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-empty"></div>
-                                                </div>
-                                                <span>5.00</span>
-                                            </div>
-                                        </div>
-                                        <div class="table-list-row premium">
-                                            <div class="body-rank">7.</div>
-                                            <div class="body-name">MinecraftServerName</div>
-                                            <div class="body-web">minecraftservername.pl</div>
-                                            <div class="body-players">1000/1000 <i class="icon icon-on"></i></div>
-                                            <div class="body-points">435239</div>
-                                            <div class="body-ratio">50.60%</div>
-                                            <div class="body-mode"><i class="icon icon-verified"></i></div>
-                                            <div class="body-version">1.12.1</div>
-                                            <div class="body-verified"><i class="icon icon-no-verified"></i></div>
-                                            <div class="body-likes">1451</div>
-                                            <div class="body-rate">
-                                                <div class="stars">
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-empty"></div>
-                                                </div>
-                                                <span>5.00</span>
-                                            </div>
-                                        </div>
-                                        <div class="table-list-row">
-                                            <div class="body-rank">8.</div>
-                                            <div class="body-name">MinecraftServerName</div>
-                                            <div class="body-web">minecraftservername.pl</div>
-                                            <div class="body-players">1000/1000 <i class="icon icon-on"></i></div>
-                                            <div class="body-points">435239</div>
-                                            <div class="body-ratio">50.60%</div>
-                                            <div class="body-mode"><i class="icon icon-verified"></i></div>
-                                            <div class="body-version">1.12.1</div>
-                                            <div class="body-verified"><i class="icon icon-no-verified"></i></div>
-                                            <div class="body-likes">1451</div>
-                                            <div class="body-rate">
-                                                <div class="stars">
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-empty"></div>
-                                                </div>
-                                                <span>5.00</span>
-                                            </div>
-                                        </div>
-                                        <div class="table-list-row">
-                                            <div class="body-rank">9.</div>
-                                            <div class="body-name">MinecraftServerName</div>
-                                            <div class="body-web">minecraftservername.pl</div>
-                                            <div class="body-players">1000/1000 <i class="icon icon-on"></i></div>
-                                            <div class="body-points">435239</div>
-                                            <div class="body-ratio">50.60%</div>
-                                            <div class="body-mode"><i class="icon icon-verified"></i></div>
-                                            <div class="body-version">1.12.1</div>
-                                            <div class="body-verified"><i class="icon icon-no-verified"></i></div>
-                                            <div class="body-likes">1451</div>
-                                            <div class="body-rate">
-                                                <div class="stars">
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-empty"></div>
-                                                </div>
-                                                <span>5.00</span>
-                                            </div>
-                                        </div>
-                                        <div class="table-list-row">
-                                            <div class="body-rank">10.</div>
-                                            <div class="body-name">MinecraftServerName</div>
-                                            <div class="body-web">minecraftservername.pl</div>
-                                            <div class="body-players">1000/1000 <i class="icon icon-on"></i></div>
-                                            <div class="body-points">435239</div>
-                                            <div class="body-ratio">50.60%</div>
-                                            <div class="body-mode"><i class="icon icon-verified"></i></div>
-                                            <div class="body-version">1.12.1</div>
-                                            <div class="body-verified"><i class="icon icon-no-verified"></i></div>
-                                            <div class="body-likes">1451</div>
-                                            <div class="body-rate">
-                                                <div class="stars">
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-empty"></div>
-                                                </div>
-                                                <span>5.00</span>
-                                            </div>
-                                        </div>
-                                        <div class="table-list-row premium">
-                                            <div class="body-rank">11.</div>
-                                            <div class="body-name">MinecraftServerName</div>
-                                            <div class="body-web">minecraftservername.pl</div>
-                                            <div class="body-players">1000/1000 <i class="icon icon-on"></i></div>
-                                            <div class="body-points">435239</div>
-                                            <div class="body-ratio">50.60%</div>
-                                            <div class="body-mode"><i class="icon icon-verified"></i></div>
-                                            <div class="body-version">1.12.1</div>
-                                            <div class="body-verified"><i class="icon icon-no-verified"></i></div>
-                                            <div class="body-likes">1451</div>
-                                            <div class="body-rate">
-                                                <div class="stars">
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-empty"></div>
-                                                </div>
-                                                <span>5.00</span>
-                                            </div>
-                                        </div>
-                                        <div class="table-list-row">
-                                            <div class="body-rank">12.</div>
-                                            <div class="body-name">MinecraftServerName</div>
-                                            <div class="body-web">minecraftservername.pl</div>
-                                            <div class="body-players">1000/1000 <i class="icon icon-on"></i></div>
-                                            <div class="body-points">435239</div>
-                                            <div class="body-ratio">50.60%</div>
-                                            <div class="body-mode"><i class="icon icon-verified"></i></div>
-                                            <div class="body-version">1.12.1</div>
-                                            <div class="body-verified"><i class="icon icon-no-verified"></i></div>
-                                            <div class="body-likes">1451</div>
-                                            <div class="body-rate">
-                                                <div class="stars">
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-empty"></div>
-                                                </div>
-                                                <span>5.00</span>
-                                            </div>
-                                        </div>
-                                        <div class="table-list-row">
-                                            <div class="body-rank">13.</div>
-                                            <div class="body-name">MinecraftServerName</div>
-                                            <div class="body-web">minecraftservername.pl</div>
-                                            <div class="body-players">1000/1000 <i class="icon icon-on"></i></div>
-                                            <div class="body-points">435239</div>
-                                            <div class="body-ratio">50.60%</div>
-                                            <div class="body-mode"><i class="icon icon-verified"></i></div>
-                                            <div class="body-version">1.12.1</div>
-                                            <div class="body-verified"><i class="icon icon-no-verified"></i></div>
-                                            <div class="body-likes">1451</div>
-                                            <div class="body-rate">
-                                                <div class="stars">
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-empty"></div>
-                                                </div>
-                                                <span>5.00</span>
-                                            </div>
-                                        </div>
-                                        <div class="table-list-row">
-                                            <div class="body-rank">14.</div>
-                                            <div class="body-name">MinecraftServerName</div>
-                                            <div class="body-web">minecraftservername.pl</div>
-                                            <div class="body-players">1000/1000 <i class="icon icon-on"></i></div>
-                                            <div class="body-points">435239</div>
-                                            <div class="body-ratio">50.60%</div>
-                                            <div class="body-mode"><i class="icon icon-verified"></i></div>
-                                            <div class="body-version">1.12.1</div>
-                                            <div class="body-verified"><i class="icon icon-no-verified"></i></div>
-                                            <div class="body-likes">1451</div>
-                                            <div class="body-rate">
-                                                <div class="stars">
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-empty"></div>
-                                                </div>
-                                                <span>5.00</span>
-                                            </div>
-                                        </div>
-                                        <div class="table-list-row premium">
-                                            <div class="body-rank">15.</div>
-                                            <div class="body-name">MinecraftServerName</div>
-                                            <div class="body-web">minecraftservername.pl</div>
-                                            <div class="body-players">1000/1000 <i class="icon icon-on"></i></div>
-                                            <div class="body-points">435239</div>
-                                            <div class="body-ratio">50.60%</div>
-                                            <div class="body-mode"><i class="icon icon-verified"></i></div>
-                                            <div class="body-version">1.12.1</div>
-                                            <div class="body-verified"><i class="icon icon-no-verified"></i></div>
-                                            <div class="body-likes">1451</div>
-                                            <div class="body-rate">
-                                                <div class="stars">
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-full"></div>
-                                                    <div class="star star-empty"></div>
-                                                </div>
-                                                <span>5.00</span>
-                                            </div>
-                                        </div>
+                                    
                                     </div>
                                 </div>
                                 <div class="list-footer">
@@ -622,10 +134,11 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <script>
             var data;
+            var promotedData;
             var currentPage = 0;
             var isPromoted = false;
             var searchPhrase = '';
-            var sizeRecords = 10;
+            var sizeRecords = 2;
             var sortBy = 'likes';
             var filterByLikesASC = false;
             var filterByRatingASC = false;
@@ -665,13 +178,14 @@
 
                         if(!currentServer.server.onlineModeEnabled) onlineModeIcon = 'icon-no-verified';
 
-                        $('.table-list-content').append($('<div class="table-list-row '+promotedClass+'"><div class="body-rank">'+i+'.</div><div class="body-name">'+currentServer.server.name+'</div><div class="body-web">'+currentServer.server.homepage+'</div><div class="body-players">'+currentServer.serverPingCredentials.onlinePlayers+'/'+currentServer.serverPingCredentials.serverSize+' <i class="icon '+onlineLight+'"></i></div><div class="body-points">435239</div><div class="body-ratio">'+serverOnlineRatio+'%</div><div class="body-mode"><i class="icon '+onlineModeIcon+'"></i></div><div class="body-version">'+ReturnServerVersion(i)+'</div><div class="body-verified"><i class="icon icon-no-verified"></i></div><div class="body-likes">'+currentServer.likes.likes+'</div><div class="body-rate"><div class="stars" id="stars_'+i+'"></div><span>'+currentServer.rate.rate+'</span></div></div>'));
-                        ShowStarsRate(i,currentServer.rate.rate);
+                        $('.table-list-content').append($('<div class="table-list-row '+promotedClass+'"><div class="body-rank">'+(i+1)+'.</div><div class="body-name">'+currentServer.server.name+'</div><div class="body-web">'+currentServer.server.homepage+'</div><div style="margin-left: 5px;" class="body-players">'+currentServer.serverPingCredentials.onlinePlayers+'/'+currentServer.serverPingCredentials.serverSize+' <i style="margin-left: auto; margin-right: 5px;" class="icon '+onlineLight+'"></i></div><div class="body-points">435239</div><div class="body-ratio">'+serverOnlineRatio+'%</div><div class="body-mode"><i class="icon '+onlineModeIcon+'"></i></div><div class="body-version">'+ReturnServerVersion(currentServer)+'</div><div class="body-verified"><i class="icon icon-no-verified"></i></div><div class="body-likes">'+currentServer.likes.likes+'</div><div class="body-rate"><div class="stars" id="stars_'+i+'"></div><span>'+currentServer.rate.rate+'</span></div></div>'));
+                        ShowStarsRate("stars",i,currentServer.rate.rate);
                     }
                 });
             }
 
             GetServers(currentPage,sizeRecords,isPromoted,searchPhrase,sortBy);
+            ShowPromotedServersPanel();
 
             //Search input
             $('#button_search').on('click', function() {
@@ -694,9 +208,9 @@
             })
 
             //Return server version
-            function ReturnServerVersion(functionParametr) {
-                if(!data.content[functionParametr].minecraftServerVersions[0]) return "??";
-                var text = data.content[functionParametr].minecraftServerVersions[0].minecraftVersion.version.split(',');
+            function ReturnServerVersion(thisServer) {
+                if(!thisServer.minecraftServerVersions[0]) return "??";
+                var text = thisServer.minecraftServerVersions[0].minecraftVersion.version.split(',');
                 if(text.length>1) {
                     return '>'+text[0];
                 }
@@ -704,8 +218,21 @@
             }
 
             //Return Stars in table
+            /*
             function ShowStarsRate(elementId,value) {
                 starsId = ('#stars_'+elementId).toString();
+                for(var i=0;i<5;i++) {
+                    if(i<value) {
+                        $(starsId).append($('<div class="star star-full"></div>'));
+                    }
+                    else {
+                        $(starsId).append($('<div class="star star-empty"></div>'));
+                    }
+                }
+            }
+            */
+            function ShowStarsRate(name,elementId,value) {
+                starsId = ('#'+name+'_'+elementId).toString();
                 for(var i=0;i<5;i++) {
                     if(i<value) {
                         $(starsId).append($('<div class="star star-full"></div>'));
@@ -718,7 +245,6 @@
 
             //Filter by likes, rating, promoted
             //Possible filter likes, -likes, rate, -rate
-            
             $('.table_filter_button').on('click', function() {
                 if($(this).data('filter') == 'likes') {
                     if(filterByLikesASC) {
@@ -741,7 +267,40 @@
                     }
                 }
                 GetServers(currentPage,sizeRecords,isPromoted,searchPhrase,sortBy);
-            })
+            });
+
+            function ShowPromotedServersPanel() {
+                $.ajax({
+                    url: "http://51.255.214.164:8080/api/v1/servers/?promoted=true",
+                })
+                .done(res => {
+                    $('.promoted-servers-items').empty();
+                    promotedData = res;
+                    if(promotedData.content.length == 0) {
+                        $('.promoted-servers-items').append($('<p style="color: white; margin-top: 10px;">Brak promowanych serwerów</p>'));
+                        return;
+                    }
+
+                    for(var i=0;i<5;i++) {
+                        var currentServer = promotedData.content[i];
+                        if(!currentServer) return;
+                        var onlineLight = 'icon-on';
+                        var serverOnlineRatio = 100.00;
+                        var onlineModeIcon = 'icon-verified';
+                        var starsId;
+                        if(!currentServer.serverPingCredentials.isOnline)  onlineLight = 'icon-off'
+
+                        if(currentServer.serverPingCredentials.timesOffline > 0) {
+                            serverOnlineRatio = (currentServer.serverPingCredentials.timesOnline / currentServer.serverPingCredentials.timesOffline).toFixed(2);
+                        }
+
+                        if(!currentServer.server.onlineModeEnabled) onlineModeIcon = 'icon-no-verified';
+
+                        $('.promoted-servers-items').append($('<div class="promoted-server-item"><div class="promoted-server-title">MinecraftServerName</div><div class="promoted-server-players"><i class="icon icon-players"></i><div class="server-players-number">'+currentServer.serverPingCredentials.onlinePlayers+'/'+currentServer.serverPingCredentials.serverSize+'</div><i class="icon '+onlineLight+'"></i></div><div class="promoted-server-rate"><i class="icon icon-rate"></i><div class="rate-number">'+currentServer.rate.rate+'</div><div class="stars" id="starsP_'+i+'"> </div> </div><div class="promoted-server-mode"><i class="icon icon-www"></i><div class="promoted-server-status">Online mode: <i class="icon '+onlineModeIcon+'"></i></div></div><div class="promoted-server-version"><i class="icon icon-version"></i><div class="version-number">Wersja serwera '+ReturnServerVersion(currentServer)+'</div></div><div class="promoted-server-web"><div class="server-url">'+currentServer.server.homepage+'</div></div></div>'));
+                        ShowStarsRate("starsP",i,currentServer.rate.rate);
+                    }
+                });
+            }
 
         </script>
     </body>
