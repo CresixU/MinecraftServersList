@@ -597,3 +597,15 @@ footer {
 }
 
 /*# sourceMappingURL=main.min.css.map */
+
+
+/*  Sub page /server.php with chart  */
+
+.server-header {
+    width: 1235px;
+    height: 78px;
+    background: url(../img/panel-header-bg.png) no-repeat;
+    display:flex;
+    margin-left:auto;
+    color:#ada190;
+}
