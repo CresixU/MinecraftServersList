@@ -8,6 +8,7 @@
         
     </head>
     <body>
+        <?php $api = require("config.php"); ?>
         <div id="fb-root"></div>
         <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v11.0&appId=915876171902531&autoLogAppEvents=1" nonce="k7fGxMia"></script>
         <nav>
@@ -78,16 +79,6 @@
                                 <div class="panel-header-pagination">
                                     <a onclick="GetServers(currentPage-1,sizeRecords,isPromoted,searchPhrase,sortBy)" class="pagination-arrow-left"></a>
                                     <ul id="pagination-list">
-                                        <li><a href="">1</a></li>
-                                        <li><a href="">2</a></li>
-                                        <li><a href="">3</a></li>
-                                        <li><a href="">4</a></li>
-                                        <li><a href="">5</a></li>
-                                        <li><a href="" class="active">6</a></li>
-                                        <li><a href="">7</a></li>
-                                        <li><a href="">8</a></li>
-                                        <li><a href="">9</a></li>
-                                        <li><a href="">10</a></li>
                                     </ul>
                                     <a onclick="GetServers(currentPage+1,sizeRecords,isPromoted,searchPhrase,sortBy)" class="pagination-arrow-right"></a>
                                 </div>
@@ -133,12 +124,13 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <script>
+            var api_url = "<?php echo $api ?>";
             var data;
             var promotedData;
             var currentPage = 0;
             var isPromoted = false;
             var searchPhrase = "";
-            var sizeRecords = 3;
+            var sizeRecords = 10;
             var sortBy = 'likes';
             var filterByLikesASC = false;
             var filterByRatingASC = false;
@@ -147,14 +139,16 @@
                 if(page<0) page = 0;
                 if(data && page>= data.total%size) page = (data.total%size)-1;
                 if(search=='' || search == null) search = "";
+                var apiUrl;
                 currentPage = page;
                 sizeRecords = size;
                 isPromoted = promoted;
                 searchPhrase = search;
                 sortBy = sort_by;
+                apiUrl = api_url+"/api/v1/servers/?page="+currentPage+"&size="+sizeRecords+"&search="+searchPhrase+"&promoted="+isPromoted+"&sort_by="+sortBy;
 
                 $.ajax({
-                    url: "http://51.255.214.164:8080/api/v1/servers/?page="+currentPage+"&size="+sizeRecords+"&search="+searchPhrase+"&promoted="+isPromoted+"&sort_by="+sortBy,
+                    url: apiUrl,
                 })
                 .done(res => {
                     $('.table-list-content').empty();
@@ -184,7 +178,7 @@
 
                         if(!currentServer.server.onlineModeEnabled) onlineModeIcon = 'icon-no-verified';
 
-                        $('.table-list-content').append($('<div class="table-list-row '+promotedClass+'"><div class="body-rank">'+(i+1)+'.</div><div class="body-name">'+currentServer.server.name+'</div><div class="body-web">'+currentServer.server.homepage+'</div><div style="margin-left: 5px;" class="body-players">'+currentServer.serverPingCredentials.onlinePlayers+'/'+currentServer.serverPingCredentials.serverSize+' <i style="margin-left: auto; margin-right: 5px;" class="icon '+onlineLight+'"></i></div><div class="body-points">'+currentServer.server.points+'</div><div class="body-ratio">'+serverOnlineRatio+'%</div><div class="body-mode"><i class="icon '+onlineModeIcon+'"></i></div><div class="body-version">'+ReturnServerVersion(currentServer)+'</div><div class="body-verified"><i class="icon icon-no-verified"></i></div><div class="body-likes">'+currentServer.likes.likes+'</div><div class="body-rate"><div class="stars" id="stars_'+i+'"></div><span>'+currentServer.rate.rate+'</span></div></div>'));
+                        $('.table-list-content').append($('<a href="./server.php?id='+currentServer.server.id+'"<div class="table-list-row '+promotedClass+'"><div class="body-rank">'+(i+1)+'.</div><div class="body-name">'+currentServer.server.name+'</div><div class="body-web">'+currentServer.server.homepage+'</div><div style="margin-left: 5px;" class="body-players">'+currentServer.serverPingCredentials.onlinePlayers+'/'+currentServer.serverPingCredentials.serverSize+' <i style="margin-left: auto; margin-right: 5px;" class="icon '+onlineLight+'"></i></div><div class="body-points">'+currentServer.server.points+'</div><div class="body-ratio">'+serverOnlineRatio+'%</div><div class="body-mode"><i class="icon '+onlineModeIcon+'"></i></div><div class="body-version">'+ReturnServerVersion(currentServer)+'</div><div class="body-verified"><i class="icon icon-no-verified"></i></div><div class="body-likes">'+currentServer.likes.likes+'</div><div class="body-rate"><div class="stars" id="stars_'+i+'"></div><span>'+currentServer.rate.rate+'</span></div></div></a>'));
                         ShowStarsRate("stars",i,currentServer.rate.rate);
                         ChangePage(currentPage);
                     }
@@ -266,7 +260,7 @@
 
             function ShowPromotedServersPanel() {
                 $.ajax({
-                    url: "http://51.255.214.164:8080/api/v1/servers/?promoted=true",
+                    url: api_url+"/api/v1/servers/?promoted=true",
                 })
                 .done(res => {
                     $('.promoted-servers-items').empty();
@@ -297,19 +291,19 @@
                 });
             }
 
-                function ChangePage(page) {
-                    $('#pagination-list').empty();
-                    var startPage = 1;
-                    var maxPages = data.total;
-                    if(currentPage > 4) startPage = currentPage - 4;
-                    if(currentPage+4 < maxPages) maxPages = currentPage+4; 
-                    for(var i=startPage; i<=maxPages;i++) {
-                        if(i==currentPage+1) 
-                            $('#pagination-list').append($('<li><a onclick="GetServers('+i+','+sizeRecords+','+isPromoted+','+searchPhrase+','+sortBy+')" class="active">'+i+'</a></li>'));
-                        else
-                            $('#pagination-list').append($('<li><a onclick="GetServers('+i+','+sizeRecords+','+isPromoted+','+searchPhrase+','+sortBy+')">'+i+'</a></li>'));
-                    }
+            function ChangePage(page) {
+                $('#pagination-list').empty();
+                var startPage = 1;
+                var maxPages = data.total;
+                if(currentPage > 4) startPage = currentPage - 4;
+                if(currentPage+4 < maxPages) maxPages = currentPage+4; 
+                for(var i=startPage; i<=maxPages;i++) {
+                    if(i==currentPage+1) 
+                        $('#pagination-list').append($('<li><a onclick="GetServers('+i+','+sizeRecords+','+isPromoted+','+searchPhrase+','+sortBy+')" class="active">'+i+'</a></li>'));
+                    else
+                        $('#pagination-list').append($('<li><a onclick="GetServers('+i+','+sizeRecords+','+isPromoted+','+searchPhrase+','+sortBy+')">'+i+'</a></li>'));
                 }
+            }           
 
         </script>
     </body>
