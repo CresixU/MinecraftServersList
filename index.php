@@ -76,8 +76,8 @@
                                     <div class="promoting-switch"><div class="switch-button" id="button_switch_premium"></div></div>
                                 </div>
                                 <div class="panel-header-pagination">
-                                    <a href="" class="pagination-arrow-left"></a>
-                                    <ul>
+                                    <a onclick="GetServers(currentPage-1,sizeRecords,isPromoted,searchPhrase,sortBy)" class="pagination-arrow-left"></a>
+                                    <ul id="pagination-list">
                                         <li><a href="">1</a></li>
                                         <li><a href="">2</a></li>
                                         <li><a href="">3</a></li>
@@ -89,7 +89,7 @@
                                         <li><a href="">9</a></li>
                                         <li><a href="">10</a></li>
                                     </ul>
-                                    <a href="" class="pagination-arrow-right"></a>
+                                    <a onclick="GetServers(currentPage+1,sizeRecords,isPromoted,searchPhrase,sortBy)" class="pagination-arrow-right"></a>
                                 </div>
                             </div>
                             <div class="panel-content panel-list-content">
@@ -112,7 +112,7 @@
                                     </div>
                                 </div>
                                 <div class="list-footer">
-                                    Ostatnie sprawdzenie: 25 lipca 2021 03:17
+                                    <span id="last-updated-datetime"> </span>
                                 </div>
                             </div>
                         </div>
@@ -137,23 +137,27 @@
             var promotedData;
             var currentPage = 0;
             var isPromoted = false;
-            var searchPhrase = '';
-            var sizeRecords = 2;
+            var searchPhrase = "";
+            var sizeRecords = 3;
             var sortBy = 'likes';
             var filterByLikesASC = false;
             var filterByRatingASC = false;
 
             function GetServers(page,size,promoted,search,sort_by) {
+                if(page<0) page = 0;
+                if(data && page>= data.total%size) page = (data.total%size)-1;
+                if(search=='' || search == null) search = "";
+                currentPage = page;
+                sizeRecords = size;
+                isPromoted = promoted;
+                searchPhrase = search;
+                sortBy = sort_by;
+
                 $.ajax({
-                    url: "http://51.255.214.164:8080/api/v1/servers/?page="+currentPage+"&size="+size+"&search="+search+"&promoted="+promoted+"&sort_by="+sort_by,
+                    url: "http://51.255.214.164:8080/api/v1/servers/?page="+currentPage+"&size="+sizeRecords+"&search="+searchPhrase+"&promoted="+isPromoted+"&sort_by="+sortBy,
                 })
                 .done(res => {
                     $('.table-list-content').empty();
-                    currentPage = page;
-                    sizeRecords = size;
-                    isPromoted = promoted;
-                    searchPhrase = search;
-                    sortBy = sort_by;
 
                     data = res;
                     if(data.content.length == 0) {
@@ -161,6 +165,8 @@
                         console.log("empty");
                         return;
                     }
+                    var str = 'Ostatnie sprawdzenie: '+data.content[0].serverPingCredentials.addedAt.substr(8,2)+'.'+data.content[0].serverPingCredentials.addedAt.substr(5,2)+'.'+data.content[0].serverPingCredentials.addedAt.substr(0,4)+'  '+data.content[0].serverPingCredentials.addedAt.substr(11,5);
+                    $('#last-updated-datetime').text(str);
 
                     for(var i=0;i<data.content.length;i++) {
                         var currentServer = data.content[i];
@@ -178,19 +184,21 @@
 
                         if(!currentServer.server.onlineModeEnabled) onlineModeIcon = 'icon-no-verified';
 
-                        $('.table-list-content').append($('<div class="table-list-row '+promotedClass+'"><div class="body-rank">'+(i+1)+'.</div><div class="body-name">'+currentServer.server.name+'</div><div class="body-web">'+currentServer.server.homepage+'</div><div style="margin-left: 5px;" class="body-players">'+currentServer.serverPingCredentials.onlinePlayers+'/'+currentServer.serverPingCredentials.serverSize+' <i style="margin-left: auto; margin-right: 5px;" class="icon '+onlineLight+'"></i></div><div class="body-points">435239</div><div class="body-ratio">'+serverOnlineRatio+'%</div><div class="body-mode"><i class="icon '+onlineModeIcon+'"></i></div><div class="body-version">'+ReturnServerVersion(currentServer)+'</div><div class="body-verified"><i class="icon icon-no-verified"></i></div><div class="body-likes">'+currentServer.likes.likes+'</div><div class="body-rate"><div class="stars" id="stars_'+i+'"></div><span>'+currentServer.rate.rate+'</span></div></div>'));
+                        $('.table-list-content').append($('<div class="table-list-row '+promotedClass+'"><div class="body-rank">'+(i+1)+'.</div><div class="body-name">'+currentServer.server.name+'</div><div class="body-web">'+currentServer.server.homepage+'</div><div style="margin-left: 5px;" class="body-players">'+currentServer.serverPingCredentials.onlinePlayers+'/'+currentServer.serverPingCredentials.serverSize+' <i style="margin-left: auto; margin-right: 5px;" class="icon '+onlineLight+'"></i></div><div class="body-points">'+currentServer.server.points+'</div><div class="body-ratio">'+serverOnlineRatio+'%</div><div class="body-mode"><i class="icon '+onlineModeIcon+'"></i></div><div class="body-version">'+ReturnServerVersion(currentServer)+'</div><div class="body-verified"><i class="icon icon-no-verified"></i></div><div class="body-likes">'+currentServer.likes.likes+'</div><div class="body-rate"><div class="stars" id="stars_'+i+'"></div><span>'+currentServer.rate.rate+'</span></div></div>'));
                         ShowStarsRate("stars",i,currentServer.rate.rate);
+                        ChangePage(currentPage);
                     }
                 });
             }
 
             GetServers(currentPage,sizeRecords,isPromoted,searchPhrase,sortBy);
             ShowPromotedServersPanel();
+            
 
             //Search input
             $('#button_search').on('click', function() {
-                var inputContent = $('#input_search').val();
-                GetServers(currentPage,sizeRecords,isPromoted,inputContent,sortBy);
+                searchPhrase = $('#input_search').val();
+                GetServers(currentPage,sizeRecords,isPromoted,searchPhrase,sortBy);
             });
 
             //Premium button
@@ -218,19 +226,6 @@
             }
 
             //Return Stars in table
-            /*
-            function ShowStarsRate(elementId,value) {
-                starsId = ('#stars_'+elementId).toString();
-                for(var i=0;i<5;i++) {
-                    if(i<value) {
-                        $(starsId).append($('<div class="star star-full"></div>'));
-                    }
-                    else {
-                        $(starsId).append($('<div class="star star-empty"></div>'));
-                    }
-                }
-            }
-            */
             function ShowStarsRate(name,elementId,value) {
                 starsId = ('#'+name+'_'+elementId).toString();
                 for(var i=0;i<5;i++) {
@@ -301,6 +296,20 @@
                     }
                 });
             }
+
+                function ChangePage(page) {
+                    $('#pagination-list').empty();
+                    var startPage = 1;
+                    var maxPages = data.total;
+                    if(currentPage > 4) startPage = currentPage - 4;
+                    if(currentPage+4 < maxPages) maxPages = currentPage+4; 
+                    for(var i=startPage; i<=maxPages;i++) {
+                        if(i==currentPage+1) 
+                            $('#pagination-list').append($('<li><a onclick="GetServers('+i+','+sizeRecords+','+isPromoted+','+searchPhrase+','+sortBy+')" class="active">'+i+'</a></li>'));
+                        else
+                            $('#pagination-list').append($('<li><a onclick="GetServers('+i+','+sizeRecords+','+isPromoted+','+searchPhrase+','+sortBy+')">'+i+'</a></li>'));
+                    }
+                }
 
         </script>
     </body>
