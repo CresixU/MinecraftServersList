@@ -10,6 +10,12 @@
             background: linear-gradient(to bottom, #110b08, #0e0906 70%);
             color: white;
         }
+        .icon-on, .icon-off {
+            display: block;
+            padding: 19px 0px 0px 0px;
+            float: left;
+            margin-top: 3px;
+        }
     </style>
 
 </head>
@@ -18,52 +24,21 @@
     <?php echo "<span id='server-id' style='display: none;'>" . $_GET['id']."</span>";?>
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v11.0&appId=915876171902531&autoLogAppEvents=1" nonce="k7fGxMia"></script>
-    <nav>
-        <div class="container">
-            <div class="row">
-                <div class="col-6">
-                    <div class="menu">
-                        <ul>
-                            <li><a href="">Konto</a></li>
-                            <li class="active"><a href="index.php">Serwery</a></li>
-                            <li><a href="">Partnerzy</a></li>
-                            <li><a href="">Statystyki</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="facebook-likebox">
-                        <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-width="100" data-layout="button_count" data-action="like" data-size="large" data-share="false"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <header>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <a href="" class="logo">
-                        <img src="img/logo.png" alt="">
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
+    <?php require_once("components/top.php"); ?>
     <main>
         <div class="container p-5">
             <div class="server-header p-2">
                 <h1 id="server-data-name" style="margin-left: 15px !important;">IP</h1>
             </div>
             <div class="body-rate">
-                <div class="stars">
+                <div class="stars" id="stars">
                     <div class="star star-full"></div>
                     <div class="star star-full"></div>
                     <div class="star star-full"></div>
                     <div class="star star-full"></div>
                     <div class="star star-empty"></div>
                 </div>
-                <span>4.00</span>
+                <span id="server-rate">4.00</span>
             </div>
             <div class="server-data-list my-5" >
                 <div class="server-data-list-header">
@@ -170,7 +145,7 @@
                 $('#server-data-ip').text(data.serverHostCredentials.address);
                 $('#server-data-port').text(data.serverHostCredentials.port);
                 if(!data.serverPingCredentials.isOnline) onlineLight = 'icon-off';
-                $('#server-data-status').append($('<i class="icon '+onlineLight+'"></i> <span>'+data.serverPingCredentials.onlinePlayers+'/'+data.serverPingCredentials.serverSize+'</span>'));
+                $('#server-data-status').append($('<i class="icon '+onlineLight+'"></i> <span style="display:block;">'+data.serverPingCredentials.onlinePlayers+'/'+data.serverPingCredentials.serverSize+'</span>'));
                 $('#server-data-top').text("Nie skończono");
                 $('#server-data-last-online').text(data.serverPingCredentials.addedAt.substr(8,2)+'.'+data.serverPingCredentials.addedAt.substr(5,2)+'.'+data.serverPingCredentials.addedAt.substr(0,4)+'  '+data.serverPingCredentials.addedAt.substr(11,5));
                 $('#server-data-page').text(data.server.homepage);
@@ -183,8 +158,11 @@
                     serverOnlineRatio = (data.serverPingCredentials.timesOnline / data.serverPingCredentials.timesOffline).toFixed(2);
                 $('#server-data-ratio').text(serverOnlineRatio+'%');
                 $('#server-data-rank').text("Brak implementacji w endpoincie");
-                $('#server-data-added').text(data.server.addedAt.substr(8,2)+'.'+data.server.addedAt.substr(5,2)+'.'+data.server.addedAt.substr(0,4)+'  '+data.server.addedAt.substr(11,5))
+                $('#server-data-added').text(data.server.addedAt.substr(8,2)+'.'+data.server.addedAt.substr(5,2)+'.'+data.server.addedAt.substr(0,4)+'  '+data.server.addedAt.substr(11,5));
                 $('#server-data-desc').text(data.server.description);
+                $('#server-rate').text("Ocena: "+data.rate.rate.toFixed(2));
+
+                ShowStarsRate(data.rate.rate);
             })
         }
 
@@ -192,7 +170,7 @@
         function ShowChart() {
             serverId = $('#server-id').text();
             $.ajax({
-                url: api_url+'/api/v1/servers/'+serverId+"/ping/?page=0&size=100",
+                url: api_url+'/api/v1/servers/'+serverId+"/ping/?page=0&size=50",
             })
             .done(res => {
                 chartData = res;
@@ -202,8 +180,8 @@
                         players.push(chartData.content[k].onlinePlayers);
                     }
                 }
-                chart.data.datasets[0].data = players;
-                chart.data.labels = time.map(t => t.substr(11,5));
+                chart.data.datasets[0].data = players.reverse();
+                chart.data.labels = time.map(t => t.substr(11,5)).reverse();
 
                 chart.update();
             })
@@ -238,16 +216,40 @@
 
         function ReturnColorByIndex(index) {
             if(time.length == 0) return;
-            var day = parseInt(time[index].substr(8,2))%3;
+            var i = time.length - index - 1;
+            var day = parseInt(time[i].substr(8,2))%3;
             if(index == 0) return 'rgb(46, 46, 46)'; //gray
             if(day == 0) return 'rgb(75,192,192)'; //blue
             else if(day == 1) return 'rgb(189, 4, 105)'; //green
             else if(day == 2) return 'rgb(28, 176, 77)';    
         }
 
-
+        //Return Stars in table
+        function ShowStarsRate(value) {
+            starsId = ('#stars');
+            $(starsId).empty();
+            for(var i=0;i<5;i++) {
+                if(i<value) {
+                    $(starsId).append($('<div id="star_'+(i+1)+'" class="star star-full"></div>'));
+                }
+                else {
+                    $(starsId).append($('<div id="star_'+(i+1)+'" class="star star-empty"></div>'));
+                }
+            }
+        }
+        //Rate server
+        /*
+        $('.stars')
+        .hover(function(event) {
+            ShowStarsRate(event.target.id.substr(5,1))
+        })
+        .mouseleave(function() {
+            console.log("out");
+            ShowStarsRate(data.rate.rate);
+        })   
+    */
         GetServerInfo();
-        ShowChart()
+        ShowChart();
 
 
     </script>

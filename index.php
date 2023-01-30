@@ -11,38 +11,7 @@
         <?php $api = require("config.php"); ?>
         <div id="fb-root"></div>
         <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v11.0&appId=915876171902531&autoLogAppEvents=1" nonce="k7fGxMia"></script>
-        <nav>
-            <div class="container">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="menu">
-                            <ul>
-                                <li><a href="">Konto</a></li>
-                                <li class="active"><a href="">Serwery</a></li>
-                                <li><a href="">Partnerzy</a></li>
-                                <li><a href="">Statystyki</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="facebook-likebox">
-                            <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-width="100" data-layout="button_count" data-action="like" data-size="large" data-share="false"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <header>
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <a href="" class="logo">
-                            <img src="img/logo.png" alt="">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <?php require_once("components/top.php"); ?>
         <main>
             <div class="container">
                 <div class="row">
