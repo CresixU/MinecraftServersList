@@ -16,6 +16,9 @@
             float: left;
             margin-top: 3px;
         }
+        .star {
+            cursor: pointer;
+        }
     </style>
 
 </head>
@@ -28,15 +31,15 @@
     <main>
         <div class="container p-5">
             <div class="server-header p-2">
-                <h1 id="server-data-name" style="margin-left: 15px !important;">IP</h1>
+                <h1 id="server-data-name" style="margin-left: 15px !important;">Ładowanie danych...</h1>
             </div>
             <div class="body-rate">
                 <div class="stars" id="stars">
-                    <div class="star star-full"></div>
-                    <div class="star star-full"></div>
-                    <div class="star star-full"></div>
-                    <div class="star star-full"></div>
-                    <div class="star star-empty"></div>
+                    <div class="star star-full" id="star_1" onclick="Rate(this.id)"></div>
+                    <div class="star star-full" id="star_2" onclick="Rate(this.id)"></div>
+                    <div class="star star-full" id="star_3" onclick="Rate(this.id)"></div>
+                    <div class="star star-full" id="star_4" onclick="Rate(this.id)"></div>
+                    <div class="star star-empty" id="star_5" onclick="Rate(this.id)"></div>
                 </div>
                 <span id="server-rate">4.00</span>
             </div>
@@ -47,51 +50,51 @@
                 <table style="width: 100%;">
                     <tr>
                         <td style="width: 50%; max-width: 500px">Adres serwera:</td>
-                        <td id="server-data-ip"></td>
+                        <td id="server-data-ip">Ładowanie danych...</td>
                     </tr>
                     <tr>
                         <td>Port:</td>
-                        <td id="server-data-port"></td>
+                        <td id="server-data-port">??</td>
                     </tr>
                     <tr>
                         <td>Status:</td>
-                        <td id="server-data-status"></td>
+                        <td id="server-data-status">??</td>
                     </tr>
                     <tr>
                         <td>Top players:</td>
-                        <td id="server-data-top"></td>
+                        <td id="server-data-top">??</td>
                     </tr>
                     <tr>
                         <td>Ostatnio online:</td>
-                        <td id="server-data-last-online"></td>
+                        <td id="server-data-last-online">??</td>
                     </tr>
                     <tr>
                         <td>Strona serwera:</td>
-                        <td id="server-data-page"></td>
+                        <td id="server-data-page">??</td>
                     </tr>
                     <tr>
                         <td>Wersja serwera:</td>
-                        <td id="server-data-version"></td>
+                        <td id="server-data-version">Nie sprecyzowano</td>
                     </tr>
                     <tr>
                         <td>Online mode:</td>
-                        <td id="server-data-online-mode"></td>
+                        <td id="server-data-online-mode">??</td>
                     </tr>
                     <tr>
                         <td>Punkty:</td>
-                        <td id="server-data-points"></td>
+                        <td id="server-data-points">??</td>
                     </tr>
                     <tr>
                         <td>Ratio online:</td>
-                        <td id="server-data-ratio"></td>
+                        <td id="server-data-ratio">??</td>
                     </tr>
                     <tr>
                         <td>Miejsce w rankingu:</td>
-                        <td id="server-data-rank"></td>
+                        <td id="server-data-rank">??</td>
                     </tr>
                     <tr>
                         <td>Data dodania na listę:</td>
-                        <td id="server-data-added"></td>
+                        <td id="server-data-added">??</td>
                     </tr>
                 </table>
             </div>
@@ -146,7 +149,7 @@
                 $('#server-data-port').text(data.serverHostCredentials.port);
                 if(!data.serverPingCredentials.isOnline) onlineLight = 'icon-off';
                 $('#server-data-status').append($('<i class="icon '+onlineLight+'"></i> <span style="display:block;">'+data.serverPingCredentials.onlinePlayers+'/'+data.serverPingCredentials.serverSize+'</span>'));
-                $('#server-data-top').text("Nie skończono");
+                $('#server-data-top').text(data.stats.maxPlayers);
                 $('#server-data-last-online').text(data.serverPingCredentials.addedAt.substr(8,2)+'.'+data.serverPingCredentials.addedAt.substr(5,2)+'.'+data.serverPingCredentials.addedAt.substr(0,4)+'  '+data.serverPingCredentials.addedAt.substr(11,5));
                 $('#server-data-page').text(data.server.homepage);
                 if(data.minecraftServerVersions.length != 0 )
@@ -157,7 +160,7 @@
                 if(data.serverPingCredentials.timesOffline > 0)
                     serverOnlineRatio = (data.serverPingCredentials.timesOnline / data.serverPingCredentials.timesOffline).toFixed(2);
                 $('#server-data-ratio').text(serverOnlineRatio+'%');
-                $('#server-data-rank').text("Brak implementacji w endpoincie");
+                $('#server-data-rank').text(data.stats.placeInRanking);
                 $('#server-data-added').text(data.server.addedAt.substr(8,2)+'.'+data.server.addedAt.substr(5,2)+'.'+data.server.addedAt.substr(0,4)+'  '+data.server.addedAt.substr(11,5));
                 $('#server-data-desc').text(data.server.description);
                 $('#server-rate').text("Ocena: "+data.rate.rate.toFixed(2));
@@ -230,14 +233,29 @@
             $(starsId).empty();
             for(var i=0;i<5;i++) {
                 if(i<value) {
-                    $(starsId).append($('<div id="star_'+(i+1)+'" class="star star-full"></div>'));
+                    $(starsId).append($('<div id="star_'+(i+1)+'" class="star star-full" onclick="Rate(this.id)"></div>'));
                 }
                 else {
-                    $(starsId).append($('<div id="star_'+(i+1)+'" class="star star-empty"></div>'));
+                    $(starsId).append($('<div id="star_'+(i+1)+'" class="star star-empty" onclick="Rate(this.id)"></div>'));
                 }
             }
         }
         //Rate server
+        function Rate(id) {
+            var number = id.substr(5,1);
+            $.ajax({
+                type: 'POST',
+                url: api_url+'/api/v1/servers/'+serverId+'/rates/',
+                data: {
+                    rate: number,
+                    description: "",
+                },
+            })
+            .done(res => {
+                console.log(res);
+            });
+            
+        }
         /*
         $('.stars')
         .hover(function(event) {
