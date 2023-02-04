@@ -4,7 +4,7 @@
                 <div class="col-6">
                     <div class="menu">
                         <ul>
-                            <li><a href="account.php">Konto</a></li>
+                            <li><a href="auth.php">Konto</a></li>
                             <li class="active"><a href="index.php">Serwery</a></li>
                             <li><a href="">Partnerzy</a></li>
                             <li><a href="">Statystyki</a></li>
