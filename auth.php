@@ -135,6 +135,7 @@
     <script>
         var requirements;
         var api_url = "<?php echo $api ?>";
+        var data;
         $.ajax({
             url: api_url+'/api/v1/users/password-requirements/',
         })
@@ -227,10 +228,10 @@
             var password = $('#account-login-password').val();
             $.ajax({
                 type: 'POST',
-                url: api_url+'/api/v1/users/',
+                url: api_url+'/api/v1/auth/login/',
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
-                data: '[{"login": "'+username+'", "password": "'+password+'"}]',
+                data: '{"login": "'+username+'", "password": "'+password+'"}',
                 success: function(data, textStatus, xhr) {
                     console.log(xhr.status + " " +textStatus);
                 },
@@ -238,7 +239,17 @@
                     console.log(xhr.status + " " +textStatus);
                     console.log(xhr.responseJSON.message);
                 } 
+            })
+            .done(res => {
+                $.ajax({
+                    type: 'GET',
+                    url: api_url+'/api/v1/auth/logged/',
+                })
+                .done(res => {
+                    data = res;
+                })
             });
+            
         }
     </script>
 </body>
