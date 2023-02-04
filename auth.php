@@ -13,7 +13,7 @@
             min-height: 100vh;
         }
         .account-authentication a:hover {
-            color:rgb(44, 148, 33) !important;
+            color:var(--main-color) !important;
         }
         main .container {
             color: white;
@@ -21,12 +21,14 @@
         input[type=text], input[type=password] {
             width: 100%;
             padding: 8px 12px;
-            color: #fceec7;
+            color: white;
         }
         label:not(label:last-child) {
             margin-top: 10px;
             width: 100%;
-            color: #fceec7;
+            color: var(--href-color);
+            position: relative;
+            top: 10px;
         }
         .account-authentication > div > div > a {
             cursor: pointer;
@@ -43,7 +45,7 @@
         input[type=text],
         input[type=password]{
             border: none;
-            border-bottom: 2px solid rgb(44, 148, 33);
+            border-bottom: 2px solid var(--main-color);
         }
         input[type=submit], input[type=button] {
             margin: 30px auto;
@@ -51,7 +53,7 @@
             font-weight: bold;
         }
         input[type=checkbox] {
-            background-color: rgb(44, 148, 33);
+            background-color: var(--main-color);
             padding: 5px;
         }
     </style>
