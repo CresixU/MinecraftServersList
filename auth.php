@@ -45,7 +45,7 @@
             border: none;
             border-bottom: 2px solid rgb(44, 148, 33);
         }
-        input[type=submit] {
+        input[type=submit], input[type=button] {
             margin: 30px auto;
             display: block;
             font-weight: bold;
@@ -82,12 +82,12 @@
                         </div>
                         
 
-                        <input type="submit" class="btn-green" value="Zaloguj">
+                        <input type="button" class="btn-green" onclick="Login()" value="Zaloguj">
                         <?php echo $_COOKIE['token'] ?>
                     </form>
                 </div>
                 <div class="account-register col-12 col-md-12">
-                    <form action="auth.php" method="POST">
+                    <form >
                         <div>
                             <label for="account-register-name">Nazwa użytkownika</label>
                             <input type="text" id="account-register-name">
@@ -225,21 +225,19 @@
         function Login() {
             var username = $('#account-login-name').val();
             var password = $('#account-login-password').val();
-
-            fetch(api_url+'/api/v1/users/', {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
+            $.ajax({
+                type: 'POST',
+                url: api_url+'/api/v1/users/',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                data: '[{"login": "'+username+'", "password": "'+password+'"}]',
+                success: function(data, textStatus, xhr) {
+                    console.log(xhr.status + " " +textStatus);
                 },
-                body: JSON.stringify({
-                    login: username,
-                    password: password,
-                }),
-            })
-            .then((response) => response.json())
-            .then((json) => {console.log('Gotcha');})
-            .catch((err) => {console.log(err);
+                complete: function(xhr, textStatus) {
+                    console.log(xhr.status + " " +textStatus);
+                    console.log(xhr.responseJSON.message);
+                } 
             });
         }
     </script>
