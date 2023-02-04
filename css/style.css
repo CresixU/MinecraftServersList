@@ -620,6 +620,13 @@ input:autofill {
     color:#ada190;
 }
 
+.second-header {
+    background: url(../img/header-second-bg.png) no-repeat;
+    height: 58px;
+    align-items: center;
+    display: flex;
+}
+
 .simple-button {
     color: var(--href-color);
 }

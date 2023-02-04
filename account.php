@@ -26,6 +26,9 @@
             button {
                 color: var(--href-color);
             }
+            .panel-content-profile td {
+                padding: 15px 10px;
+            }
         </style>
     </head>
     <body>
@@ -56,9 +59,80 @@
                                 </div>
                             </div>
                             <div class="panel-content p-3 pt-5">
-                                <div class="panel-content-profile "></div>
-                                <div class="panel-content-servers "></div>
-                                <div class="panel-content-history "></div>
+                                <div class="panel-content-profile row">
+                                    <div class="col col-12">
+                                        <div class="second-header">
+                                            <p class="mb-0" style="padding-left: 20px;">Informacje o twoim koncie</p> 
+                                        </div>
+                                    </div>
+                                    <div class="col col-12">
+                                        <table>
+                                            <tr>
+                                                <td>Nazwa użytkownika</td>
+                                                <td>{user.name}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Hasło</td>
+                                                <td><a href="" >Zmień hasło</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Adres e-mail</td>
+                                                <td>{user.email} <a href="">Zmień</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>{img} Ilość tokenów:</td>
+                                                <td>{user.tokens} <a href="">Kup tokeny</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <input type="checkbox" id="account-ad-mails">
+                                                    <label for="account-ad-mails">Wyrażam zgodę na dostarczanie przez serwis {website name} treści reklamowych na adres e-mail podany przeze mnie podczas rejestracji</label>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="panel-content-servers row">
+                                    Sekcja nie skończona, przejdz do <a href="new-server.php">Dodaj nowy serwer</a>
+                                </div>
+                                <div class="panel-content-history row">
+                                    <div class="col col-12">
+                                        <div class="row">
+                                            <div class="col col-6 second-header mb-3">
+                                                <p class="mb-0">Historia konta {Zalogowany user}: <span>0</span> operacji</p>
+                                            </div>
+                                            <div class="col col-6">
+                                                <button class="simple-button d-block" style="float: right">Kup tokeny</button>
+                                                <p class="d-block" style="float: right; margin-right: 20px;">Twoje tokeny: <span>0</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col col-12">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <td>Tokeny przed operacją</td>
+                                                    <td>Tokeny</td>
+                                                    <td>Tokeny po operacji</td>
+                                                    <td>Typ operacji</td>
+                                                    <td>Czas operacji</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>0</td>
+                                                    <td>+0</td>
+                                                    <td>0</td>
+                                                    <td>Program partnerski (Polecanie serwerów przez użytkownika</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col col-12">
+                                        <p style="font-weight: bold; padding: 20px">Na twoim koncie nie zostały jeszcze wykonane żadne operacje na Tokenach.</p>
+                                    </div>
+                                </div>
+                                <!-- Reklama -->
                                 <div class="panel-content-ad row">
                                     <div class="col col-12">
                                         <div class="row mb-3 w-100">
