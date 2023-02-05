@@ -92,9 +92,39 @@
                                         </table>
                                     </div>
                                 </div>
+                                <!-- Serwery -->
                                 <div class="panel-content-servers row">
-                                    Sekcja nie skończona, przejdz do <a href="new-server.php">Dodaj nowy serwer</a>
+                                    <div class="col col-12">
+                                        <div class="row second-header">
+                                            <div class="col col-6">
+                                                <p class="mb-0">Informacje o dodanych przez Ciebie serwerach</p>
+                                            </div>
+                                            <div class="col col-6">
+                                                <p class="mb-0" style="display: block; margin-left: 10px; float: right;">Tokeny z programu partnerskiego: 0</p>
+                                                <button class="simple-button" style="display: block; float: right">Kup tokeny</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <table style="width: 100%">
+                                            <thead>
+                                                <tr>
+                                                    <td>Rank</td>
+                                                    <td>Nazwa</td>
+                                                    <td>Adres serwera</td>
+                                                    <td>Port</td>
+                                                    <td>Online mode</td>
+                                                    <td>Wersja</td>
+                                                    <td>Punkty</td>
+                                                    <td>Hajs</td>
+                                                    <td>Akcje</td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <p>Nie dodano jeszcze żadnego serwera na tym koncie. <a href="new-server.php">Dodaj nowy serwer</a></p> 
                                 </div>
+                                <!-- Historia -->
                                 <div class="panel-content-history row">
                                     <div class="col col-12">
                                         <div class="row">
@@ -244,6 +274,9 @@
             var api_url = "<?php echo $api ?>";
             var data;
             var selected_subpage;
+            //UWAGA token jest tylko testowy dla konta test_user
+            var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMzgzOTY2MzAtMzIzMC02MzMzLTJkMzktMzgzMjMyMmQzMTMxIiwiZXhwIjoxNjc1ODg3MDUyfQ.buQOyXv4455nPJgPiXDw_L5eGzhFn3PfaqQ3K1q_LXY';
+
             function ChangeSubpage(e) {
                 if(e == '' || e == undefined || e == null) selected_subpage = $('#selected-subpage').text();
                 else selected_subpage = e;
@@ -257,6 +290,16 @@
                 if(selected_subpage == 'ad' || selected_subpage == 4) $('.panel-content-ad').css('display','flex');
             }
             ChangeSubpage();
+            ShowOwnerServers();
+
+            function ShowOwnerServers() {
+                $.ajax({
+                url: api_url+'/api/v1/servers/own/?token='+token
+            })
+            .done(res => {
+                data = res;
+            })
+            }
         </script>
     </body>
 </html>
