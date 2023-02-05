@@ -22,7 +22,7 @@
                                     Promowane serwery
                                 </div>
                                 <div class="panel-header-addon">
-                                    <a href="account.php?subpage=ad" class="btn-green">Promuj swój serwer</a>
+                                    <a href="promote-server.php" class="btn-green">Promuj swój serwer</a>
                                 </div>
                             </div>
                             <div class="panel-content">
