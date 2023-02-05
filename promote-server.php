@@ -44,7 +44,7 @@
             select:focus {
                 outline: none;
             }
-            li::marker {
+            .panel li::marker {
                 content: '> ';
                 font-size: 120%;
                 font-weight: bold;
