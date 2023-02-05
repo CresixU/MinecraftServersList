@@ -13,15 +13,23 @@
                 margin-top: 10px;
                 width: 100%;
                 color: var(--href-color);
-            }
-            input {
-                border: 1px solid red;
+                position: relative;
+                top: 10px;
             }
             .panel-content > div > *:not(.second-header) {
                 padding: 10px 30px;
             }
             .second-header {
                 padding-left: 20px;
+            }
+            input[type=text],
+            input[type=password] {
+                width: 100%;
+                padding: 8px 12px;
+                color: white;
+                border: none;
+                border-bottom: 2px solid var(--main-color);
+                border-radius: 8px;
             }
         </style>
     </head>
@@ -52,7 +60,7 @@
                                 </div>
                                 <div>
                                     <p class="second-header mb-0">Nazwa i adres serwera</p>
-                                    <div class="mx-auto">
+                                    <div class="mx-auto" style="max-width: 500px; width: 100%; padding: 20px 15px;">
                                         <div>
                                             <label for="addserver-servername" id="addserver-servername-label">Nazwa serwera</label>
                                             <input type="text" id="addserver-servername">
@@ -67,8 +75,8 @@
                                         </div>
                                         <div>
                                             <label for="addserver-website" id="addserver-website-label">Strona serwera</label>
-                                            <input type="text" id="addserver-website">
-                                            <span >Adres URL musi zawierać <b>http://</b> na początku.</span>
+                                            <input type="text" id="addserver-website" placeholder="http://example.com">
+                                            <label for="addserver-website" style="font-size:70%; color: #b9b9b9; position: relative; top: -5px">Adres URL musi zawierać <b>http://</b> na początku.</label>
                                         </div>
                                     </div>
                                 </div>
@@ -78,8 +86,8 @@
                                         <p class="mb-0" style="padding-right: 20px">Pozostało <span id="addserver-desc-chars">5000</span> znaków</p>
                                     </div>
                                     <div>
-                                        <textarea name="addserver-desc" id="addserver-desc" cols="30" rows="10"
-                                        style="background: transparent; color: white"></textarea>
+                                        <textarea name="addserver-desc" id="addserver-desc" rows="10" placeholder="Twój opis serwera..."
+                                        style="background: transparent; color: white; width: 100%; padding: 10px"></textarea>
                                     </div>
 
                                 </div>

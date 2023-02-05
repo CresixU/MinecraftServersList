@@ -18,10 +18,14 @@
         main .container {
             color: white;
         }
-        input[type=text], input[type=password] {
+        input[type=text],
+        input[type=password] {
             width: 100%;
             padding: 8px 12px;
             color: white;
+            border: none;
+            border-bottom: 2px solid var(--main-color);
+            border-radius: 8px;
         }
         label:not(label:last-child) {
             margin-top: 10px;
@@ -41,11 +45,6 @@
             background: linear-gradient(to bottom, rgba(17, 11, 8), rgba(14, 9, 6,0.5) 70%);
             border-radius: 20px;
             padding: 30px;
-        }
-        input[type=text],
-        input[type=password]{
-            border: none;
-            border-bottom: 2px solid var(--main-color);
         }
         input[type=submit], input[type=button] {
             margin: 30px auto;
@@ -232,6 +231,9 @@
                 type: 'POST',
                 url: api_url+'/api/v1/auth/login/',
                 dataType: 'json',
+                /*xhrFields: {
+                    withCredentials: true
+                },*/
                 contentType: "application/json; charset=utf-8",
                 data: '{"login": "'+username+'", "password": "'+password+'"}',
                 success: function(data, textStatus, xhr) {
