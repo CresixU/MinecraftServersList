@@ -50,6 +50,53 @@
                 font-weight: bold;
                 color: var(--main-color);
             }
+
+            .promote-item {
+                width: calc(50% - 30px);
+                margin: 15px;
+                padding: 20px;
+                transition: all 0.2s ease-in;
+                border-radius: 5px;
+            }
+            .promote-item:hover {
+                margin: 10px 20px 20px 10px;
+            }
+            .bronze:hover {
+                box-shadow: 5px 5px 10px rgba(223, 138, 20, 0.5);
+            }
+            .silver:hover {
+                box-shadow: 5px 5px 10px rgba(179, 179, 179, 1);
+            }
+            .gold:hover {
+                box-shadow: 5px 5px 10px rgba(197, 177, 0, 1);
+            }
+            .diamond:hover {
+                box-shadow: 5px 5px 10px rgba(21, 213, 213, 1);
+            }
+            .promote-item-header {
+                padding: 10px 5px;
+                border-bottom: 1px solid var(--main-color);
+            }
+            .promote-item-header div:first-child {
+                font-size: 150%;
+                font-weight: bold;
+            }
+            .promote-item-header div:nth-child(2) {
+                text-align: right;
+            }
+            .promote-item-content {
+                padding: 10px 5px;
+            }
+            .promote-item-footer {
+                padding: 10px;
+                margin: 10px 0px;
+            }
+            .promote-item-footer > button {
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+            }
+
         </style>
     </head>
     <body>
@@ -91,7 +138,10 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <p class="second-header mb-0">Kup tokeny</p>
+                                    <div class="second-header mb-0 pr-4" style="padding-right: 20px;">
+                                        <p style="width: 50%" class="mb-0">Kup tokeny</p>
+                                        <p style="width: 50%; text-align: right;" class="mb-0">Twoje tokeny: 123</p>
+                                    </div>
                                     <div class="mx-auto" style="max-width: 500px; width: 100%; padding: 20px 15px;">
                                         <div>
                                             <label for="payment-method" id="payment-method-label" style="top:0">Metoda płatności</label>
@@ -137,20 +187,101 @@
                                         
                                     </div>
                                 </div>
+                                <!-- PAKIETY PROMOWANIA -->
                                 <div>
                                     <p class="second-header mb-0">Pakiety promowania</p>
-                                    <div>
-                                        <div>
-                                            Pakiet bronze
+                                    <div class="row">
+                                        <div class="promote-item bronze">
+                                            <div class="promote-item-header row">
+                                                <div class="col">Pakiet Bronze</div>
+                                                <div class="col">token-img 1000</div>
+                                            </div>
+                                            <div class="promote-item-content row">
+                                                <div class="col col-12">
+                                                    <p>Pakiet, dzięki któremy otrzymujesz możliwość umieszczenia swojego serwera na liście serwerów promowanych na 3 dni w zamian za <b>1000</b> Tokenów.</p>
+                                                    
+                                                </div>
+                                                <div class="col col-12">
+                                                    <label for="promote-bronze-select" id="promote-bronze-select" style="top:0">Metoda płatności</label>
+                                                    <select name="promote-bronze-select" id="promote-bronze-select">
+                                                        <option value="Brak" selected disabled>Wybierz serwer</option>
+                                                        <option value="ID">hypixel.com</option>
+                                                        <option value="ID2">hakuna-matata.pl</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="promote-item-footer">
+                                                <button class="simple-button ">Promuj serwer</button>
+                                            </div>
                                         </div>
-                                        <div>
-                                            Pakiet silver
+                                        <div class="promote-item silver">
+                                            <div class="promote-item-header row">
+                                                <div class="col">Pakiet Silver</div>
+                                                <div class="col">token-img 2000</div>
+                                            </div>
+                                            <div class="promote-item-content row">
+                                                <div class="col col-12">
+                                                    <p>Pakiet, dzięki któremy otrzymujesz możliwość umieszczenia swojego serwera na liście serwerów promowanych na 7 dni w zamian za <b>2000</b> Tokenów.</p>
+                                                    
+                                                </div>
+                                                <div class="col col-12">
+                                                    <label for="promote-silver-select" id="promote-silver-select" style="top:0">Metoda płatności</label>
+                                                    <select name="promote-silver-select" id="promote-silver-select">
+                                                        <option value="Brak" selected disabled>Wybierz serwer</option>
+                                                        <option value="ID">hypixel.com</option>
+                                                        <option value="ID2">hakuna-matata.pl</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="promote-item-footer">
+                                                <button class="simple-button ">Promuj serwer</button>
+                                            </div>
                                         </div>
-                                        <div>
-                                            Pakiet gold
+                                        <div class="promote-item gold">
+                                            <div class="promote-item-header row">
+                                                <div class="col">Pakiet Gold</div>
+                                                <div class="col">token-img 3200</div>
+                                            </div>
+                                            <div class="promote-item-content row">
+                                                <div class="col col-12">
+                                                    <p>Pakiet, dzięki któremy otrzymujesz możliwość umieszczenia swojego serwera na liście serwerów promowanych na 14 dni w zamian za <b>3200</b> Tokenów.</p>
+                                                    
+                                                </div>
+                                                <div class="col col-12">
+                                                    <label for="promote-gold-select" id="promote-gold-select" style="top:0">Metoda płatności</label>
+                                                    <select name="promote-gold-select" id="promote-gold-select">
+                                                        <option value="Brak" selected disabled>Wybierz serwer</option>
+                                                        <option value="ID">hypixel.com</option>
+                                                        <option value="ID2">hakuna-matata.pl</option>
+                                                        </select>
+                                                </div>
+                                            </div>
+                                            <div class="promote-item-footer">
+                                                <button class="simple-button ">Promuj serwer</button>
+                                            </div>
                                         </div>
-                                        <div>
-                                            Pakiet diamond
+                                        <div class="promote-item diamond">
+                                            <div class="promote-item-header row">
+                                                <div class="col">Pakiet Diamond</div>
+                                                <div class="col">token-img 6000</div>
+                                            </div>
+                                            <div class="promote-item-content row">
+                                                <div class="col col-12">
+                                                    <p>Pakiet, dzięki któremy otrzymujesz możliwość umieszczenia swojego serwera na liście serwerów promowanych na 3 dni w zamian za <b>6000</b> Tokenów.</p>
+                                                    
+                                                </div>
+                                                <div class="col col-12">
+                                                    <label for="promote-diamond-select" id="promote-diamond-select" style="top:0">Metoda płatności</label>
+                                                    <select name="promote-diamond-select" id="promote-diamond-select">
+                                                        <option value="Brak" selected disabled>Wybierz serwer</option>
+                                                        <option value="ID">hypixel.com</option>
+                                                        <option value="ID2">hakuna-matata.pl</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="promote-item-footer">
+                                                <button class="simple-button ">Promuj serwer</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
