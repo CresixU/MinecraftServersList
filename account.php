@@ -69,7 +69,7 @@
                                         <table>
                                             <tr>
                                                 <td>Nazwa użytkownika</td>
-                                                <td>{user.name}</td>
+                                                <td id="user-name">{user.name}</td>
                                             </tr>
                                             <tr>
                                                 <td>Hasło</td>
@@ -77,7 +77,7 @@
                                             </tr>
                                             <tr>
                                                 <td>Adres e-mail</td>
-                                                <td>{user.email} <a href="">Zmień</a></td>
+                                                <td id="user-email">{user.email} <a href="">Zmień</a></td>
                                             </tr>
                                             <tr>
                                                 <td>{img} Ilość tokenów:</td>
@@ -274,8 +274,21 @@
             var api_url = "<?php echo $api ?>";
             var data;
             var selected_subpage;
-            //UWAGA token jest tylko testowy dla konta test_user
-            var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMzgzOTY2MzAtMzIzMC02MzMzLTJkMzktMzgzMjMyMmQzMTMxIiwiZXhwIjoxNjc1ODg3MDUyfQ.buQOyXv4455nPJgPiXDw_L5eGzhFn3PfaqQ3K1q_LXY';
+            var userData;
+
+
+            $.ajax({
+                url: api_url+'/api/v1/auth/logged/',
+                complete: function(xhr, textStatus) {
+                    if(xhr.status != "200") 
+                        window.location.replace("auth.php");
+                } 
+            }).done(res => {
+                userData = res;
+                $('#user-name').text(userData.login);
+                $('#user-email').text(userData.email);
+            })
+
 
             function ChangeSubpage(e) {
                 if(e == '' || e == undefined || e == null) selected_subpage = $('#selected-subpage').text();
@@ -294,12 +307,13 @@
 
             function ShowOwnerServers() {
                 $.ajax({
-                url: api_url+'/api/v1/servers/own/?token='+token
-            })
-            .done(res => {
+                url: api_url+'/api/v1/servers/own/'
+            }).done(res => {
                 data = res;
+
             })
             }
+
         </script>
     </body>
 </html>
