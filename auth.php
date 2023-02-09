@@ -7,7 +7,7 @@
     
     <style>
         * {
-            color: white;
+            color: #dfd7cc;
         }
         body {
             min-height: 100vh;
@@ -16,13 +16,13 @@
             color:var(--main-color) !important;
         }
         main .container {
-            color: white;
+            color: #dfd7cc;
         }
         input[type=text],
         input[type=password] {
             width: 100%;
             padding: 8px 12px;
-            color: white;
+            color: #dfd7cc;
             border: none;
             border-bottom: 2px solid var(--main-color);
             border-radius: 8px;
@@ -72,7 +72,7 @@
                     <div><a onclick="ShowRegister()">Zarejestruj się</a></div>
                 </div>
                 <div class="account-login col-12 col-md-12" style="display: none;">
-                    <form action="">
+                    <form >
                         <div>
                             <label for="account-login-name" id="account-login-name-label">Nazwa użytkownika</label>
                             <input type="text" id="account-login-name">
@@ -231,17 +231,17 @@
                 type: 'POST',
                 url: api_url+'/api/v1/auth/login/',
                 dataType: 'json',
-                /*xhrFields: {
+                xhrFields: {
                     withCredentials: true
-                },*/
+                },
                 contentType: "application/json; charset=utf-8",
                 data: '{"login": "'+username+'", "password": "'+password+'"}',
                 success: function(data, textStatus, xhr) {
-                    console.log(xhr.status + " " +textStatus);
+                    console.log("Success: "+xhr.status + " " +textStatus);
                 },
                 complete: function(xhr, textStatus) {
-                    console.log(xhr.status + " " +textStatus);
-                    console.log(xhr.responseJSON.message);
+                    console.log("Complete: "+xhr.status + " " +textStatus);
+                    console.log("Complete: "+xhr.responseJSON.message);
                 } 
             })
             .done(res => {

@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
         <style>
             body {
-                color: white;
+                color: #dfd7cc;
             }
             label {
                 margin-top: 10px;
