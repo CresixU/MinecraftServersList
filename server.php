@@ -8,7 +8,7 @@
     <style>
         main .container {
             background: linear-gradient(to bottom, #110b08, #0e0906 70%);
-            color: white;
+            color: #dfd7cc;
         }
         .icon-on, .icon-off {
             display: block;
@@ -41,7 +41,8 @@
                     <div class="star star-full" id="star_4" onclick="Rate(this.id)"></div>
                     <div class="star star-empty" id="star_5" onclick="Rate(this.id)"></div>
                 </div>
-                <span id="server-rate">4.00</span>
+                <span id="server-rate" style="color: var(--href-color);">4.00</span><br>
+                <span style="color">Kliknij w gwiazdkę by ocenić serwer</span>
             </div>
             <div class="server-data-list my-5" >
                 <div class="server-data-list-header">
@@ -245,14 +246,14 @@
             var number = id.substr(5,1);
             $.ajax({
                 type: 'POST',
+                contentType: "application/json; charset=utf-8",
                 url: api_url+'/api/v1/servers/'+serverId+'/rates/',
-                data: {
-                    rate: number,
-                    description: "",
-                },
+                data: '{"rate": "'+number+'", "description": ""}',
             })
             .done(res => {
                 console.log(res);
+                alert("Oceniono serwer na "+number+" gwiazdek");
+                GetServerInfo();
             });
             
         }
