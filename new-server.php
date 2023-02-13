@@ -9,7 +9,7 @@
             body {
                 color: #dfd7cc;
             }
-            label {
+            label:not(.checkbox-label) {
                 margin-top: 10px;
                 width: 100%;
                 color: var(--href-color);
@@ -55,8 +55,10 @@
                                 <div>
                                     <p class="second-header mb-0">Weryfikacja</p>
                                     <p>Przed przejściem do wypełniania dalszej częsci formularza ustaw swojemu serwerowi następujący MOTD (Message of the day - Wiadomość dnia)</p>
-                                    <h3>www.minecraft-list.pl#{user.name}</h3>
+                                    <h3 id="desired-motd">www.minecraft-list.pl#<span id="user-name"></span></h3>
                                     <p>Weryfikacja jest konieczna, aby pewne było, że serwer, który dodajesz na listę należy do Ciebie</p>
+                                    <button class="simple-button" onclick="CheckServerMotd()">Sprawdź MOTD</button>
+                                    <p id="motd-response"></p>
                                 </div>
                                 <div>
                                     <p class="second-header mb-0">Nazwa i adres serwera</p>
@@ -73,10 +75,49 @@
                                             <label for="addserver-port" id="addserver-port-label">Port</label>
                                             <input type="text" id="addserver-port" value="25565">
                                         </div>
+                                        <div class="mt-3">
+                                            <input type="checkbox" id="addserver-onlinemode">
+                                            <label for="addserver-onlinemode" class="checkbox-label">Online Mode</label>
+                                        </div>
+                                        <div>Easy autosuggest library todo
+                                            <label for="server-versions" id="server-versions-label">Wersja serwera</label>
+                                            <select id="server-versions" multiple>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                            </select>
+                                        </div>
+                                        <div>Easy autosuggest library todo
+                                            <label for="server-types" id="server-types-label">Typ serwera</label>
+                                            <select id="server-types" multiple>
+                                                <option value="Survival">Survival</option>
+                                                <option value="PVP">PVP</option>
+                                                <option value="Minigames">Minigames</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="second-header mb-0">Socialmedia</p>
+                                    <div  class="mx-auto" style="max-width: 500px; width: 100%; padding: 20px 15px;">
                                         <div>
                                             <label for="addserver-website" id="addserver-website-label">Strona serwera</label>
                                             <input type="text" id="addserver-website" placeholder="http://example.com">
                                             <label for="addserver-website" style="font-size:70%; color: #b9b9b9; position: relative; top: -5px">Adres URL musi zawierać <b>http://</b> na początku.</label>
+                                        </div>
+                                        <div>
+                                            <label for="addserver-discord-server" id="addserver-discord-server-label">Link do Discorda serwera</label>
+                                            <input type="text" id="addserver-discord-server" placeholder="http://example.com">
+                                            <label for="addserver-discord-server" style="font-size:70%; color: #b9b9b9; position: relative; top: -5px">Adres URL musi zawierać <b>https://</b> na początku.</label>
+                                        </div>
+                                        <div>
+                                            <label for="addserver-discord-owner" id="addserver-discord-owner-label">Discord właściciela</label>
+                                            <input type="text" id="addserver-discord-owner" placeholder="np. user#1234">
+                                        </div>
+                                        <div>
+                                            <label for="addserver-facebook-server" id="addserver-facebook-server-label">Link do strony serwera na Facebooku</label>
+                                            <input type="text" id="addserver-facebook-server" placeholder="http://example.com">
+                                            <label for="addserver-facebook-server" style="font-size:70%; color: #b9b9b9; position: relative; top: -5px">Adres URL musi zawierać <b>https://</b> na początku.</label>
                                         </div>
                                     </div>
                                 </div>
@@ -120,10 +161,65 @@
         <script>
             var api_url = "<?php echo $api ?>";
             var data;
+            var userData;
             $('#addserver-desc').on('input', function() {
                 $('#addserver-desc-chars').text(5000 - $('#addserver-desc').val().length );
             })
-            
+
+            $.ajax({
+                url: api_url+'/api/v1/auth/logged/',
+                complete: function(xhr, textStatus) {
+                    if(xhr.status != "200") 
+                        window.location.replace("auth.php");
+                } 
+            }).done(res => {
+                userData = res;
+                $('#user-name').text(userData.login);
+            })
+
+            function CheckServerMotd() {
+                $('#motd-response').empty();
+                var serverIp = $('#addserver-ip').val();
+                if(serverIp == '') {
+                    $('#motd-response').text("Ip serwera nie zostało ustawione poniżej");
+                    return;
+                }
+                    
+                var serverPort = $('#addserver-port').val();
+                if(serverIp == '') {
+                    $('#motd-response').text("Port serwera nie został ustawiony poniżej");
+                    return;
+                }
+                   
+                var mcapi_url = 'https://mcapi.us/server/status?ip='+serverIp+'&port='+serverPort;
+
+                $.ajax({
+                    url: mcapi_url,
+                }).done(res => {
+                    if(res.status == 'error')  {
+                        $('#motd-response').text("Error. Prawdopodobnie nie odnaleziono serwera");
+                        return;
+                    }
+                    if(res.motd_json != $('#desired-motd').text()) {
+                        var desired_motd = $("#desired-motd").text();
+                        $('#motd-response').append($('<p>MOTD nie został ustawiony poprawnie<br> Wymagany MOTD: '+desired_motd+'<br>Twoje MOTD: '+res.motd_json+'</p>'));
+                        return;
+                    }
+                    $('#motd-response').append($('<p color="var(--main-color)">MOTD zostało zweryfikowane</p>'))
+                        
+                })
+            }
+
+            //Funkcja zwarająca wszystkie oficialne wersje serwerów mc
+            async function GetMinecraftAllVersions() {
+                await $.ajax({
+                    url: 'https://launchermeta.mojang.com/mc/game/version_manifest.json',
+                }).done(res => {
+                    var results = res.versions.filter(x => x.type == 'release');
+                    console.log(results);
+                })
+            }
+            GetMinecraftAllVersions()
         </script>
     </body>
 </html>
