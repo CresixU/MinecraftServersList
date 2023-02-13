@@ -252,7 +252,7 @@
             })
             .done(res => {
                 console.log(res);
-                alert("Oceniono serwer na "+number+" gwiazdek");
+                alert("Oceniono serwer<br>Ocena: "+number);
                 GetServerInfo();
             });
             
