@@ -6,6 +6,9 @@
         <link rel="stylesheet" href="css/style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="autocomplete/tokenize2.css">
+        
+
         <style>
             body {
                 color: #dfd7cc;
@@ -20,6 +23,9 @@
             }
             tbody tr:hover {
                 border-bottom: 1px solid var(--href-color);
+                color: var(--href-color);
+            }
+            thead td {
                 color: var(--href-color);
             }
             td i {
@@ -73,6 +79,13 @@
             }
             #pagination-list li {
                 cursor: pointer;
+            }
+            .form-control {
+                background: linear-gradient(180deg, rgba(2,0,36,0) 0%, rgba(0,0,0,0.30) 100%);
+                border: none;
+                border-left: 2px solid var(--main-color);
+                border-right: 2px solid var(--main-color);
+                border-radius: 10px;
             }
         </style>
     </head>
@@ -157,6 +170,17 @@
                                                             <textarea name="modal_edit-desc" id="modal_edit-desc" rows="10" placeholder="Twój opis serwera..."
                                                             style="background: transparent; color: white; width: 100%; padding: 10px"></textarea>
                                                         </div>
+                                                        <div>
+                                                            <label for="server-version" id="server-version-label" style="top:0;">Wersja serwera</label>
+                                                            <select class="demo" id="server-version" multiple>
+                                                            </select>
+                                                        </div>
+                                                        <div>
+                                                            <label for="server-gamemode" id="server-gamemode-label" style="top:0;">Tryb gry</label>
+                                                            <select class="demo2" id="server-gamemode" multiple>
+                                                            </select>
+                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -199,22 +223,41 @@
                 <?php
                 if(!isset($_GET['subpage'])) $_GET['subpage'] = 'profile'; 
                 echo "<span id='selected-subpage' style='display: none;'>" . $_GET['subpage']."</span>";?>
+                <div class="row mb-5">
+                    <div class="col col-12">
+                        <div class="panel">
+                            <div class="panel-header">
+                                <div class="row w-100">
+                                    <div class="col col-3">
+                                        <a href="admin-servers.php" class="simple-button align-center">Lista serwerów</a>
+                                    </div>
+                                    <div class="col col-3">
+                                        <a href="admin-users.php" class="simple-button">Lista userów</a>
+                                    </div>
+                                    <div class="col col-3">
+                                        <a href="admin-blocked-services.php" class="simple-button">Zablokowane serwisy</a>
+                                    </div>
+                                    <div class="col col-3">
+                                        <a href="" class="simple-button">Zablkowowane domeny</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col col-12">
                         <div class="panel">
                             <div class="panel-header">
-                                <div>
-                                    PANEL ADMINISTRATORA
+                                <div class="panel-header-input">
+                                    <input type="text" id="input_search" placeholder="Wyszukaj...">
+                                    <buttton type="button" class="btn-search" id="button_search"></buttton>
                                 </div>
-                                <div class="panel-header-pagination">
+                                <div class="panel-header-pagination" style="margin-right: 10px; margin-left: auto;">
                                     <a onclick="GetServers(currentPage-1)" class="pagination-arrow-left"></a>
                                     <ul id="pagination-list">
                                     </ul>
                                     <a onclick="GetServers(currentPage+1)" class="pagination-arrow-right"></a>
-                                </div>
-                                <div class="panel-header-input">
-                                    <input type="text" id="input_search" placeholder="Wyszukaj...">
-                                    <buttton type="button" class="btn-search" id="button_search"></buttton>
                                 </div>
                             </div>
                             <div class="panel-content p-3 pt-5">
@@ -264,6 +307,9 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery.min.js"></script>
+        <script src="autocomplete/tokenize2.js"></script>
+        <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script>
             var api_url = "<?php echo $api ?>";
             var data;
@@ -282,8 +328,6 @@
                 } 
             }).done(res => {
                 userData = res;
-                $('#user-name').text(userData.login);
-                $('#user-email').text(userData.email);
                 if(userData.role != "ADMIN")
                     window.location.replace("account.php");
             });
@@ -325,7 +369,7 @@
                         var onlineModeIcon = 'icon-verified';
                         var lastOnline = currentServer.serverPingCredentials.addedAt.substr(8,2)+'.'+currentServer.serverPingCredentials.addedAt.substr(5,2)+'.'+currentServer.serverPingCredentials.addedAt.substr(0,4)+'  '+currentServer.serverPingCredentials.addedAt.substr(11,5)
                         if(currentServer.server.promoted) promotedClass = 'premium';
-                        if(!currentServer.serverPingCredentials.isOnline)  onlineLight = 'icon-off'
+                        if(!currentServer.serverPingCredentials.isOnline)  onlineLight = 'icon-off';
 
                         if(currentServer.serverPingCredentials.timesOffline > 0) {
                             serverOnlineRatio = (currentServer.serverPingCredentials.timesOnline / currentServer.serverPingCredentials.timesOffline).toFixed(2);
@@ -333,7 +377,7 @@
 
                         if(!currentServer.server.onlineModeEnabled) onlineModeIcon = 'icon-no-verified';
 
-                        $('.table-list-content').append($('<tr class="table-list-row"><td class="body-rank">'+currentServer.server.id+'.</td><td class="body-name">'+currentServer.server.name+'</td><td class="body-web">Wlasciciel</td><td style="margin-left: 5px;" class="body-players"><span style="float:left;">'+currentServer.serverPingCredentials.onlinePlayers+'/'+currentServer.serverPingCredentials.serverSize+'</span> <i style="margin-left: auto; margin-right: 5px; margin-top:3px;" class="icon '+onlineLight+'"></i></td><td class="body-ratio">'+serverOnlineRatio+'%</td><td>'+lastOnline+'</td><td class="body-mode"><i class="icon '+onlineModeIcon+'"></i></td><td class="body-version">'+ReturnServerVersion(currentServer)+'</td><td><button onclick="ModalDelete(\''+currentServer.server.id+'\',\''+currentServer.server.name+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><button onclick="ModalEdit(\''+currentServer.server.id+'\')"><i class="bi bi-pencil-square"></i></button</td><td><button onclick="ModalHistory(\''+currentServer.server.id+'\')"><i class="bi bi-card-text"></i></button></td><td><a href="server.php?id='+currentServer.server.id+'"><i class="bi bi-card-image"></i></a></td></tr>'));
+                        $('.table-list-content').append($('<tr class="table-list-row"><td class="body-rank">'+currentServer.server.id+'.</td><td class="body-name">'+currentServer.server.name+'</td><td class="body-web">'+currentServer.owner.login+'</td><td style="margin-left: 5px;" class="body-players"><span style="float:left;">'+currentServer.serverPingCredentials.onlinePlayers+'/'+currentServer.serverPingCredentials.serverSize+'</span> <i style="margin-left: auto; margin-right: 5px; margin-top:3px;" class="icon '+onlineLight+'"></i></td><td class="body-ratio">'+serverOnlineRatio+'%</td><td>'+lastOnline+'</td><td class="body-mode"><i class="icon '+onlineModeIcon+'"></i></td><td class="body-version">'+ReturnServerVersion(currentServer)+'</td><td><button onclick="ModalDelete(\''+currentServer.server.id+'\',\''+currentServer.server.name+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><button onclick="ModalEdit(\''+currentServer.server.id+'\')"><i class="bi bi-pencil-square"></i></button</td><td><button onclick="ModalHistory(\''+currentServer.server.id+'\')"><i class="bi bi-card-text"></i></button></td><td><a href="server.php?id='+currentServer.server.id+'"><i class="bi bi-card-image"></i></a></td></tr>'));
                         ChangePage(currentPage);
                     }
                 });
@@ -342,7 +386,7 @@
             function ChangePage(page) {
                 $('#pagination-list').empty();
                 var startPage = 1;
-                var maxPages = (data.total%size)+1;
+                var maxPages = (data.total%size);
                 if(currentPage > 4) startPage = currentPage - 4;
                 if(currentPage+4 < maxPages) maxPages = currentPage+4; 
                 for(var i=startPage; i<=maxPages;i++) {
@@ -378,23 +422,52 @@
             }
 
             function ModalEdit(serverId) {
-                for(var k=0; k<data.content.length;k++) {
-                    if(data.content[k].server.id == serverId) 
-                        thisServer = data.content[k];
-                }
+                thisServer = data.content.find(x => x.server.id == serverId);
+                
                 $('#modal_edit-servername').val(thisServer.server.name);
                 $('#modal_edit-ip').val(thisServer.serverHostCredentials.address);
                 $('#modal_edit-port').val(thisServer.serverHostCredentials.port);
                 if(thisServer.server.onlineModeEnabled) $('#modal_edit-onlinemode').prop('checked', true);
                 $('#modal_edit-website').val(thisServer.server.homepage);
                 $('#modal_edit-discord-server').val(thisServer.server.discord);
-                $('#modal_edit-discord-owner').val("Brak w endpoincie");
+                $('#modal_edit-discord-owner').val(thisServer.owner.discord);
                 $('#modal_edit-facebook-server').val(thisServer.server.facebook);
                 $('#modal_edit-desc').val(thisServer.server.description);
                 $('#modal_edit').modal('toggle');
+
+                $('.demo').tokenize2();
+                $('.demo2').tokenize2();
+                
             }
             function ModalEditAction(server) {
                 //Send api request edit server
+                //Nie skończone
+                var servername = $('#modal_edit-servername').val();
+                var ip = $('#modal_edit-ip').val();
+                var port = $('#modal_edit-port').val();
+                var isOnlineMode = $('#modal_edit-onlinemode').prop('checked');
+                var homepage = $('#modal_edit-website').val();
+                var discordServer = $('#modal_edit-discord-server').val();
+                var discordOwner = $('#modal_edit-discord-owner').val();
+                var facebookServer = $('#modal_edit-facebook-server').val();
+                var desc = $('#modal_edit-desc').val();
+                $.ajax({
+                    type: 'PUT',
+                    url: api_url+'/api/v1/auth/login/',
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"login": "'+username+'", "password": "'+password+'"}',
+                    success: function(data, textStatus, xhr) {
+                        console.log("Success: "+xhr.status + " " +textStatus);
+                    },
+                    complete: function(xhr, textStatus) {
+                        console.log("Complete: "+xhr.status + " " +textStatus);
+                        console.log("Complete: "+xhr.responseJSON.message);
+                    } 
+                })
             }
 
             function ModalHistory(serverId) {
@@ -402,9 +475,32 @@
                 $('#modal_history').modal('toggle');
             }
 
+            async function GetMinecraftAllVersions() {
+                await $.ajax({
+                    url: 'https://launchermeta.mojang.com/mc/game/version_manifest.json',
+                }).done(res => {
+                    var serverVersions = res.versions.filter(x => x.type == 'release');
+                    serverVersions.forEach(x => $('#server-version').append($('<option value="'+x.id+'">'+x.id+'</option>')));
+                })
+            }
+            async function GetMinecraftAllGameModes() {
+                $.ajax({
+                    url: api_url+'/api/v1/servers/game-modes/',
+                }).done(res => {
+                    res.content.forEach(x => $('#server-gamemode').append($('<option value="'+x.id+'">'+x.gameMode+'</option>')));
+                });
+            }
 
+            GetMinecraftAllVersions();
+            GetMinecraftAllGameModes();
             GetServers(0)
 
         </script>
     </body>
 </html>
+
+'{
+    "hostCredentials": {
+        "host:"
+    }
+}'
