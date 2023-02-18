@@ -93,7 +93,7 @@
         <?php require_once("components/top.php"); ?>
         <main>
             <div class="container">
-                                    <!--MODAL DELETE -->
+                                    <!--MODAL IP DELETE -->
                                     <div class="modal fade" id="modal_delete" tabindex="-1" role="dialog" aria-labelledby="modal_delete" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -108,8 +108,29 @@
                                                     <p id="modal_delete-id"></p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary" onclick="ModalDeleteAction()">Tak</button>
+                                                    <button type="button" class="btn btn-primary" onclick="ModalDeleteIpAction()">Tak</button>
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#modal_delete').modal('toggle');">Anuluj</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- MODAL DOMAIN DELETE -->
+                                    <div class="modal fade" id="modal_delete2" tabindex="-1" role="dialog" aria-labelledby="modal_delete2" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Usuwanie Domeny z listy</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#modal_delete2').modal('toggle');">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Czy chcesz usunąć domene <span id="modal_delete-domain"></span>?</p>
+                                                    <p id="modal_delete-domain"></p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary" onclick="ModalDeleteDomainAction()">Tak</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#modal_delete2').modal('toggle');">Anuluj</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -119,21 +140,10 @@
                 <div class="row mb-5">
                     <div class="col col-12">
                         <div class="panel">
-                            <div class="panel-header">
-                                <div class="row w-100">
-                                    <div class="col col-3">
-                                        <a href="admin-servers.php" class="simple-button align-center">Lista serwerów</a>
-                                    </div>
-                                    <div class="col col-3">
-                                        <a href="admin-users.php" class="simple-button">Lista userów</a>
-                                    </div>
-                                    <div class="col col-3">
-                                        <a href="admin-blocked-services.php" class="simple-button">Zablokowane serwisy</a>
-                                    </div>
-                                    <div class="col col-3">
-                                        <a href="" class="simple-button">Zablkowowane domeny</a>
-                                    </div>
-                                </div>
+                            <div class="panel-header d-flex justify-content-around">
+                                <a href="admin-servers.php" class="simple-button align-center">Lista serwerów</a>
+                                <a href="admin-users.php" class="simple-button">Lista userów</a>
+                                <a href="admin-blocked-services.php" class="simple-button">Zablokowane serwisy</a>
                             </div>
                         </div>
                     </div>
@@ -143,27 +153,55 @@
                 <div class="col col-12">
                     <div class="panel">
                         <div class="panel-header">
-                            Liczba zablokowanych ip: <span id="blocked-count">0</span>
+                            
                         </div>
-                        <div class="panel-content px-5">
+                        <div class="panel-content">
                             <div class="row">
-                                <div class="col col-12">
-                                   <table id="blocked-ips" class="mx-auto mt-3">
-                                        <thead>
-                                            <tr>
-                                                <td>Zablokowany adres</td>
-                                                <td>Akcje</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="blocked-list">
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td><input id="input-ip" type="text" placeholder="1.1.1.1"></td>
-                                                <td><button onclick="AddBlockedIp()">Dodaj</button></td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+                                <div class="col col-6 px-5 d-flex justify-content-center" style="min-width: 300px">
+                                    <div>
+                                        <p>
+                                            Liczba zablokowanych ip: <span id="blocked-ip-count">0</span>
+                                        </p>
+                                        <table id="blocked-ips" class=" mt-3">
+                                            <thead>
+                                                <tr>
+                                                    <td>Zablokowany adres</td>
+                                                    <td>Akcje</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="blocked-list-ip">
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td><input id="input-ip" type="text" placeholder="1.1.1.1"></td>
+                                                    <td><button onclick="AddBlockedIp()">Dodaj</button></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col col-6 px-5 d-flex justify-content-center" style="min-width: 300px">
+                                    <div>
+                                        <table id="blocked-domains" class=" mt-3">
+                                            <p>
+                                                Liczba zablokowanych domen: <span id="blocked-domains-count">0</span>
+                                            </p>
+                                            <thead>
+                                                <tr>
+                                                    <td>Zablokowany domeny</td>
+                                                    <td>Akcje</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="blocked-list-domain">
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td><input id="input-domains" type="text" placeholder="example.com"></td>
+                                                    <td><button onclick="AddBlockedDomain()">Dodaj</button></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -204,24 +242,41 @@
             });
 
             async function ShowBlockedIp() {
-                $('#blocked-list').empty();
+                $('#blocked-list-ip').empty();
                 await $.ajax({
                     url: api_url+'/api/v1/blocked-ip/',
                 }).done(res => {
                     data = res;
-                    $('#blocked-count').text(data.length);
-                    data.forEach(x => $('#blocked-list').append($('<tr><td>'+x.ip+'</td><td><button onclick="ModalDelete(\''+x.id+'\')"><i class="bi bi-trash3-fill"></i></button></td></tr>')))
+                    $('#blocked-ip-count').text(data.length);
+                    data.forEach(x => $('#blocked-list-ip').append($('<tr><td>'+x.ip+'</td><td><button onclick="ModalDeleteIp(\''+x.id+'\')"><i class="bi bi-trash3-fill"></i></button></td></tr>')))
                 })
             };
 
-            function ModalDelete(id) {
+            async function ShowBlockedDomain() {
+                $('#blocked-list-domain').empty();
+                await $.ajax({
+                    url: api_url+'/api/v1/emails/blocked/',
+                }).done(res => {
+                    data = res;
+                    $('#blocked-domains-count').text(data.length);
+                    data.forEach(x => $('#blocked-list-domain').append($('<tr><td>'+x.value+'</td><td><button onclick="ModalDeleteDomain(\''+x.id+'\')"><i class="bi bi-trash3-fill"></i></button></td></tr>')))
+                })
+            };
+
+            function ModalDeleteIp(id) {
                 clickedIp = data.find(x => x.id == id);
                 $('#modal_delete-ip').text(clickedIp.ip);
                 $('#modal_delete-id').text(clickedIp.id);
                 $('#modal_delete').modal('toggle');
             };
+            function ModalDeleteDomain(id) {
+                clickedIp = data.find(x => x.id == id);
+                $('#modal_delete-ip2').text(clickedIp.value);
+                $('#modal_delete-id2').text(clickedIp.id);
+                $('#modal_delete2').modal('toggle');
+            };
 
-            function ModalDeleteAction(){
+            function ModalDeleteIpAction(){
                 $('#modal_delete').modal('toggle');
                 $.ajax({
                     url: api_url+'/api/v1/blocked-ip/'+clickedIp.id+'/',
@@ -230,8 +285,19 @@
                     ShowBlockedIp();
                     alert("Usunięto ip "+clickedIp.ip);
                 });
-            
             };
+            function ModalDeleteDomainAction(){
+                $('#modal_delete2').modal('toggle');
+                $.ajax({
+                    url: api_url+'/api/v1/emails/blocked/'+clickedIp.id+'/',
+                    type: 'DELETE',
+                }).done(res => {
+                    ShowBlockedDomain();
+                    alert("Usunięto domene "+clickedIp.value);
+                });
+            };
+
+
             function AddBlockedIp() {
                 var ip = $('#input-ip').val();
                 $.ajax({
@@ -239,13 +305,36 @@
                     type: 'POST',
                     contentType: "application/json; charset=utf-8",
                     data: '{"ip": "'+ip+'"}',
+                    complete: function(xhr, textStatus) {
+                        if(xhr.status != 200) alert("Tego ip nie można zablokować");
+                        console.log("Complete: "+xhr.status + " " +textStatus);
+                        console.log("Complete: "+xhr.responseJSON.message);
+                    } 
                 }).done(res => {
                     ShowBlockedIp();
                     $('#input-ip').val("");
                 });
             }
+            function AddBlockedDomain() {
+                var ip = $('#input-domains').val();
+                $.ajax({
+                    url: api_url+'/api/v1/emails/blocked/',
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"value": "'+ip+'"}',
+                    complete: function(xhr, textStatus) {
+                        if(xhr.status != 200) alert("Tej domeny nie można zablokować");
+                        console.log("Complete: "+xhr.status + " " +textStatus);
+                        console.log("Complete: "+xhr.responseJSON.message);
+                    } 
+                }).done(res => {
+                    ShowBlockedDomain();
+                    $('#input-domains').val("");
+                });
+            }
 
             ShowBlockedIp();
+            ShowBlockedDomain()
 
         </script>
     </body>
