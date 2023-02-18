@@ -5,7 +5,8 @@
         <title>MinecraftList</title>
         <link rel="stylesheet" href="css/style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="autocomplete/tokenize2.css">
         <style>
             body {
                 color: #dfd7cc;
@@ -29,6 +30,82 @@
             .panel-content-profile td {
                 padding: 15px 10px;
             }
+            #servers-list tr:hover {
+                border-bottom: 1px solid var(--href-color);
+                color: var(--href-color);
+            }
+            thead td {
+                color: var(--href-color);
+            }
+            #servers-list tr:hover,
+            #history-list tr:hover {
+                border-bottom: 1px solid var(--href-color);
+                color: var(--href-color);
+            }
+            thead td,
+            thead td {
+                color: var(--href-color);
+            }
+            #servers-list td i,
+            #history-list td i {
+                font-size: 20px;
+            }
+            #servers-list td a,
+            #history-list td a {
+                color: inherit;
+            }
+            #servers-list td a:hover,
+            #history-list td a:hover{
+                color: inherit;
+            }
+            .bi-trash3-fill {
+                color: #ff4a61;
+            }
+            .bi-pencil-square {
+                color: #fcf860;
+            }
+            .bi-card-text {
+                color: #73d6fa;
+            }
+
+            .modal-content {
+                background: linear-gradient(to bottom, #110b08, #0e0906 70%);
+                color: #dfd7cc;
+            }
+            .modal-header {
+                border-bottom: none;
+            }
+            .modal-footer {
+                border-top: none;
+            }
+            .modal-title + button {
+                font-size: 200%;
+            }
+
+            label:not(.checkbox-label) {
+                margin-top: 10px;
+                width: 100%;
+                color: var(--href-color);
+                position: relative;
+                top: 10px;
+            }
+            input[type=text],
+            input[type=password] {
+                width: 100%;
+                padding: 8px 12px;
+                color: white;
+                border: none;
+                border-bottom: 2px solid var(--main-color);
+                border-radius: 8px;
+            }
+            .form-control {
+                background: linear-gradient(180deg, rgba(2,0,36,0) 0%, rgba(0,0,0,0.30) 100%);
+                border: none;
+                border-left: 2px solid var(--main-color);
+                border-right: 2px solid var(--main-color);
+                border-radius: 10px;
+            }
+
         </style>
     </head>
     <body>
@@ -38,6 +115,132 @@
         <?php require_once("components/top.php"); ?>
         <main>
             <div class="container">
+
+                    <!-- MODAL PASSWORD EDIT -->
+                        <div class="modal fade" id="modal_password" tabindex="-1" role="dialog" aria-labelledby="modal_password" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Zmiana hasła</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#modal_password').modal('toggle');">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p id="modal_password-user-id"></p>
+                                        <div class="mx-auto" style="max-width: 500px; width: 100%; padding: 20px 15px;">
+                                            <div>
+                                                <label for="modal_password-1">Nowe hasło</label>
+                                                <input type="password" id="modal_password-1">
+                                            </div>
+                                            <div>
+                                                <label for="modal_password-2">Potwierdź nowe hasło</label>
+                                                <input type="password" id="modal_password-2">
+                                            </div>
+                                            <p class="mt-2" id="password-messager"></p>
+                                            <p style="color: red" id="modal_password-info"></p>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" onclick="ChangePasswordAction()">Zapisz</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#modal_password').modal('toggle');">Anuluj</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                         <!-- MODAL DELETE -->
+                                    <div class="modal fade" id="modal_delete" tabindex="-1" role="dialog" aria-labelledby="modal_delete" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Usuwanie serwera</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#modal_delete').modal('toggle');">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Czy chcesz usunąć serwer <span id="modal_delete-server-name"></span>?</p>
+                                                    <p id="modal_delete-server-id"></p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary" onclick="ModalDeleteAction()">Tak</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#modal_delete').modal('toggle');">Anuluj</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                        <!-- MODAL EDIT -->
+                                    <div class="modal fade" id="modal_edit" tabindex="-1" role="dialog" aria-labelledby="modal_edit" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Edytowanie serwera</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#modal_edit').modal('toggle');">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p id="modal_edit-server-id"></p>
+                                                    <div class="mx-auto" style="max-width: 500px; width: 100%; padding: 20px 15px;">
+                                                        <div>
+                                                            <label for="modal_edit-servername" id="modal_edit-servername-label">Nazwa serwera</label>
+                                                            <input type="text" id="modal_edit-servername">
+                                                        </div>
+                                                        <div>
+                                                            <label for="modal_edit-ip" id="modal_edit-ip-label">Adres IP lub domena serwera</label>
+                                                            <input type="text" id="modal_edit-ip">
+                                                        </div>
+                                                        <div>
+                                                            <label for="modal_edit-port" id="modal_edit-port-label">Port</label>
+                                                            <input type="text" id="modal_edit-port" value="25565">
+                                                        </div>
+                                                        <div class="mt-3">
+                                                            <input type="checkbox" id="modal_edit-onlinemode">
+                                                            <label for="modal_edit-onlinemode" class="checkbox-label">Online Mode</label>
+                                                        </div>
+                                                        <div>
+                                                            <label for="modal_edit-website" id="modal_edit-website-label">Strona serwera</label>
+                                                            <input type="text" id="modal_edit-website" placeholder="http://example.com">
+                                                            <label for="modal_edit-website" style="font-size:70%; color: #b9b9b9; position: relative; top: -5px">Adres URL musi zawierać <b>http://</b> na początku.</label>
+                                                        </div>
+                                                        <div>
+                                                            <label for="modal_edit-discord-server" id="modal_edit-discord-server-label">Link do Discorda serwera</label>
+                                                            <input type="text" id="modal_edit-discord-server" placeholder="http://example.com">
+                                                            <label for="modal_edit-discord-server" style="font-size:70%; color: #b9b9b9; position: relative; top: -5px">Adres URL musi zawierać <b>https://</b> na początku.</label>
+                                                        </div>
+                                                        <div>
+                                                            <label for="modal_edit-facebook-server" id="modal_edit-facebook-server-label">Link do strony serwera na Facebooku</label>
+                                                            <input type="text" id="modal_edit-facebook-server" placeholder="http://example.com">
+                                                            <label for="modal_edit-facebook-server" style="font-size:70%; color: #b9b9b9; position: relative; top: -5px">Adres URL musi zawierać <b>https://</b> na początku.</label>
+                                                        </div>
+                                                        <div>
+                                                            <textarea name="modal_edit-desc" id="modal_edit-desc" rows="10" placeholder="Twój opis serwera..."
+                                                            style="background: transparent; color: white; width: 100%; padding: 10px"></textarea>
+                                                        </div>
+                                                        <!--<div id="server-versions-div">
+                                                            <label for="server-version" id="server-version-label" style="top:0;">Wersja serwera</label>
+                                                            <select class="demo" id="server-version" multiple>
+                                                            </select>
+                                                        </div>-->
+                                                        <div id="server-gamemodes-div">
+                                                            <label for="server-gamemode" id="server-gamemode-label" style="top:0;">Tryb gry</label>
+                                                            <select class="demo2" id="server-gamemode" multiple>
+                                                            </select>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary" onclick="ModalEditAction()">Zapisz</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#modal_edit').modal('toggle');">Anuluj</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                 <?php
                 if(!isset($_GET['subpage'])) $_GET['subpage'] = 'profile'; 
                 echo "<span id='selected-subpage' style='display: none;'>" . $_GET['subpage']."</span>";?>
@@ -69,24 +272,24 @@
                                         <table>
                                             <tr>
                                                 <td>Nazwa użytkownika</td>
-                                                <td id="user-name">{user.name}</td>
+                                                <td id="user-name"></td>
                                             </tr>
                                             <tr>
                                                 <td>Hasło</td>
-                                                <td><a href="" >Zmień hasło</a></td>
+                                                <td><button class="simple-button" onclick="ChangePassword()">Zmień hasło</a></td>
                                             </tr>
                                             <tr>
                                                 <td>Adres e-mail</td>
-                                                <td id="user-email">{user.email} <a href="">Zmień</a></td>
+                                                <td id="user-email"> <a href="">Zmień</a></td>
                                             </tr>
                                             <tr>
-                                                <td>{img} Ilość tokenów:</td>
-                                                <td>{user.tokens} <a href="">Kup tokeny</a></td>
+                                                <td>Discord</td>
+                                                <td id="user-discord"></td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">
-                                                    <input type="checkbox" id="account-ad-mails">
-                                                    <label for="account-ad-mails">Wyrażam zgodę na dostarczanie przez serwis {website name} treści reklamowych na adres e-mail podany przeze mnie podczas rejestracji</label>
+                                                    <input type="checkbox" id="account-ad-mails" checked>
+                                                    <label for="account-ad-mails">Wyrażam zgodę na dostarczanie przez serwis minecraftlist treści reklamowych na adres e-mail podany przeze mnie podczas rejestracji</label>
                                                 </td>
                                             </tr>
                                         </table>
@@ -96,12 +299,8 @@
                                 <div class="panel-content-servers row">
                                     <div class="col col-12">
                                         <div class="row second-header">
-                                            <div class="col col-6">
+                                            <div class="col col-12">
                                                 <p class="mb-0">Informacje o dodanych przez Ciebie serwerach</p>
-                                            </div>
-                                            <div class="col col-6">
-                                                <p class="mb-0" style="display: block; margin-left: 10px; float: right;">Tokeny z programu partnerskiego: 0</p>
-                                                <button class="simple-button" style="display: block; float: right">Kup tokeny</button>
                                             </div>
                                         </div>
                                     </div>
@@ -116,63 +315,44 @@
                                                     <td>Online mode</td>
                                                     <td>Wersja</td>
                                                     <td>Punkty</td>
-                                                    <td>Hajs</td>
-                                                    <td>Akcje</td>
+                                                    <td colspan="3">Akcje</td>
                                                 </tr>
                                             </thead>
+                                            <tbody id="servers-list">
+                                            </tbody>
                                         </table>
                                     </div>
-                                    <p>Nie dodano jeszcze żadnego serwera na tym koncie. <a href="new-server.php">Dodaj nowy serwer</a></p> 
+                                    <p class="mt-3" id="panel-content-servers-p"><a href="new-server.php">Dodaj nowy serwer</a></p> 
                                 </div>
                                 <!-- Historia -->
                                 <div class="panel-content-history row">
                                     <div class="col col-12">
                                         <div class="row">
-                                            <div class="col col-6 second-header mb-3">
-                                                <p class="mb-0">Historia konta {Zalogowany user}: <span>0</span> operacji</p>
-                                            </div>
-                                            <div class="col col-6">
-                                                <button class="simple-button d-block" style="float: right">Kup tokeny</button>
-                                                <p class="d-block" style="float: right; margin-right: 20px;">Twoje tokeny: <span>0</span></p>
+                                            <div class="col col-12 second-header mb-3">
+                                                <p class="mb-0">Historia konta: <span id="operations-count">0</span> operacji</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col col-12">
-                                        <table>
+                                        <table class="w-100">
                                             <thead>
                                                 <tr>
-                                                    <td>Tokeny przed operacją</td>
-                                                    <td>Tokeny</td>
-                                                    <td>Tokeny po operacji</td>
-                                                    <td>Typ operacji</td>
-                                                    <td>Czas operacji</td>
+                                                    <td>ID</td>
+                                                    <td>Operacja</td>
+                                                    <td>Data</td>
+                                                    <td>Serwer</td>
+                                                    <td>Płatność</td>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>0</td>
-                                                    <td>+0</td>
-                                                    <td>0</td>
-                                                    <td>Program partnerski (Polecanie serwerów przez użytkownika</td>
-                                                </tr>
+                                            <tbody id="history-list">
+
                                             </tbody>
                                         </table>
-                                    </div>
-                                    <div class="col col-12">
-                                        <p style="font-weight: bold; padding: 20px">Na twoim koncie nie zostały jeszcze wykonane żadne operacje na Tokenach.</p>
                                     </div>
                                 </div>
                                 <!-- Reklama -->
                                 <div class="panel-content-ad row">
                                     <div class="col col-12">
-                                        <div class="row mb-3 w-100">
-                                            <div class="col col-6 mb-3" style="display: flex; justify-content: center;">
-                                                <i class="bi bi-cash-coin"></i>
-                                                <p class="mb-auto">Twoje tokeny: 12345</p>
-                                            </div>
-                                            <div class="col col-6 mb-3" style="display: flex; justify-content: center;">
-                                                <button class="simple-button">Kup tokeny</button>
-                                            </div>
                                             <div class="col col-12">
                                                 <p><b>Uwaga:</b> Banery reklamowe na stronie głównej wyświetlane są w losowej kolejności, kolejnośc miejsca reklamowego podczas wynajmu nie ma znaczenia.</p>
                                             </div>
@@ -270,11 +450,16 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="autocomplete/tokenize2.js"></script>
+        <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/password-requirements.js"></script>
         <script>
             var api_url = "<?php echo $api ?>";
             var data;
+            var dataHistory;
             var selected_subpage;
             var userData;
+            var gamemodes = [];
 
 
             $.ajax({
@@ -287,6 +472,10 @@
                 userData = res;
                 $('#user-name').text(userData.login);
                 $('#user-email').text(userData.email);
+                $('#user-discord').text("Brak w endpoincie");
+                if(userData.role == "ADMIN") {
+                    $('.panel-header').append($('<div class="col"><a href="admin-servers.php">Panel Administratora</a></div>'))
+                }
             })
 
 
@@ -302,18 +491,178 @@
                 if(selected_subpage == 'history' || selected_subpage == 3) $('.panel-content-history').css('display','flex');
                 if(selected_subpage == 'ad' || selected_subpage == 4) $('.panel-content-ad').css('display','flex');
             }
-            ChangeSubpage();
-            ShowOwnerServers();
 
-            function ShowOwnerServers() {
-                $.ajax({
-                url: api_url+'/api/v1/servers/own/'
-            }).done(res => {
-                data = res;
-
-            })
+            async function ShowOwnerServers() {
+                await $.ajax({
+                    url: api_url+'/api/v1/servers/own/'
+                }).done(res => {
+                    data = res;
+                    if(data.content.length == 0) $('#panel-content-servers-p').prepend('Nie dodano jeszcze żadnego serwera na tym koncie. ')
+                    var onlineMode = "Tak";
+                    data.content.forEach(x => {
+                        if(!x.server.onlineModeEnabled) onlineMode = "Nie";
+                        $('#servers-list').append($('<tr><td>'+x.stats.placeInRanking+'</td><td>'+x.server.name+'</td><td>'+x.serverHostCredentials.address+'</td><td>'+x.serverHostCredentials.port+'</td><td>'+onlineMode+'</td><td>Coś?</td><td>'+x.server.points+'</td><td><button onclick="ModalDelete(\''+x.server.id+'\',\''+x.server.name+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><button onclick="ModalEdit(\''+x.server.id+'\')"><i class="bi bi-pencil-square"></i></button></td><td><a href="server.php?id='+x.server.id+'"><i class="bi bi-card-image"></i></a></td></tr>'))
+                    })
+                    ;
+                })
             }
 
+            function ShowHistoryList() {
+                $.ajax({
+                    url: api_url+'/api/v1/history/?page=0&size=10'
+                }).done(res => {
+                    dataHistory = res;
+                    $('#operations-count').text(dataHistory.content.length);
+                    if(dataHistory.content.length < 1) {
+                        $('#history-list').append($('<tr><td>Brak wyników</td></tr>'));
+                        return;
+                    }
+                    dataHistory.content.forEach(x => $('#history-list').append($('<tr><td>'+x.id+'</td><td>'+x.type+'</td><td>'+ReturnStringDate(x.at)+'</td><td>'+ReturnServerValue(x.name)+'</td><td>'+ReturnPaymentValue(x.payment)+'</td> </tr>')));
+                })
+            }
+            
+            function ReturnStringDate(x) {
+                return x.substr(8,2)+'.'+x.substr(5,2)+'.'+x.substr(0,4)+'  '+x.substr(11,5);
+            }
+            function ReturnServerValue(x) {
+                if(!x) return "";
+                return x;
+            }
+            function ReturnPaymentValue(x) {
+                if(!x) return "";
+                return x;
+            }
+
+            function ChangePassword() {
+                $('#modal_password').modal('toggle');
+                ShowPasswordRequirements('modal_password-1','password-messager')
+                $('#modal_password-1').on('input',function() {
+                    PasswordMessager();
+                    if($('#modal_password-1').val() != $('#modal_password-2').val()) $('#modal_password-info').text("Hasła się różnią");
+                    else $('#modal_password-info').text("");
+                })
+                $('#modal_password-2').on('input',function() {
+                    if($('#modal_password-1').val() != $('#modal_password-2').val()) $('#modal_password-info').text("Hasła się różnią");
+                    else $('#modal_password-info').text("");
+                })
+            }
+
+            function ChangePasswordAction() {
+                var pass1 = $('#modal_password-1').val();
+                var pass2 = $('#modal_password-2').val();
+                if(pass1 != pass2) return;
+
+                $.ajax({
+                    url: api_url+'/api/v1/users/change-password/',
+                    type: 'PATCH',
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"password": "'+pass1+'", "passwordConfirm": "'+pass2+'"}',
+                    success: function(data, textStatus, xhr) {
+                        console.log("Success: "+xhr.status + " " +textStatus);
+                    },
+                    complete: function(xhr, textStatus) {
+                        console.log("Complete: "+xhr.status + " " +textStatus);
+                        console.log("Complete: "+xhr.responseJSON.message);
+                    } 
+                })
+            }
+
+            function ModalDelete(serverId,serverName) {
+                $('#modal_delete-server-name').text(serverName);
+                $('#modal_delete-server-id').text(serverId);
+                $('#modal_delete').modal('toggle');
+            }
+            function ModalDeleteAction() {
+                $('#modal_delete').modal('toggle');
+                var id = $('#modal_delete-server-id').text();
+                $.ajax({
+                    url: api_url+'/api/v1/servers/'+id+'/',
+                    type: 'DELETE',
+                }).done(alert("Usunięto serwer "+id));
+            }
+
+            function ModalEdit(serverId) {
+                thisServer = data.content.find(x => x.server.id == serverId);
+                
+                $('#modal_edit-servername').val(thisServer.server.name);
+                $('#modal_edit-ip').val(thisServer.serverHostCredentials.address);
+                $('#modal_edit-port').val(thisServer.serverHostCredentials.port);
+                if(thisServer.server.onlineModeEnabled) $('#modal_edit-onlinemode').prop('checked', true);
+                $('#modal_edit-website').val(thisServer.server.homepage);
+                $('#modal_edit-discord-server').val(thisServer.server.discord);
+                $('#modal_edit-discord-owner').val(thisServer.owner.discord);
+                $('#modal_edit-facebook-server').val(thisServer.server.facebook);
+                $('#modal_edit-desc').val(thisServer.server.description);
+                $('#modal_edit').modal('toggle');
+
+                //$('.demo').tokenize2({sortable: true});
+                //AddGameVersionsToInput(thisServer);
+                $('.demo2').tokenize2({sortable: true});
+                AddGameModesToInput(thisServer)
+                
+            }
+            function ModalEditAction() {
+                var servername = $('#modal_edit-servername').val();
+                var ip = $('#modal_edit-ip').val();
+                var port = $('#modal_edit-port').val();
+                var isOnlineMode = $('#modal_edit-onlinemode').prop('checked');
+                var homepage = $('#modal_edit-website').val();
+                var discordServer = $('#modal_edit-discord-server').val();
+                var facebookServer = $('#modal_edit-facebook-server').val();
+                var desc = $('#modal_edit-desc').val();
+                GetGameModesFromInput();
+                $.ajax({
+                    type: 'PUT',
+                    url: api_url+'/api/v1/servers/'+thisServer.server.id+'/',
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"hostCredentials": {"host:" "'+ip+'","port": "'+port+'",},"serverCredentials": {"name": "'+servername+'","description": "'+desc+'","homepage": "'+homepage+'","facebook": "'+facebookServer+'","discord": "'+discordServer+'""isOnlineModeEnabled": '+isOnlineMode+',},"gameModesCredentials": {"internalGameModes": '+gamemodes+',},}',
+                    success: function(data, textStatus, xhr) {
+                        console.log("Success: "+xhr.status + " " +textStatus);
+                    },
+                    complete: function(xhr, textStatus) {
+                        console.log("Complete: "+xhr.status + " " +textStatus);
+                        //console.log("Complete: "+xhr.responseJSON.message);
+                    } 
+                });
+            }
+
+            function AddGameModesToInput(thisServer) {
+                if(thisServer.serverGameModes.length == 0) return;
+                if($('#server-gamemodes-div .tokens-container').children().length > 1) return;
+                var gm = thisServer.serverGameModes;
+                gm.forEach(x => $('#server-gamemodes-div .tokens-container').prepend($('<li class="token" data-value="'+x.id+'"><a class="dismiss" onclick="DeleteElement(\''+x.id+'\')"></a><span>'+x.gameMode+'</span></li>')))
+            }
+            function GetGameModesFromInput() {
+                var htmlArray = $('#server-gamemodes-div').children('.tokenize').children('.tokens-container').children('li.token');
+                for(var i = 0; i<htmlArray.length; i++) {
+                    gamemodes[i] = htmlArray[i].attributes[1].textContent;
+                }
+            }
+
+            function DeleteElement(id) {
+                $('li.token[data-value="'+id+'"]').remove();
+            }
+
+            async function GetMinecraftAllGameModes() {
+                $.ajax({
+                    url: api_url+'/api/v1/servers/game-modes/',
+                }).done(res => {
+                    res.content.forEach(x => $('#server-gamemode').append($('<option value="'+x.id+'">'+x.gameMode+'</option>')));
+                });
+            }
+            
+            
+            ChangeSubpage();
+            ShowOwnerServers();
+            ShowHistoryList();
+            GetMinecraftAllGameModes();
+            
         </script>
+        
     </body>
 </html>
