@@ -158,10 +158,6 @@
                                                             <label for="modal_edit-discord-server" style="font-size:70%; color: #b9b9b9; position: relative; top: -5px">Adres URL musi zawierać <b>https://</b> na początku.</label>
                                                         </div>
                                                         <div>
-                                                            <label for="modal_edit-discord-owner" id="modal_edit-discord-owner-label">Discord właściciela</label>
-                                                            <input type="text" id="modal_edit-discord-owner" placeholder="np. user#1234">
-                                                        </div>
-                                                        <div>
                                                             <label for="modal_edit-facebook-server" id="modal_edit-facebook-server-label">Link do strony serwera na Facebooku</label>
                                                             <input type="text" id="modal_edit-facebook-server" placeholder="http://example.com">
                                                             <label for="modal_edit-facebook-server" style="font-size:70%; color: #b9b9b9; position: relative; top: -5px">Adres URL musi zawierać <b>https://</b> na początku.</label>
@@ -170,12 +166,12 @@
                                                             <textarea name="modal_edit-desc" id="modal_edit-desc" rows="10" placeholder="Twój opis serwera..."
                                                             style="background: transparent; color: white; width: 100%; padding: 10px"></textarea>
                                                         </div>
-                                                        <div>
+                                                        <!--<div id="server-versions-div">
                                                             <label for="server-version" id="server-version-label" style="top:0;">Wersja serwera</label>
                                                             <select class="demo" id="server-version" multiple>
                                                             </select>
-                                                        </div>
-                                                        <div>
+                                                        </div>-->
+                                                        <div id="server-gamemodes-div">
                                                             <label for="server-gamemode" id="server-gamemode-label" style="top:0;">Tryb gry</label>
                                                             <select class="demo2" id="server-gamemode" multiple>
                                                             </select>
@@ -203,14 +199,20 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <p id="modal_history-server-id"></p>
-                                                    <table>
+                                                    <table class="w-100 px-3">
                                                         <thead>
                                                             <tr>
-                                                                <td>ID</td>
                                                                 <td>Data</td>
-                                                                <td>Nowe ip</td>
+                                                                <td>Wykonawca</td>
+                                                                <td>Typ operacji</td>
+                                                                <td>Ip</td>
+                                                                <td>Nowe Ip</td>
+                                                                <td>Płatność</td>
                                                             </tr>
                                                         </thead>
+                                                        <tbody id='table-history-list'>
+                                                            
+                                                        </tbody>
                                                     </table>
                                                 </div>
                                                 <div class="modal-footer">
@@ -226,21 +228,10 @@
                 <div class="row mb-5">
                     <div class="col col-12">
                         <div class="panel">
-                            <div class="panel-header">
-                                <div class="row w-100">
-                                    <div class="col col-3">
-                                        <a href="admin-servers.php" class="simple-button align-center">Lista serwerów</a>
-                                    </div>
-                                    <div class="col col-3">
-                                        <a href="admin-users.php" class="simple-button">Lista userów</a>
-                                    </div>
-                                    <div class="col col-3">
-                                        <a href="admin-blocked-services.php" class="simple-button">Zablokowane serwisy</a>
-                                    </div>
-                                    <div class="col col-3">
-                                        <a href="" class="simple-button">Zablkowowane domeny</a>
-                                    </div>
-                                </div>
+                            <div class="panel-header d-flex justify-content-around">
+                                <a href="admin-servers.php" class="simple-button align-center">Lista serwerów</a>
+                                <a href="admin-users.php" class="simple-button">Lista userów</a>
+                                <a href="admin-blocked-services.php" class="simple-button">Zablokowane serwisy</a>
                             </div>
                         </div>
                     </div>
@@ -318,6 +309,8 @@
             var currentPage = 0;
             var searchPhrase = "";
             var thisServer;
+            var versions = [];
+            var gamemodes = [];
 
             //Authentication
             $.ajax({
@@ -377,7 +370,7 @@
 
                         if(!currentServer.server.onlineModeEnabled) onlineModeIcon = 'icon-no-verified';
 
-                        $('.table-list-content').append($('<tr class="table-list-row"><td class="body-rank">'+currentServer.server.id+'.</td><td class="body-name">'+currentServer.server.name+'</td><td class="body-web">'+currentServer.owner.login+'</td><td style="margin-left: 5px;" class="body-players"><span style="float:left;">'+currentServer.serverPingCredentials.onlinePlayers+'/'+currentServer.serverPingCredentials.serverSize+'</span> <i style="margin-left: auto; margin-right: 5px; margin-top:3px;" class="icon '+onlineLight+'"></i></td><td class="body-ratio">'+serverOnlineRatio+'%</td><td>'+lastOnline+'</td><td class="body-mode"><i class="icon '+onlineModeIcon+'"></i></td><td class="body-version">'+ReturnServerVersion(currentServer)+'</td><td><button onclick="ModalDelete(\''+currentServer.server.id+'\',\''+currentServer.server.name+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><button onclick="ModalEdit(\''+currentServer.server.id+'\')"><i class="bi bi-pencil-square"></i></button</td><td><button onclick="ModalHistory(\''+currentServer.server.id+'\')"><i class="bi bi-card-text"></i></button></td><td><a href="server.php?id='+currentServer.server.id+'"><i class="bi bi-card-image"></i></a></td></tr>'));
+                        $('.table-list-content').append($('<tr class="table-list-row"><td class="body-rank">'+currentServer.server.id+'.</td><td class="body-name">'+currentServer.server.name+'</td><td class="body-web">'+currentServer.owner.login+'</td><td style="margin-left: 5px;" class="body-players"><span style="float:left;">'+currentServer.serverPingCredentials.onlinePlayers+'/'+currentServer.serverPingCredentials.serverSize+'</span> <i style="margin-left: auto; margin-right: 5px; margin-top:3px;" class="icon '+onlineLight+'"></i></td><td class="body-ratio">'+serverOnlineRatio+'%</td><td>'+lastOnline+'</td><td class="body-mode"><i class="icon '+onlineModeIcon+'"></i></td><td class="body-version">'+ReturnServerVersion(currentServer)+'</td><td><button onclick="ModalDelete(\''+currentServer.server.id+'\',\''+currentServer.server.name+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><button onclick="ModalEdit(\''+currentServer.server.id+'\')"><i class="bi bi-pencil-square"></i></button></td><td><button onclick="ModalHistory(\''+currentServer.server.id+'\')"><i class="bi bi-card-text"></i></button></td><td><a href="server.php?id='+currentServer.server.id+'"><i class="bi bi-card-image"></i></a></td></tr>'));
                         ChangePage(currentPage);
                     }
                 });
@@ -407,6 +400,43 @@
                 return text[0];
             }
 
+            //Wersje gry 
+            function AddGameVersionsToInput(thisServer) {
+                if(thisServer.minecraftServerVersions.length == 0) return;
+                var v = thisServer.minecraftServerVersions.map(x => x.minecraftVersion.version);
+                console.log(v);
+                v.forEach(x => $('#server-versions-div .tokens-container').prepend($('<li class="token" data-value="'+x+'"><a class="dismiss" onclick="DeleteElement(\''+x+'\')"></a><span>'+x+'</span></li>')));
+
+            }
+            //Pobrać dane z inputa do tablicy
+            //Tablice wysłać do API
+            function GetVersionsFromInput() {
+                var htmlArray = $('#server-versions-div').children('.tokenize').children('.tokens-container').children('li.token');
+                for(var i = 0; i<htmlArray.length; i++) {
+                    versions[i] = htmlArray[i].innerText;
+                }
+            }
+            //Gamemodes
+            function AddGameModesToInput(thisServer) {
+                if(thisServer.serverGameModes.length == 0) return;
+                if($('#server-gamemodes-div .tokens-container').children().length > 1) return;
+                var gm = thisServer.serverGameModes;
+                gm.forEach(x => $('#server-gamemodes-div .tokens-container').prepend($('<li class="token" data-value="'+x.id+'"><a class="dismiss" onclick="DeleteElement(\''+x.id+'\')"></a><span>'+x.gameMode+'</span></li>')))
+            }
+            function GetGameModesFromInput() {
+                var htmlArray = $('#server-gamemodes-div').children('.tokenize').children('.tokens-container').children('li.token');
+                for(var i = 0; i<htmlArray.length; i++) {
+                    gamemodes[i] = htmlArray[i].attributes[1].textContent;
+                }
+            }
+
+            function DeleteElement(id) {
+                $('li.token[data-value="'+id+'"]').remove();
+            }
+                
+            
+
+
             function ModalDelete(serverId,serverName) {
                 $('#modal_delete-server-name').text(serverName);
                 $('#modal_delete-server-id').text(serverId);
@@ -435,11 +465,13 @@
                 $('#modal_edit-desc').val(thisServer.server.description);
                 $('#modal_edit').modal('toggle');
 
-                $('.demo').tokenize2();
-                $('.demo2').tokenize2();
+                //$('.demo').tokenize2({sortable: true});
+                //AddGameVersionsToInput(thisServer);
+                $('.demo2').tokenize2({sortable: true});
+                AddGameModesToInput(thisServer)
                 
             }
-            function ModalEditAction(server) {
+            function ModalEditAction() {
                 //Send api request edit server
                 //Nie skończone
                 var servername = $('#modal_edit-servername').val();
@@ -448,31 +480,46 @@
                 var isOnlineMode = $('#modal_edit-onlinemode').prop('checked');
                 var homepage = $('#modal_edit-website').val();
                 var discordServer = $('#modal_edit-discord-server').val();
-                var discordOwner = $('#modal_edit-discord-owner').val();
                 var facebookServer = $('#modal_edit-facebook-server').val();
                 var desc = $('#modal_edit-desc').val();
+                GetGameModesFromInput();
                 $.ajax({
                     type: 'PUT',
-                    url: api_url+'/api/v1/auth/login/',
+                    url: api_url+'/api/v1/servers/'+thisServer.server.id+'/',
                     dataType: 'json',
                     xhrFields: {
                         withCredentials: true
                     },
                     contentType: "application/json; charset=utf-8",
-                    data: '{"login": "'+username+'", "password": "'+password+'"}',
+                    data: '{"hostCredentials": {"host:" "'+ip+'","port": "'+port+'",},"serverCredentials": {"name": "'+servername+'","description": "'+desc+'","homepage": "'+homepage+'","facebook": "'+facebookServer+'","discord": "'+discordServer+'""isOnlineModeEnabled": '+isOnlineMode+',},"gameModesCredentials": {"internalGameModes": '+gamemodes+',},}',
                     success: function(data, textStatus, xhr) {
                         console.log("Success: "+xhr.status + " " +textStatus);
                     },
                     complete: function(xhr, textStatus) {
                         console.log("Complete: "+xhr.status + " " +textStatus);
-                        console.log("Complete: "+xhr.responseJSON.message);
+                        //console.log("Complete: "+xhr.responseJSON.message);
                     } 
-                })
+                });
             }
 
             function ModalHistory(serverId) {
                 //Show modal change ip history
+                $('#table-history-list').empty();
                 $('#modal_history').modal('toggle');
+                $.ajax({
+                    url: api_url+'/api/v1/history/server/'+serverId+'/?size=10&page=0',
+                }).done(res => {
+                    res.content.forEach(x => {
+                        var t = x.at.substr(8,2)+'.'+x.at.substr(5,2)+'.'+x.at.substr(0,4)+'  '+x.at.substr(11,5);
+                        var oldIp = "?";
+                        var newIp = "?";
+                        var payment = "?";
+                        if(x.oldHostCredentials) oldIp = x.oldHostCredentials.address;
+                        if(x.newHostCredentials) newIp = x.newHostCredentials.address;
+                        if(x.payment) payment = x.payment.method+' '+x.payment.price;
+                        $('#table-history-list').append($('<tr><td>'+t+'</td><td>'+x.user.login+'</td><td>'+x.type+'</td><td>'+oldIp+'</td><td>'+newIp+'</td><td>'+payment+'</td></tr>'))
+                    })
+                })
             }
 
             async function GetMinecraftAllVersions() {
@@ -491,16 +538,10 @@
                 });
             }
 
-            GetMinecraftAllVersions();
+            //GetMinecraftAllVersions();
             GetMinecraftAllGameModes();
             GetServers(0)
 
         </script>
     </body>
 </html>
-
-'{
-    "hostCredentials": {
-        "host:"
-    }
-}'
