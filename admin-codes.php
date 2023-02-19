@@ -180,15 +180,6 @@
                                 </select>
                             </div>
                             <div>
-                                <label for="package" id="package-label" style="top:0">Pakiet</label>
-                                <select id="package">
-                                    <option value="Bronze" selected>Bronze</option>
-                                    <option value="Silver">Silver</option>
-                                    <option value="Gold">Gold</option>
-                                    <option value="Diamond">Diamond</option>
-                                </select>
-                            </div>
-                            <div>
                                 <label for="code-time" id="code-time-label">Długość trwania pakietu w dniach</label>
                                 <input type="number" id="code-time" placeholder="Podaj ilość dni">
                             </div>
@@ -231,7 +222,7 @@
             var currentMonth;
             var selectedYear;
             var selectedMonth;
-            
+            $('#nav-konto').addClass('active');         
 
             function GenerateYears() {
                 currentYear = new Date().getFullYear();

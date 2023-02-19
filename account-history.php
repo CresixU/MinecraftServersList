@@ -180,7 +180,7 @@
             var api_url = "<?php echo $api ?>";
             var data;
             var dataHistory;
-
+            $('#nav-konto').addClass('active');
 
             $.ajax({
                 url: api_url+'/api/v1/auth/logged/',

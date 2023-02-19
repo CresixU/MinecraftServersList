@@ -306,7 +306,7 @@
         <script>
             var api_url = "<?php echo $api ?>";
             var data;
-            
+            $('#nav-serwery').addClass('active');            
         </script>
     </body>
 </html>

@@ -53,7 +53,7 @@
         <script src="//code.jquery.com/jquery.min.js"></script>
         <script>
             var api_url = "<?php echo $api ?>";
-
+            $('#nav-konto').addClass('active');
             $.ajax({
                 type: "DELETE",
                 url: api_url+'/api/v1/auth/logout/',

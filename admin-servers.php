@@ -312,7 +312,8 @@
             var thisServer;
             var versions = [];
             var gamemodes = [];
-
+            $('#nav-konto').addClass('active');
+            
             //Authentication
             $.ajax({
                 url: api_url+'/api/v1/auth/logged/',
@@ -474,7 +475,6 @@
             }
             function ModalEditAction() {
                 //Send api request edit server
-                //Nie skończone
                 var servername = $('#modal_edit-servername').val();
                 var ip = $('#modal_edit-ip').val();
                 var port = $('#modal_edit-port').val();

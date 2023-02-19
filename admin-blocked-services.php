@@ -228,7 +228,7 @@
             var data;
             var userData;
             var clickedIp;
-
+            $('#nav-konto').addClass('active');
             //Authentication
             $.ajax({
                 url: api_url+'/api/v1/auth/logged/',
