@@ -232,6 +232,7 @@
                                 <a href="admin-servers.php" class="simple-button align-center">Lista serwerów</a>
                                 <a href="admin-users.php" class="simple-button">Lista userów</a>
                                 <a href="admin-blocked-services.php" class="simple-button">Zablokowane serwisy</a>
+                                <a href="admin-codes.php" class="simple-button">Generator kodów</a>
                             </div>
                         </div>
                     </div>
