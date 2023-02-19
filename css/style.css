@@ -606,10 +606,6 @@ footer {
 
 /*  Sub page /server.php with chart  */
 
-input:autofill {
-    background-color: transparent;
-}
-
 .server-header {
     width: 1235px;
     height: 78px;
