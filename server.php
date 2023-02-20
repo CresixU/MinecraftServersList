@@ -33,19 +33,27 @@
             <div class="server-header p-2">
                 <h1 id="server-data-name" style="margin-left: 15px !important;">Ładowanie danych...</h1>
             </div>
-            <div class="body-rate">
-                <div class="stars" id="stars">
-                    <div class="star star-full" id="star_1" onclick="Rate(this.id)"></div>
-                    <div class="star star-full" id="star_2" onclick="Rate(this.id)"></div>
-                    <div class="star star-full" id="star_3" onclick="Rate(this.id)"></div>
-                    <div class="star star-full" id="star_4" onclick="Rate(this.id)"></div>
-                    <div class="star star-empty" id="star_5" onclick="Rate(this.id)"></div>
+            <div class="row mt-2">
+                <div class="body-rate">
+                    <div class="stars" id="stars">
+                        <div class="star star-full" id="star_1" onclick="Rate(this.id)"></div>
+                        <div class="star star-full" id="star_2" onclick="Rate(this.id)"></div>
+                        <div class="star star-full" id="star_3" onclick="Rate(this.id)"></div>
+                        <div class="star star-full" id="star_4" onclick="Rate(this.id)"></div>
+                        <div class="star star-empty" id="star_5" onclick="Rate(this.id)"></div>
+                    </div>
+                    <span id="server-rate" style="color: var(--href-color);">4.00</span><br>
+                    <span style="color">Kliknij w gwiazdkę by ocenić serwer</span>
                 </div>
-                <span id="server-rate" style="color: var(--href-color);">4.00</span><br>
-                <span style="color">Kliknij w gwiazdkę by ocenić serwer</span>
+                <div class="py-3">
+                    <div onlick="GiveALike()" class="table_filter_button px-3">
+                        <span id="server-likes" style="float:left; padding: 10px 0px;"></span><i class="icon icon-likes" style="float:left;"></i> <span style="float:left; padding: 9px 0px;">Lubię to</span>
+                    </div>
+                </div>
             </div>
-            <div class="server-data-list my-5" >
-                <div class="server-data-list-header">
+            
+            <div class="server-data-list mb-5 mt-2" >
+                <div class="server-data-list-header mb-2">
                     Informacje o serwerze
                 </div>
                 <table style="width: 100%;">
@@ -72,6 +80,14 @@
                     <tr>
                         <td>Strona serwera:</td>
                         <td id="server-data-page">??</td>
+                    </tr>
+                    <tr>
+                        <td>Facebook serwera:</td>
+                        <td id="server-data-facebook">??</td>
+                    </tr>
+                    <tr>
+                        <td>Discord serwera:</td>
+                        <td id="server-data-discord">??</td>
                     </tr>
                     <tr>
                         <td>Wersja serwera:</td>
@@ -136,6 +152,7 @@
         var time = [];
         var players = [];
 
+        $('#nav-serwery').addClass('active');
         const ctx = document.getElementById('myChart');
 
         function GetServerInfo() {
@@ -153,8 +170,9 @@
                 $('#server-data-top').text(data.stats.maxPlayers);
                 $('#server-data-last-online').text(data.serverPingCredentials.addedAt.substr(8,2)+'.'+data.serverPingCredentials.addedAt.substr(5,2)+'.'+data.serverPingCredentials.addedAt.substr(0,4)+'  '+data.serverPingCredentials.addedAt.substr(11,5));
                 $('#server-data-page').text(data.server.homepage);
-                if(data.minecraftServerVersions.length != 0 )
-                    $('#server-data-version').text(data.minecraftServerVersions[0].minecraftVersion.version);
+                $('#server-data-facebook').text(data.server.facebook);
+                $('#server-data-discord').text(data.server.discord);
+                    $('#server-data-version').text(ReturnServerVersions(data));
                 if(data.server.onlineModeEnabled) $('#server-data-online-mode').text("Tak");
                 else $('#server-data-online-mode').text("Nie");
                 $('#server-data-points').text(data.server.points);
@@ -165,6 +183,7 @@
                 $('#server-data-added').text(data.server.addedAt.substr(8,2)+'.'+data.server.addedAt.substr(5,2)+'.'+data.server.addedAt.substr(0,4)+'  '+data.server.addedAt.substr(11,5));
                 $('#server-data-desc').text(data.server.description);
                 $('#server-rate').text("Ocena: "+data.rate.rate.toFixed(2));
+                $('#server-likes').text(data.likes.likes);
 
                 ShowStarsRate(data.rate.rate);
             })
@@ -218,6 +237,13 @@
             }
         });
 
+        function ReturnServerVersions(server) {
+            var versions = [];
+            if(server.minecraftServerVersions.length == 0) return "??";
+            server.minecraftServerVersions.map(x => versions.append(x.minecraftVersion.version));
+            return versions;
+        }
+
         function ReturnColorByIndex(index) {
             if(time.length == 0) return;
             var i = time.length - index - 1;
@@ -245,7 +271,7 @@
         function Rate(id) {
             var number = id.substr(5,1);
             $.ajax({
-                type: 'POST',
+                type: 'PUT',
                 contentType: "application/json; charset=utf-8",
                 url: api_url+'/api/v1/servers/'+serverId+'/rates/',
                 data: '{"rate": "'+number+'", "description": ""}',
@@ -257,6 +283,21 @@
             });
             
         }
+
+        //Like server
+        $('.table_filter_button').on('click', function() {
+            $.ajax({
+                url: api_url+'/api/v1/servers/'+data.server.id+'/likes/',
+                type: 'PUT',
+            }).done(res => {
+                $.ajax({
+                    url: api_url+'/api/v1/servers/'+data.server.id+'/likes/',
+                }).done(res => {
+                    $('#server-likes').val(res.likes);
+                })
+            })
+        });
+
         /*
         $('.stars')
         .hover(function(event) {
