@@ -84,8 +84,8 @@
                         
 
                         <input type="button" class="btn-green" onclick="Login()" value="Zaloguj">
-                        <?php echo $_COOKIE['token'] ?>
                     </form>
+                    <a href="">Nie pamiętam hasła</a>
                 </div>
                 <div class="account-register col-12 col-md-12">
                     <form >
@@ -102,20 +102,29 @@
                             <input type="password" id="account-register-password2">
                         </div>
                         <div>
+                            <label for="account-register-discord">Discord</label>
+                            <input type="text" id="account-register-discord" placeholder="user#1234">
+                        </div>
+                        <div>
                             <label for="account-register-email">Email</label>
-                            <input type="text" id="account-register-email">
+                            <input type="text" id="account-register-email" placeholder="example@ex.com">
                         </div>
                         <div>
                             <label for="account-register-email2">Powtórz email</label>
-                            <input type="text" id="account-register-email2">
+                            <input type="text" id="account-register-email2" placeholder="example@ex.com">
                         </div>
                         <div class="mt-4">
                             <input type="checkbox" id="account-register-rules">
                             <label for="account-register-rules">Akceptuje regulamin</label>
                         </div>
-                        <div id="account-info-box" style="color: red;"></div>
+                        <div class="mt-4">
+                            <input type="checkbox" id="account-register-ads" checked>
+                            <label for="account-register-ads">Zgadzam się na otrzymywanie treści reklamowych przez portal minecraftlist na podany adres mailowy</label>
+                        </div>
+                        <div id="account-info-box" style="color: red; margin-top:20px;"></div>
+                        <div id="account-info-box2" style="color: red; margin-top:20px;"></div>
 
-                        <input type="submit" onclick="Register()" class="btn-green" value="Zarejestruj się">
+                        <input type="button" onclick="Register()" class="btn-green" value="Zarejestruj się">
                     </form>
                 </div>
             </div>
@@ -133,17 +142,22 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/password-requirements.js"></script>
     <script>
-        var requirements;
         var api_url = "<?php echo $api ?>";
         var data;
-        $.ajax({
-            url: api_url+'/api/v1/users/password-requirements/',
-        })
-        .done(res => {
-            requirements = res;
-        });
+        $('#nav-konto').addClass('active');
 
+        ShowPasswordRequirements('account-register-password','account-info-box');
+        $('#account-register-password').on('input', function() {
+            PasswordMessager()
+        })
+
+        function isRequirementsChecked() {
+            if(minLength && upperCase && number && specialChar) return true;
+
+            return false;
+        }
 
         function ShowLogin() {
             $('.account-login').css('display' ,'block');
@@ -159,67 +173,50 @@
             var username = $('#account-register-name').val();
             var password = $('#account-register-password').val();
             var password2 = $('#account-register-password2').val();
+            var discord = $('#account-register-discord').val();
             var email = $('#account-register-email').val();
             var email2 = $('#account-register-email2').val();
-
-            if(password != password2) {
-                $('#account-info-box').text("Hasła się różnią");
-                return;
-            }
-
-            if(password.length < requirements.minLength) {
-                $('#account-info-box').text("Hasło musi się składać z minimum "+requirements.minLength+" znaków");
-                return;
-            }
-
-            var regex = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-            if(requirements.mustContainsSpecialChar && !password.match(regex)) {
-                $('#account-info-box').text("Hasło musi posiadać znak specjalny");
-                return;
-            }
-
-            regex = /[A-Z]/;
-            if(requirements.mustContainsUpperLetter && !password.match(regex)) {
-                $('#account-info-box').text("Hasło musi posiadać duże litery");
-                return;
-            }
-
-            regex = /[0-9]/;
-            if(requirements.mustContainsNumber && !password.match(regex)) {
-                $('#account-info-box').text("Hasło musi posiadać cyrfy");
-                return;
-            }
-
-            if(!email == email2) {
-                $('#account-info-box').text("Adresy email się różnią");
-                return;
-            }
-
+            var adsCheckbox = true;
             if(!($('#account-register-rules').prop('checked'))) {
                 console.log($('#account-register-rules').prop('checked'));
-                $('#account-info-box').text("Akceptacja regulaminu jest wymagana");
+                $('#account-info-box2').text("Akceptacja regulaminu jest wymagana");
                 return;
             }
-            $('#account-info-box').text(" ");
-            fetch(api_url+'/api/v1/users/', {
-                method: 'POST',
-                credentials: 'same-origin',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    login: username,
-                    password: password,
-                    passwordConfirm: password2,
-                    email: {
-                        value: email,
+            if(!($('#account-register-ads').prop('checked'))) {
+                console.log($('#account-register-ads').prop('checked'));
+                adsCheckbox = false;
+            }
+            if(password != password2 || password == '') {
+                $('#account-info-box2').text("Hasła są różne");
+                return;
+            }
+            if(email != email2 || email == "") {
+                $('#account-info-box2').text("Adresy email są różne");
+                return;
+            }
+            if(!isRequirementsChecked()) {
+                $('#account-info-box2').text("Wymagania hasła nie zostały spełnione");
+                return;
+            }
+
+            $('#account-info-box2').text(" ");
+
+            $.ajax({
+                    type: 'POST',
+                    url: api_url+'/api/v1/users/',
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
                     },
-                    emailConfirm: {
-                        value: email2,
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"login": "'+username+'","password": "'+password+'","passwordConfirm": "'+password2+'","discord": "'+discord+'","email": {"value": "'+email+'"},"emailConfirm": {"value": "'+email2+'"},"acceptsRules": true,"acceptsAdvertisements": '+adsCheckbox+'}',
+                    success: function(data, textStatus, xhr) {
+                        console.log("Success: "+xhr.status + " " +textStatus);
                     },
-                    acceptsRules: true,
-                }),
-            });
+                    complete: function(xhr, textStatus) {
+                        console.log("Complete: "+xhr.status + " " +textStatus);
+                    } 
+                });
 
 
         }
