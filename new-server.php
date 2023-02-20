@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="css/style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="autocomplete/tokenize2.css">
         <style>
             body {
                 color: #dfd7cc;
@@ -79,20 +80,9 @@
                                             <input type="checkbox" id="addserver-onlinemode">
                                             <label for="addserver-onlinemode" class="checkbox-label">Online Mode</label>
                                         </div>
-                                        <div>Easy autosuggest library todo
-                                            <label for="server-versions" id="server-versions-label">Wersja serwera</label>
-                                            <select id="server-versions" multiple>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                            </select>
-                                        </div>
-                                        <div>Easy autosuggest library todo
-                                            <label for="server-types" id="server-types-label">Typ serwera</label>
-                                            <select id="server-types" multiple>
-                                                <option value="Survival">Survival</option>
-                                                <option value="PVP">PVP</option>
-                                                <option value="Minigames">Minigames</option>
+                                        <div id="server-gamemodes-div">
+                                            <label for="server-gamemode" id="server-gamemode-label" style="top:0;">Tryb gry</label>
+                                            <select class="demo2" id="server-gamemode" multiple>
                                             </select>
                                         </div>
                                     </div>
@@ -109,10 +99,6 @@
                                             <label for="addserver-discord-server" id="addserver-discord-server-label">Link do Discorda serwera</label>
                                             <input type="text" id="addserver-discord-server" placeholder="http://example.com">
                                             <label for="addserver-discord-server" style="font-size:70%; color: #b9b9b9; position: relative; top: -5px">Adres URL musi zawierać <b>https://</b> na początku.</label>
-                                        </div>
-                                        <div>
-                                            <label for="addserver-discord-owner" id="addserver-discord-owner-label">Discord właściciela</label>
-                                            <input type="text" id="addserver-discord-owner" placeholder="np. user#1234">
                                         </div>
                                         <div>
                                             <label for="addserver-facebook-server" id="addserver-facebook-server-label">Link do strony serwera na Facebooku</label>
@@ -158,10 +144,18 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery.min.js"></script>
+        <script src="autocomplete/tokenize2.js"></script>
+        <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script>
             var api_url = "<?php echo $api ?>";
             var data;
             var userData;
+            var gamemodes = [];
+
+            GetMinecraftAllGameModes();
+            $('#nav-serwery').addClass('active');
+
             $('#addserver-desc').on('input', function() {
                 $('#addserver-desc-chars').text(5000 - $('#addserver-desc').val().length );
             })
@@ -175,6 +169,8 @@
             }).done(res => {
                 userData = res;
                 $('#user-name').text(userData.login);
+
+                $('.demo2').tokenize2({sortable: true});
             })
 
             function CheckServerMotd() {
@@ -219,7 +215,55 @@
                     console.log(results);
                 })
             }
-            GetMinecraftAllVersions()
+
+            //Gamemodes
+            function GetGameModesFromInput() {
+                var htmlArray = $('#server-gamemodes-div').children('.tokenize').children('.tokens-container').children('li.token');
+                for(var i = 0; i<htmlArray.length; i++) {
+                    gamemodes[i] = htmlArray[i].attributes[1].textContent;
+                }
+            }
+            async function GetMinecraftAllGameModes() {
+                $.ajax({
+                    url: api_url+'/api/v1/servers/game-modes/',
+                }).done(res => {
+                    res.content.forEach(x => $('#server-gamemode').append($('<option value="'+x.id+'">'+x.gameMode+'</option>')));
+                });
+            }
+            function DeleteElement(id) {
+                $('li.token[data-value="'+id+'"]').remove();
+            }
+
+            //Create Server
+            function CreateNewServer() {
+                var servername = $('#addserver-servername').val();
+                var ip = $('#addserver-ip').val();
+                var port = $('#addserver-port').val();
+                var isOnlineMode = $('#addserver-onlinemode').prop('checked');
+                var homepage = $('#addserver-website').val();
+                var discordServer = $('#addserver-discord-server').val();
+                var facebookServer = $('#addserver-facebook-server').val();
+                var desc = $('#addserver-desc').val();
+                GetGameModesFromInput();
+                $.ajax({
+                    type: 'POST',
+                    url: api_url+'/api/v1/servers/',
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"hostCredentials": {"host": "'+ip+'","port": '+port+'},"serverCredentials": {"name": "'+servername+'","description": "'+desc+'","homepage": "'+homepage+'","facebook": "'+facebookServer+'","discord": "'+discordServer+'","isOnlineModeEnabled": '+isOnlineMode+'},"gameModesCredentials": {"internalGameModes": "'+gamemodes+'"}}',
+                    success: function(data, textStatus, xhr) {
+                        console.log("Success: "+xhr.status + " " +textStatus);
+                    },
+                    complete: function(xhr, textStatus) {
+                        console.log("Complete: "+xhr.status + " " +textStatus);
+                        //console.log("Complete: "+xhr.responseJSON.message);
+                    } 
+                });
+            }
+
         </script>
     </body>
 </html>
