@@ -145,10 +145,10 @@
                                         <table class="w-100">
                                             <thead>
                                                 <tr>
-                                                    <td>ID</td>
-                                                    <td>Operacja</td>
                                                     <td>Data</td>
-                                                    <td>Serwer</td>
+                                                    <td>Operacja</td>
+                                                    <td>IP</td>
+                                                    <td>Nowe IP</td>
                                                     <td>Płatność</td>
                                                 </tr>
                                             </thead>
@@ -219,7 +219,7 @@
                         $('#history-list').append($('<tr><td>Brak wyników</td></tr>'));
                         return;
                     }
-                    dataHistory.content.forEach(x => $('#history-list').append($('<tr><td>'+x.id+'</td><td>'+x.type+'</td><td>'+ReturnStringDate(x.at)+'</td><td>'+ReturnServerValue(x.name)+'</td><td>'+ReturnPaymentValue(x.payment)+'</td> </tr>')));
+                    dataHistory.content.forEach(x => $('#history-list').append($('<tr><td>'+ReturnStringDate(x.at)+'</td><td>'+x.type+'</td><td>'+ReturnServerValue(x.oldHostCredentials)+'</td><td>'+ReturnServerValue(x.newHostCredentials)+'</td><td>'+ReturnPaymentValue(x.payment)+'</td></tr>')));
                 })
             }
             
