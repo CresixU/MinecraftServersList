@@ -233,6 +233,7 @@
                                 <a href="admin-users.php" class="simple-button">Lista userów</a>
                                 <a href="admin-blocked-services.php" class="simple-button">Zablokowane serwisy</a>
                                 <a href="admin-codes.php" class="simple-button">Generator kodów</a>
+                                <a href="admin-gamemodes.php" class="simple-button">Tryby gry</a>
                             </div>
                         </div>
                     </div>
@@ -533,7 +534,7 @@
             }
             async function GetMinecraftAllGameModes() {
                 $.ajax({
-                    url: api_url+'/api/v1/servers/game-modes/',
+                    url: api_url+'/api/v2/game-modes/?status=ACCEPTED',
                 }).done(res => {
                     res.content.forEach(x => $('#server-gamemode').append($('<option value="'+x.id+'">'+x.gameMode+'</option>')));
                 });

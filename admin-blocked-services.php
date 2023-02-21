@@ -145,6 +145,7 @@
                                 <a href="admin-users.php" class="simple-button">Lista userów</a>
                                 <a href="admin-blocked-services.php" class="simple-button">Zablokowane serwisy</a>
                                 <a href="admin-codes.php" class="simple-button">Generator kodów</a>
+                                <a href="admin-gamemodes.php" class="simple-button">Tryby gry</a>
                             </div>
                         </div>
                     </div>
@@ -159,7 +160,7 @@
                         <div class="panel-content">
                             <div class="row">
                                 <div class="col col-6 px-5 d-flex justify-content-center" style="min-width: 300px">
-                                    <div>
+                                    <div class="w-100">
                                         <p>
                                             Liczba zablokowanych ip: <span id="blocked-ip-count">0</span>
                                         </p>
@@ -182,7 +183,7 @@
                                     </div>
                                 </div>
                                 <div class="col col-6 px-5 d-flex justify-content-center" style="min-width: 300px">
-                                    <div>
+                                    <div class="w-100">
                                         <table id="blocked-domains" class=" mt-3">
                                             <p>
                                                 Liczba zablokowanych domen: <span id="blocked-domains-count">0</span>

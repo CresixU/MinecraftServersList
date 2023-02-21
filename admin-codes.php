@@ -120,6 +120,7 @@
                                 <a href="admin-users.php" class="simple-button">Lista userów</a>
                                 <a href="admin-blocked-services.php" class="simple-button">Zablokowane serwisy</a>
                                 <a href="admin-codes.php" class="simple-button">Generator kodów</a>
+                                <a href="admin-gamemodes.php" class="simple-button">Tryby gry</a>
                             </div>
                         </div>
                     </div>
