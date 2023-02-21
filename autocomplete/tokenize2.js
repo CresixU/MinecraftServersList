@@ -1,5 +1,6 @@
 /*!
  * Tokenize2 v1.3.6 (https://github.com/dragonofmercy/Tokenize2)
+ * https://www.jqueryscript.net/form/Dynamic-Autocomplete-Tag-Input-Plugin-For-jQuery-Tokenize2.html
  * Copyright 2016-2017 DragonOfMercy.
  * Licensed under the new BSD license
  */
