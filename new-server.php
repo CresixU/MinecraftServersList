@@ -32,6 +32,13 @@
                 border-bottom: 2px solid var(--main-color);
                 border-radius: 8px;
             }
+            .form-control {
+                background: linear-gradient(180deg, rgba(2,0,36,0) 0%, rgba(0,0,0,0.30) 100%);
+                border: none;
+                border-left: 2px solid var(--main-color);
+                border-right: 2px solid var(--main-color);
+                border-radius: 10px;
+            }
         </style>
     </head>
     <body>
@@ -66,15 +73,15 @@
                                     <div class="mx-auto" style="max-width: 500px; width: 100%; padding: 20px 15px;">
                                         <div>
                                             <label for="addserver-servername" id="addserver-servername-label">Nazwa serwera</label>
-                                            <input type="text" id="addserver-servername">
+                                            <input type="text" id="addserver-servername" placeholder="Minecraft Server">
                                         </div>
                                         <div>
                                             <label for="addserver-ip" id="addserver-ip-label">Adres IP lub domena serwera</label>
-                                            <input type="text" id="addserver-ip">
+                                            <input type="text" id="addserver-ip" placeholder="mój-server.pl">
                                         </div>
                                         <div>
                                             <label for="addserver-port" id="addserver-port-label">Port</label>
-                                            <input type="text" id="addserver-port" value="25565">
+                                            <input type="text" id="addserver-port" value="25565" placeholder="Domyślnie 25565">
                                         </div>
                                         <div class="mt-3">
                                             <input type="checkbox" id="addserver-onlinemode">
@@ -170,7 +177,10 @@
                 userData = res;
                 $('#user-name').text(userData.login);
 
-                $('.demo2').tokenize2({sortable: true});
+                $('.demo2').tokenize2({
+                    sortable: true,
+                    placeholder: "Zacznij wpisywać..."
+                });
             })
 
             function CheckServerMotd() {
