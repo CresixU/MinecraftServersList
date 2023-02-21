@@ -406,7 +406,7 @@
 
             async function GetMinecraftAllGameModes() {
                 $.ajax({
-                    url: api_url+'/api/v1/servers/game-modes/',
+                    url: api_url+'/api/v2/game-modes/?status=ACCEPTED',
                 }).done(res => {
                     res.content.forEach(x => $('#server-gamemode').append($('<option value="'+x.id+'">'+x.gameMode+'</option>')));
                 });
