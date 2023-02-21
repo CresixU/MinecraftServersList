@@ -125,11 +125,11 @@
             $('#nav-serwery').addClass('active');
 
             function GetServers(page,size,promoted,search,sort_by) {
-                if(page<0) page = 0;
-                if(data && page>= data.total%size) page = (data.total%size)-1;
+                currentPage = page;
+                if(page<0) currentPage = 0;
+                if(data && page >= data.total%size) page = (data.total%size);
                 if(search=='' || search == null) search = "";
                 var apiUrl;
-                currentPage = page;
                 sizeRecords = size;
                 isPromoted = promoted;
                 searchPhrase = search;
