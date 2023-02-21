@@ -80,6 +80,7 @@
 }
 .tokenize > .tokens-container > .placeholder {
     color: #ccc;
+    background-color: transparent;
 }
 
 .tokenize > .tokens-container > .token-search > input {
