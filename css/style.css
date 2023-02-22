@@ -1,5 +1,6 @@
 :root {
     --href-color: #fceec7;
+    --href-color2: #f9da9d;
     --main-color: rgb(21 64 16);
 }
 
@@ -636,4 +637,18 @@ footer {
 }
 .simple-button:hover:after {
     width: 100%;
+}
+
+tbody td{
+    cursor:default;
+}
+
+.panel-header a,
+nav a {
+    transition: all 0.5s;
+}
+
+.panel-header a:hover,
+nav a:hover {
+    color: var(--href-color2);
 }
