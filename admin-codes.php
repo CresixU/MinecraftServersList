@@ -95,6 +95,16 @@
                 margin-bottom: 0px;
                 color: #f9da9d;
             }
+
+            .close {
+                float: right;
+                position: relative;
+                top: -4px;
+                right: 10px;
+            }
+            .close span {
+                font-size: 25px;
+            }
             
         </style>
     </head>
@@ -173,7 +183,6 @@
                             </div>
                             <div class="panel-content">
                                 <div class="d-flex justify-content-around row" id="codes-list" style="padding: 0 10px;">
-                                    
                                 </div>
                             </div>
                         </div>
@@ -335,7 +344,7 @@
 
             function GeneratePaymentTypes() {
                 $.ajax({
-                    url: api_url+'/api/v1/banner-payments/available-methods/'
+                    url: api_url+'/api/v1/advertisements-payments/available-methods/'
                 }).done(res => {
                     res.forEach(x => $('#payment-type').append($('<option value="'+x+'">'+ReturnPaymentType(x)+'</option>')));      
                 })
@@ -391,6 +400,7 @@
                     } 
                 }).done(res => {
                     alert("Kod został utworzony");
+                    ShowPromoCodes();
                 });
             }
             
@@ -409,15 +419,28 @@
             }
 
             async function ShowPromoCodes() {
+                $('#codes-list').empty();
                 await $.ajax({
                     url: api_url+'/api/v1/promotional-codes/'
                 }).done(res => {
                     data = res;
-                    data.forEach(x => $('#codes-list').append($('<div class="code-item-around col col-3"><div class="code-item"><div><p>Kod:</p><p>'+x.code+'</p><p>Zniżka:</p><p>'+x.discountPercent+'%</p><p>Wygasa: </p><p>'+ReturnStringDate(x.expires)+'</p></div></div></div>')));
+                    data.forEach(x => $('#codes-list').append($('<div class="code-item-around col col-3"><div class="code-item"><button type="button" class="close" aria-label="Close" onclick="DeleteCode(\''+x.id+'\')"><span aria-hidden="true">&times;</span></button><div><p>Kod:</p><p>'+x.code+'</p><p>Zniżka:</p><p>'+x.discountPercent+'%</p><p>Wygasa: </p><p>'+ReturnStringDate(x.expires)+'</p></div></div></div>')));
                 })
             }
             function ReturnStringDate(x) {
                 return x.substr(8,2)+'.'+x.substr(5,2)+'.'+x.substr(0,4)+'  '+x.substr(11,5);
+            }
+
+            function DeleteCode(id) {
+                $.ajax({
+                    url: api_url+'/api/v1/promotional-codes/'+id+'/',
+                    type: 'DELETE',
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                }).done(res => {
+                    alert("Kod został usunięty");
+                    ShowPromoCodes();
+                })
             }
             
             GenerateYears();
