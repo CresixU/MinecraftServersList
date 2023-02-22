@@ -198,12 +198,12 @@
             async function ShowWaitingGamemodes() {
                 $('#waiting-gamemodes-list').empty();
                 await $.ajax({
-                    url: api_url+'/api/v2/game-modes/?status=WAITING',
+                    url: api_url+'/api/v2/game-modes/add-requests/?status=WAITING',
                 }).done(res => {
                     data = res.content;
                     $('#waiting-gamemodes-count').text(data.length);
                     if(data.length == 0) return;
-                    data.forEach(x => $('#waiting-gamemodes-list').append($('<tr><td>'+x.user.login+'</td><td>'+x.gameMode+'</td><td><button onclick="GameModeChangeStatus(\'accept\',\''+x.id+'\')"><i class="icon icon-verified"></i></button></td><td><button onclick="GameModeChangeStatus(\'reject\',\''+x.id+'\')"><i class="icon icon-no-verified"></i></button></td></tr>')))
+                    data.forEach(x => $('#waiting-gamemodes-list').append($('<tr><td>'+x.addedByUser.login+'</td><td>'+x.gameMode.gameMode+'</td><td><button onclick="GameModeChangeStatus(1,\''+x.gameMode.id+'\')"><i class="icon icon-verified"></i></button></td><td><button onclick="GameModeChangeStatus(\'reject\',\''+x.gameMode.id+'\')"><i class="icon icon-no-verified"></i></button></td></tr>')))
                 })
             };
 
@@ -215,14 +215,15 @@
                     data2 = res.content;
                     $('#gamemodes-count').text(data2.length);
                     if(data2.length == 0) return;
-                    data2.forEach(x => $('#gamemodes-list').append($('<tr><td>'+x.gameMode+'</td><td><button onclick="GameModeChangeStatus(\'reject\',\''+x.id+'\')"><i class="bi bi-trash3-fill""></i></button></td></tr>')))
+                    data2.forEach(x => $('#gamemodes-list').append($('<tr><td>'+x.gameMode+'</td><td><button onclick=\'GameModeChangeStatus(0,"'+x.id+'")\'><i class="bi bi-trash3-fill""></i></button></td></tr>')));
                 })
-            };
+            }
 
             function GameModeChangeStatus(status,id) {
                 var gameStatus;
-                if(status == 'reject') gameStatus = 'REJECTED';
-                if(status == 'accept') gameStatus = 'ACCEPTED';
+                console.log(status);
+                if(status == 0) gameStatus = 'REJECTED';
+                else if(status == 1) gameStatus = 'ACCEPTED';
                 else {
                     alert("Błąd techniczny");
                     return;
@@ -255,7 +256,7 @@
                     url: api_url+'/api/v2/game-modes/',
                     type: 'POST',
                     contentType: "application/json; charset=utf-8",
-                    data: '{"gameMode": "'+gamemodeInput+'"}',
+                    data: '{"gameMode": "'+gamemodeInput+'", "autoAccept": '+true+'}',
                     complete: function(xhr, textStatus) {
                         console.log("Complete: "+xhr.status + " " +textStatus);
                         console.log("Complete: "+xhr.responseJSON.message);
