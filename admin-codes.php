@@ -53,10 +53,47 @@
             select:focus {
                 outline: none;
             }
-            .panel-content > div {
+            .panel-content > div:not(#codes-list) {
                 padding-bottom: 20px;
                 max-width: 700px;
                 margin: 0 auto;
+            }
+            .code-item-around {
+                padding: 15px 10px;
+                justify-content: center;
+                display: flex;
+            }
+
+            .code-item {
+                position: relative;
+                z-index: 0;
+                max-width: 200px;
+            }
+            .code-item > div {
+                background-color: black;
+                border-radius: 20px;
+                padding: 20px;
+                min-width: 170px;
+            }
+            .code-item::before {
+                content: '';
+                position: absolute;
+                background-color: red;
+                z-index: -1;
+                top: 0px;
+                left: 0px;
+                right: 0px;
+                bottom: 0px;
+                border-radius: 20px;
+                transform: skew(2deg, 2deg);
+                background: linear-gradient(315deg, #05fc4f, #0abcfc);
+            }
+            .code-item p {
+                text-align: center;
+            }
+            .code-item p:nth-child(odd) {
+                margin-bottom: 0px;
+                color: #f9da9d;
             }
             
         </style>
@@ -127,6 +164,22 @@
                 </div>
             </div>
             <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel-header">
+                                <div class="panel-header-title">
+                                    Aktualne kody zniżkowe
+                                </div>
+                            </div>
+                            <div class="panel-content">
+                                <div class="d-flex justify-content-around row" id="codes-list" style="padding: 0 10px;">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="row">
                 <div class="col col-12">
                     <div class="panel">
                         <div class="panel-header">
@@ -145,7 +198,7 @@
                                 <select name="expire-date" id="hour" class="date"></select>:
                                 <select name="expire-date" id="minute" class="date"></select>
                             </div>
-                            <div>
+                            <!--<div>
                                 <div class="w-100">
                                     <input type="checkbox" id="check-server-allowed">
                                     <label for="check-server-allowed" class="not-label">Może zostać użyty do kupna serwera</label>
@@ -170,33 +223,35 @@
                             <div>
                                 <label for="usage-limit" id="usage-limit-label">Ilość użyć (?)</label>
                                 <input type="text" id="usage-limit" value="1">
-                            </div>
+                            </div>-->
                             <div>
-                                <label for="sms-option" id="sms-option-label" style="top:0">Typ</label>
-                                <select id="sms-option">
+                                <label for="payment-type" style="top:0">Typ płatności</label>
+                                <select id="payment-type">
                                     <option value="Brak" selected disabled>Wybierz</option>
-                                    <option value="gra">Gra</option>
-                                    <option value="gra2">??</option>
-                                    <option value="gra3">??</option>
                                 </select>
                             </div>
-                            <div>
+                            <!--<div>
                                 <label for="code-time" id="code-time-label">Długość trwania pakietu w dniach</label>
                                 <input type="number" id="code-time" placeholder="Podaj ilość dni">
-                            </div>
+                            </div>-->
                             <div>
-                                <label for="code-price" id="code-price-label">Cena</label>
+                                <label for="code-price" id="code-price-label">Procent zniżki</label>
                                 <input type="number" id="code-price">
                             </div>
-                            <div>
+                            <!--<div>
                                 <label for="sms-option" id="sms-option-label" style="top:0">Opcja SMS</label>
                                 <select id="sms-option">
                                     <option value="Brak" selected disabled>Brak</option>
                                     <option value="przelew">Nie wiem co jeszcze</option>
                                 </select>
+                            </div>-->
+                            <div>
+                                <label for="code-target" style="top:0">Target</label>
+                                <select id="code-target">
+                                </select>
                             </div>
                             <div>
-                                <button class="simple-button">Utwórz</button>
+                                <button class="simple-button" onclick="CreatePromoCode()">Utwórz</button>
                             </div>
                         </div>
                     </div>
@@ -277,12 +332,101 @@
                     $('#minute').append('<option value='+i+'>'+t+'</option>');
                 }
             }
+
+            function GeneratePaymentTypes() {
+                $.ajax({
+                    url: api_url+'/api/v1/banner-payments/available-methods/'
+                }).done(res => {
+                    res.forEach(x => $('#payment-type').append($('<option value="'+x+'">'+ReturnPaymentType(x)+'</option>')));      
+                })
+            }
+            function ReturnPaymentType(type) {
+                switch(type) {
+                    case 'PAYPAL':
+                        return "PayPal";
+                    case 'PAYSAFECARD':
+                        return "PaySafeCard";
+                    case 'G2APAY':
+                        return "G2A Pay";
+                    case 'JUST_PAY':
+                        return "Just Pay";
+                    case 'CASH_BILL_TRANSFER':
+                        return "Przelew gotówkowy";
+                    case 'SMS_CASH_BILL':
+                        return "SMS";
+                    default:
+                        return 'Error';
+                }
+            }
+
+            function CreatePromoCode() {
+                var code = $('#code-port').val();
+
+                var y = $('#year').val();
+                var m = $('#month').val()-1;
+                var d = $('#day').val();
+                var h = $('#hour').val();
+                var min = $('#minute').val();
+
+                var datetime = Date.parse(new Date(y,m,d,h,min));
+
+                var discount = $('#code-price').val();
+                var target = $('#code-target').val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: api_url+'/api/v1/promotional-codes/',
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"code": "'+code+'","discountPercent": '+discount+',"expires": '+datetime+',"target": "'+target+'"}',
+                    success: function(data, textStatus, xhr) {
+                        console.log("Success: "+xhr.status + " " +textStatus);
+                    },
+                    complete: function(xhr, textStatus) {
+                        console.log("Complete: "+xhr.status + " " +textStatus);
+                        //console.log("Complete: "+xhr.responseJSON.message);
+                    } 
+                }).done(res => {
+                    alert("Kod został utworzony");
+                });
+            }
+            
+            async function GenerateTargets() {
+                await $.ajax({
+                    url: api_url+'/api/v1/promotional-codes/targets/'
+                }).done(res => {
+                    res.forEach(x => $('#code-target').append($('<option value="'+x+'">'+ReturnTargetType(x)+'</option>')))
+                })
+            }
+            function ReturnTargetType(target) {
+                if(target == 'ANY') return "Wszystko";
+                else if (target == 'PROMOTE') return "Promowanie";
+                else if (target == 'ADVERTISEMENT') return "Reklama";
+                else return target;
+            }
+
+            async function ShowPromoCodes() {
+                await $.ajax({
+                    url: api_url+'/api/v1/promotional-codes/'
+                }).done(res => {
+                    data = res;
+                    data.forEach(x => $('#codes-list').append($('<div class="code-item-around col col-3"><div class="code-item"><div><p>Kod:</p><p>'+x.code+'</p><p>Zniżka:</p><p>'+x.discountPercent+'%</p><p>Wygasa: </p><p>'+ReturnStringDate(x.expires)+'</p></div></div></div>')));
+                })
+            }
+            function ReturnStringDate(x) {
+                return x.substr(8,2)+'.'+x.substr(5,2)+'.'+x.substr(0,4)+'  '+x.substr(11,5);
+            }
             
             GenerateYears();
             GenerateMonths(new Date().getFullYear());
             GenerateDays(new Date().getMonth()+1);
             GenerateTime();
-
+            GenerateTargets();
+            GeneratePaymentTypes();
+            ShowPromoCodes();
         </script>
     </body>
 </html>
