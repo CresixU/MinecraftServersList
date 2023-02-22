@@ -4,10 +4,15 @@
                 <div class="col-6">
                     <div class="menu">
                         <ul>
-                            <li><a href="account.php">Konto</a></li>
-                            <li class="active"><a href="index.php">Serwery</a></li>
-                            <li><a href="">Partnerzy</a></li>
-                            <li><a href="">Statystyki</a></li>
+                            <li id="nav-konto" style="position: relative;">
+                                <a href="account.php">Konto</a>
+                                <ol style="display: none">
+                                    <li>Wyloguj</li>
+                                </ol>
+                            </li>
+                            <li id="nav-serwery" ><a href="index.php">Serwery</a></li>
+                            <li id="nav-partnerzy" ><a href="">Partnerzy</a></li>
+                            <li id="nav-statystyki" ><a href="">Statystyki</a></li>
                         </ul>
                     </div>
                 </div>
@@ -20,13 +25,13 @@
         </div>
     </nav>
     <header>
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <a href="" class="logo">
-                            <img src="img/logo.png" alt="">
-                        </a>
-                    </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <a href="" class="logo">
+                        <img src="img/logo.png" alt="">
+                    </a>
                 </div>
             </div>
-        </header>
+        </div>
+    </header>
