@@ -104,8 +104,16 @@
                 border-left: 2px solid var(--main-color);
                 border-right: 2px solid var(--main-color);
                 border-radius: 10px;
+                color: #dfd7cc;
             }
-
+            .form-control:active, .form-control:focus {
+                background: linear-gradient(180deg, rgba(2,0,36,0) 0%, rgba(0,0,0,0.30) 100%);
+                color: #dfd7cc;
+            }
+            .form-control option {
+                color: #dfd7cc;
+                background-color: black;
+            }
         </style>
     </head>
     <body>
@@ -137,9 +145,18 @@
                                     <div class="col col-12">
                                         <div class="row">
                                             <div class="col col-12 second-header mb-3">
-                                                <p class="mb-0">Historia konta: <span id="operations-count">0</span> operacji</p>
+                                                <p class="mb-0">Historia konta</p>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col col-12 mb-3">
+                                        <div class="col col-6">
+                                            <label for="history-type" style="top: 0px;">Typ operacji</label>
+                                            <select id="history-type" class="form-control">
+                                                    <option value="NONE">Bez filtrowania</option>
+                                            </select>
+                                        </div>
+                                        
                                     </div>
                                     <div class="col col-12">
                                         <table class="w-100">
@@ -149,10 +166,36 @@
                                                     <td>Operacja</td>
                                                     <td>IP</td>
                                                     <td>Nowe IP</td>
-                                                    <td>Płatność</td>
                                                 </tr>
                                             </thead>
                                             <tbody id="history-list">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-content p-3 pt-5">
+                                <div class="panel-content-history row">
+                                    <div class="col col-12">
+                                        <div class="row">
+                                            <div class="col col-12 second-header mb-3">
+                                                <p class="mb-0">Historia płatności</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col col-12">
+                                        <table class="w-100">
+                                            <thead>
+                                                <tr>
+                                                    <td>Data</td>
+                                                    <td>Cena</td>
+                                                    <td>Status</td>
+                                                    <td>Typ płatności</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="payment-list">
 
                                             </tbody>
                                         </table>
@@ -195,23 +238,16 @@
                 }
             })
 
-
-            function ChangeSubpage(e) {
-                if(e == '' || e == undefined || e == null) selected_subpage = $('#selected-subpage').text();
-                else selected_subpage = e;
-                $('.panel-content-profile').css('display','none');
-                $('.panel-content-servers').css('display','none');
-                $('.panel-content-history').css('display','none');
-                $('.panel-content-ad').css('display','none');
-                if(selected_subpage == 'profile' || selected_subpage == 1) $('.panel-content-profile').css('display','flex');
-                if(selected_subpage == 'servers' || selected_subpage == 2) $('.panel-content-servers').css('display','flex');
-                if(selected_subpage == 'history' || selected_subpage == 3) $('.panel-content-history').css('display','flex');
-                if(selected_subpage == 'ad' || selected_subpage == 4) $('.panel-content-ad').css('display','flex');
-            }
-
             async function ShowHistoryList() {
+                $('#history-list').empty();
+                var historyType = $('#history-type').val();
+                var fullUrl = api_url+'/api/v1/history/?page=0&size=10';
+                if(historyType != 'NONE')
+                {
+                    fullUrl += '&type='+historyType;
+                }
                 await $.ajax({
-                    url: api_url+'/api/v1/history/?page=0&size=10'
+                    url: fullUrl,
                 }).done(res => {
                     dataHistory = res;
                     $('#operations-count').text(dataHistory.content.length);
@@ -219,7 +255,20 @@
                         $('#history-list').append($('<tr><td>Brak wyników</td></tr>'));
                         return;
                     }
-                    dataHistory.content.forEach(x => $('#history-list').append($('<tr><td>'+ReturnStringDate(x.at)+'</td><td>'+x.type+'</td><td>'+ReturnServerValue(x.oldHostCredentials)+'</td><td>'+ReturnServerValue(x.newHostCredentials)+'</td><td>'+ReturnPaymentValue(x.payment)+'</td></tr>')));
+                    dataHistory.content.forEach(x => $('#history-list').append($('<tr><td>'+ReturnStringDate(x.at)+'</td><td>'+x.type+'</td><td>'+ReturnServerValue(x.oldHostCredentials)+'</td><td>'+ReturnServerValue(x.newHostCredentials)+'</td></tr>')));
+                })
+            }
+            async function ShowPaymentHistoryList() {
+                $('#payment-list').empty();
+                await $.ajax({
+                    url: api_url+'/api/v1/payments/',
+                }).done(res => {
+                    console.log(res)
+                    if(res.length < 1) {
+                        $('#payment-list').append($('<tr><td>Brak wyników</td></tr>'));
+                        return;
+                    }
+                    res.forEach(x => $('#history-list').append($('<tr><td>'+ReturnStringDate(x.create_date)+'</td><td>'+x.price+'</td><td>'+x.status+'</td><td>'+x.method+'</td><td><a href="'+x.url+'">Strona płatności</a></td></tr>')));
                 })
             }
             
@@ -230,12 +279,20 @@
                 if(!x) return "";
                 return x;
             }
-            function ReturnPaymentValue(x) {
-                if(!x) return "";
-                return x;
+            async function GenerateHistoryTypes() {
+                await $.ajax({
+                    url: api_url+'/api/v1/history/types/'
+                }).done(res => {
+                    res.forEach(x => $('#history-type').append($('<option value="'+x+'">'+x+'</option>')));
+                });
             }
-                 
+            GenerateHistoryTypes()   
             ShowHistoryList();
+            ShowPaymentHistoryList()
+            
+            $('#history-type').on('change', function() {
+                ShowHistoryList();
+            })
             
         </script>
         
