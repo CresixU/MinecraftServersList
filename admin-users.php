@@ -210,8 +210,17 @@
             <div class="row">
                 <div class="col col-12">
                     <div class="panel">
-                        <div class="panel-header">
-                            Liczba użytkowników: <span id="users-count">0</span>
+                       <div class="panel-header">
+                            <!--<div class="panel-header-input">
+                                <input type="text" id="input_search" placeholder="Wyszukaj...">
+                                <buttton type="button" class="btn-search" id="button_search"></buttton>
+                            </div>-->
+                            <div class="panel-header-pagination" style="margin-right: 10px; margin-left: auto;">
+                                <a onclick="GetUsers(currentPage-1)" class="pagination-arrow-left"></a>
+                                <ul id="pagination-list">
+                                </ul>
+                                <a onclick="GetUsers(currentPage+1)" class="pagination-arrow-right"></a>
+                            </div>
                         </div>
                         <div class="panel-content px-5">
                             <div class="row">
@@ -256,6 +265,9 @@
         <script>
             var api_url = "<?php echo $api ?>";
             var data;
+            var size = 20;
+            var currentPage = 0;
+            var searchPhrase = "";
             var userData;
             var historyData;
             var clickedUser;
@@ -274,14 +286,52 @@
                     window.location.replace("account.php");
             });
 
-            $.ajax({
-                url: api_url+'/api/v1/users/',
-            }).done(res => {
-                data = res;
-                $('#users-count').text(data.total);
-                data.content.forEach(x => $('#users-list').append($('<tr><td>'+x.id+'</td><td>'+x.login+'</td><td>'+x.email+'</td><td>'+x.motD+'</td><td>'+x.role+'</td><td><button onclick="ModalDelete(\''+x.id+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><button onclick="ModalEdit(\''+x.id+'\')"><i class="bi bi-pencil-square"></i></button</td><td><button onclick="ModalHistory(\''+x.id+'\')"><i class="bi bi-card-text"></i></button></td><td><a href="server.php?id='+x.id+'"><i class="bi bi-card-image"></i></a></td></tr>')))
-
+            //Search input
+            $('#button_search').on('click', function() {
+                searchPhrase = $('#input_search').val();
+                GetUsers(currentPage);
             });
+
+            //Users
+            function GetUsers(page) {
+                if(page<0) page = 0;
+                if(data && page >= data.total%size) page = (data.total%size);
+                var apiUrl;
+                currentPage = page;
+                console.log(currentPage)
+                apiUrl = api_url+'/api/v1/users/?page='+currentPage+'&size=10';
+
+                $.ajax({
+                    url: apiUrl,
+                })
+                .done(res => {
+                    $('#users-list').empty();
+
+                    data = res;
+                    if(data.content.length == 0) {
+                        $('#users-list').append($('<p style="color: white; margin-top: 10px;">Brak serwerów z tym kryterium.</p>'));
+                        console.log("empty");
+                        return;
+                    }
+
+                    $('#users-count').text(data.total);
+                    data.content.forEach(x => $('#users-list').append($('<tr><td>'+x.id+'</td><td>'+x.login+'</td><td>'+x.email+'</td><td>'+x.motD+'</td><td>'+x.role+'</td><td><button onclick="ModalDelete(\''+x.id+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><button onclick="ModalEdit(\''+x.id+'\')"><i class="bi bi-pencil-square"></i></button</td><td><button onclick="ModalHistory(\''+x.id+'\')"><i class="bi bi-card-text"></i></button></td><td><a href="server.php?id='+x.id+'"><i class="bi bi-card-image"></i></a></td></tr>')))
+                    ChangePage(currentPage);
+                });
+            }
+            function ChangePage(currentPage) {
+                $('#pagination-list').empty();
+                var startPage = 1;
+                var maxPages = (data.total%size);
+                if(currentPage > 4) startPage = currentPage - 4;
+                if(currentPage+4 < maxPages) maxPages = currentPage+4; 
+                for(var i=startPage; i<=maxPages;i++) {
+                    if(i==currentPage+1) 
+                        $('#pagination-list').append($('<li><a onclick="GetUsers('+(i-1)+')" class="active">'+i+'</a></li>'));
+                    else
+                        $('#pagination-list').append($('<li><a onclick="GetUsers('+(i-1)+')">'+i+'</a></li>'));
+                }
+            }  
 
             function ModalDelete(userId) {
                 clickedUser = data.content.find(x => x.id == userId);
@@ -359,6 +409,8 @@
                 if(!x) return "";
                 return x;
             }
+
+            GetUsers(0)
 
         </script>
     </body>
