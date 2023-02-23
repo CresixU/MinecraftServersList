@@ -274,6 +274,7 @@
         <script src="autocomplete/tokenize2.js"></script>
         <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script type="text/javascript" src="js/password-requirements.js"></script>
+        <script type="text/javascript" src="js/server-service.js"></script>
         <script>
             var api_url = "<?php echo $api ?>";
             var data;
@@ -304,7 +305,7 @@
                     var onlineMode = "Tak";
                     data.content.forEach(x => {
                         if(!x.server.onlineModeEnabled) onlineMode = "Nie";
-                        $('#servers-list').append($('<tr><td>'+x.stats.placeInRanking+'</td><td>'+x.server.name+'</td><td>'+x.serverHostCredentials.address+'</td><td>'+x.serverHostCredentials.port+'</td><td>'+onlineMode+'</td><td>Coś?</td><td>'+x.server.points+'</td><td><button onclick="ModalDelete(\''+x.server.id+'\',\''+x.server.name+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><button onclick="ModalEdit(\''+x.server.id+'\')"><i class="bi bi-pencil-square"></i></button></td><td><a href="server.php?id='+x.server.id+'"><i class="bi bi-card-image"></i></a></td></tr>'))
+                        $('#servers-list').append($('<tr><td>'+x.stats.placeInRanking+'</td><td>'+x.server.name+'</td><td>'+x.serverHostCredentials.address+'</td><td>'+x.serverHostCredentials.port+'</td><td>'+onlineMode+'</td><td>'+ReturnServerVersions(x.minecraftServerVersions).versionsString+'</td><td>'+x.server.points+'</td><td><button onclick="ModalDelete(\''+x.server.id+'\',\''+x.server.name+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><button onclick="ModalEdit(\''+x.server.id+'\')"><i class="bi bi-pencil-square"></i></button></td><td><a href="server.php?id='+x.server.id+'"><i class="bi bi-card-image"></i></a></td></tr>'))
                     })
                     ;
                 })
