@@ -30,14 +30,14 @@
             .panel-content-profile td {
                 padding: 15px 10px;
             }
-            #servers-list tr:hover {
+            #payment-list tr:hover {
                 border-bottom: 1px solid var(--href-color);
                 color: var(--href-color);
             }
             thead td {
                 color: var(--href-color);
             }
-            #servers-list tr:hover,
+            #payment-list tr:hover,
             #history-list tr:hover {
                 border-bottom: 1px solid var(--href-color);
                 color: var(--href-color);
@@ -46,15 +46,15 @@
             thead td {
                 color: var(--href-color);
             }
-            #servers-list td i,
+            #payment-list td i,
             #history-list td i {
                 font-size: 20px;
             }
-            #servers-list td a,
+            #payment-list td a,
             #history-list td a {
                 color: inherit;
             }
-            #servers-list td a:hover,
+            #payment-list td a:hover,
             #history-list td a:hover{
                 color: inherit;
             }
@@ -268,7 +268,7 @@
                         $('#payment-list').append($('<tr><td>Brak wyników</td></tr>'));
                         return;
                     }
-                    res.forEach(x => $('#history-list').append($('<tr><td>'+ReturnStringDate(x.create_date)+'</td><td>'+x.price+'</td><td>'+x.status+'</td><td>'+x.method+'</td><td><a href="'+x.url+'">Strona płatności</a></td></tr>')));
+                    res.forEach(x => $('#payment-list').append($('<tr><td>'+ReturnStringDate(x.createDate)+'</td><td>'+x.price+'</td><td>'+x.status+'</td><td>'+x.method+'</td><td><a href="'+x.url+'" class="simple-button">Przejdź do płatności</a></td></tr>')));
                 })
             }
             
