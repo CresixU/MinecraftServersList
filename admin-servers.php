@@ -87,6 +87,13 @@
                 border-right: 2px solid var(--main-color);
                 border-radius: 10px;
             }
+            .body-version {
+                transition: .3s;
+            }
+            .body-version:hover {
+                cursor: help;
+                color: var(--href-color2);
+            }
         </style>
     </head>
     <body>
@@ -302,6 +309,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <script src="//code.jquery.com/jquery.min.js"></script>
         <script src="autocomplete/tokenize2.js"></script>
+        <script type="text/javascript" src="js/server-service.js"></script>
         <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script>
             var api_url = "<?php echo $api ?>";
@@ -373,7 +381,7 @@
 
                         if(!currentServer.server.onlineModeEnabled) onlineModeIcon = 'icon-no-verified';
 
-                        $('.table-list-content').append($('<tr class="table-list-row"><td class="body-rank">'+currentServer.server.id+'.</td><td class="body-name">'+currentServer.server.name+'</td><td class="body-web">'+currentServer.owner.login+'</td><td style="margin-left: 5px;" class="body-players"><span style="float:left;">'+currentServer.serverPingCredentials.onlinePlayers+'/'+currentServer.serverPingCredentials.serverSize+'</span> <i style="margin-left: auto; margin-right: 5px; margin-top:3px;" class="icon '+onlineLight+'"></i></td><td class="body-ratio">'+serverOnlineRatio+'%</td><td>'+lastOnline+'</td><td class="body-mode"><i class="icon '+onlineModeIcon+'"></i></td><td class="body-version">'+ReturnServerVersion(currentServer)+'</td><td><button onclick="ModalDelete(\''+currentServer.server.id+'\',\''+currentServer.server.name+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><button onclick="ModalEdit(\''+currentServer.server.id+'\')"><i class="bi bi-pencil-square"></i></button></td><td><button onclick="ModalHistory(\''+currentServer.server.id+'\')"><i class="bi bi-card-text"></i></button></td><td><a href="server.php?id='+currentServer.server.id+'"><i class="bi bi-card-image"></i></a></td></tr>'));
+                        $('.table-list-content').append($('<tr class="table-list-row"><td class="body-rank">'+currentServer.server.id+'.</td><td class="body-name">'+currentServer.server.name+'</td><td class="body-web">'+currentServer.owner.login+'</td><td style="margin-left: 5px;" class="body-players"><span style="float:left;">'+currentServer.serverPingCredentials.onlinePlayers+'/'+currentServer.serverPingCredentials.serverSize+'</span> <i style="margin-left: auto; margin-right: 5px; margin-top:3px;" class="icon '+onlineLight+'"></i></td><td class="body-ratio">'+serverOnlineRatio+'%</td><td>'+lastOnline+'</td><td class="body-mode"><i class="icon '+onlineModeIcon+'"></i></td><td class="body-version" title="'+ReturnServerVersions(currentServer.minecraftServerVersions).versionsString+'">'+ReturnServerVersions(currentServer.minecraftServerVersions).formatedVersions+'</td><td><button onclick="ModalDelete(\''+currentServer.server.id+'\',\''+currentServer.server.name+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><button onclick="ModalEdit(\''+currentServer.server.id+'\')"><i class="bi bi-pencil-square"></i></button></td><td><button onclick="ModalHistory(\''+currentServer.server.id+'\')"><i class="bi bi-card-text"></i></button></td><td><a href="server.php?id='+currentServer.server.id+'"><i class="bi bi-card-image"></i></a></td></tr>'));
                         
                     }
                     ChangePage(currentPage);
@@ -394,15 +402,6 @@
                 }
             }   
 
-            //Return server version
-            function ReturnServerVersion(thisServer) {
-                if(!thisServer.minecraftServerVersions[0]) return "??";
-                var text = thisServer.minecraftServerVersions[0].minecraftVersion.version.split(',');
-                if(text.length>1) {
-                    return '>'+text[0];
-                }
-                return text[0];
-            }
 
             //Wersje gry 
             function AddGameVersionsToInput(thisServer) {
