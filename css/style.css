@@ -88,8 +88,12 @@ nav .menu ul li.active  {
 nav .menu ul li.active a  {  
     color:#ffe5b2;
 }
+nav .menu ul a:hover {
+    color: var(--href-color2) !important;
+    cursor: pointer;
+}
 nav .menu ul a {  
-    color:#fffefe;
+    color:#fffefe !important;
     font-size:17px;
     font-weight:400;
 }
@@ -649,6 +653,6 @@ nav a {
 }
 
 .panel-header a:hover,
-nav a:hover {
+nav a {
     color: var(--href-color2);
 }
