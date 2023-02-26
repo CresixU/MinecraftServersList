@@ -55,6 +55,20 @@
             background-color: var(--main-color);
             padding: 5px;
         }
+        .modal-content {
+            background: linear-gradient(to bottom, #110b08, #0e0906 70%);
+            color: #dfd7cc;
+        }
+        .modal-header {
+            border-bottom: none;
+        }
+        .modal-footer {
+            border-top: none;
+        }
+        .modal-title + button {
+            font-size: 200%;
+        }
+
     </style>
 
 </head>
@@ -65,6 +79,30 @@
     <?php require_once("components/top.php"); ?>
     <main>
         <div class="container p-5">
+
+                    <!-- Reset password modal -->
+                    <div class="modal fade" id="modal_password-reset" tabindex="-1" role="dialog" aria-labelledby="modal_password-reset" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Resetowanie hasła</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#modal_password-reset').modal('toggle');">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <label for="modal_password-reset-input">Podaj mail do zresetowania hasła</label>
+                                    <input type="text" id="modal_password-reset-input" placeholder="example@mail.com">
+                                    <div id="modal_reset-response"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" onclick="ModalResetPasswordAction()">Wyślij</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#modal_password-reset').modal('toggle');">Anuluj</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
             <div class="account-authentication row">
                 <div class="col col-12" style="justify-content: center; display: flex;">
                     <div><a onclick="ShowLogin()">Zaloguj się</a></div>
@@ -81,11 +119,12 @@
                             <label for="account-login-password">Hasło</label>
                             <input type="password" id="account-login-password">
                         </div>
-                        
+                        <div id="login-response"></div>
 
                         <input type="button" class="btn-green" onclick="Login()" value="Zaloguj">
                     </form>
-                    <a href="">Nie pamiętam hasła</a>
+                    <button class="simple-button" onclick="$('#modal_password-reset').modal('toggle');">Nie pamiętam hasła</button><br>
+                    
                 </div>
                 <div class="account-register col-12 col-md-12">
                     <form >
@@ -123,9 +162,10 @@
                         </div>
                         <div id="account-info-box" style="color: red; margin-top:20px;"></div>
                         <div id="account-info-box2" style="color: red; margin-top:20px;"></div>
-
+                        <div id="register-response"></div>
                         <input type="button" onclick="Register()" class="btn-green" value="Zarejestruj się">
                     </form>
+                    <button class="simple-button">Wyślij ponownie klucz weryfikacyjny</button>
                 </div>
             </div>
         </div>
@@ -177,6 +217,7 @@
             var email = $('#account-register-email').val();
             var email2 = $('#account-register-email2').val();
             var adsCheckbox = true;
+            
             if(!($('#account-register-rules').prop('checked'))) {
                 console.log($('#account-register-rules').prop('checked'));
                 $('#account-info-box2').text("Akceptacja regulaminu jest wymagana");
@@ -198,7 +239,6 @@
                 $('#account-info-box2').text("Wymagania hasła nie zostały spełnione");
                 return;
             }
-
             $('#account-info-box2').text(" ");
 
             $.ajax({
@@ -210,11 +250,9 @@
                     },
                     contentType: "application/json; charset=utf-8",
                     data: '{"login": "'+username+'","password": "'+password+'","passwordConfirm": "'+password2+'","discord": "'+discord+'","email": {"value": "'+email+'"},"emailConfirm": {"value": "'+email2+'"},"acceptsRules": true,"acceptsAdvertisements": '+adsCheckbox+'}',
-                    success: function(data, textStatus, xhr) {
-                        console.log("Success: "+xhr.status + " " +textStatus);
-                    },
                     complete: function(xhr, textStatus) {
                         console.log("Complete: "+xhr.status + " " +textStatus);
+                        if(xhr.status != 200) $('#register-response').html($('<p class="mt-3" style="color: red">'+xhr.responseJSON.message+'</p>'));
                     } 
                 });
 
@@ -233,12 +271,10 @@
                 },
                 contentType: "application/json; charset=utf-8",
                 data: '{"login": "'+username+'", "password": "'+password+'"}',
-                success: function(data, textStatus, xhr) {
-                    console.log("Success: "+xhr.status + " " +textStatus);
-                },
                 complete: function(xhr, textStatus) {
                     console.log("Complete: "+xhr.status + " " +textStatus);
-                    console.log("Complete: "+xhr.responseJSON.message);
+                    if(xhr.status == 200) window.location.replace("index.php");
+                    else $('#login-response').html($('<p class="mt-3" style="color: red">'+xhr.responseJSON.message+'</p>'));
                 } 
             })
             .done(res => {
@@ -250,8 +286,30 @@
                     data = res;
                 })
             });
-            
+        }
+
+        function ModalResetPasswordAction() {
+            var resetEmail = $('#modal_password-reset-input').val();
+            if(resetEmail == '') {
+                alert("Nie podano maila");
+                return;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: api_url+'/api/v1/users/password-reset/',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                data: '{"email": {"value": "'+resetEmail+'"}}',
+                complete: function(xhr, textStatus) {
+                    console.log(xhr)
+                    console.log("Complete: "+xhr.status + " " +textStatus);
+                    if(xhr.status == 200) $('#modal_reset-response').html($('<p class="mt-3" style="color: green">Link resetujący hasło został wysłany na podany adres mailowy</p>'));
+                    else $('#modal_reset-response').html($('<p class="mt-3" style="color: red">'+xhr.responseJSON.message+'</p>'));
+                } 
+            });
         }
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </body>
 </html>
