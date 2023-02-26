@@ -222,7 +222,6 @@
                     url: 'https://launchermeta.mojang.com/mc/game/version_manifest.json',
                 }).done(res => {
                     var results = res.versions.filter(x => x.type == 'release');
-                    console.log(results);
                 })
             }
 
