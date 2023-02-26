@@ -211,10 +211,10 @@
                 <div class="col col-12">
                     <div class="panel">
                        <div class="panel-header">
-                            <!--<div class="panel-header-input">
+                            <div class="panel-header-input">
                                 <input type="text" id="input_search" placeholder="Wyszukaj...">
                                 <buttton type="button" class="btn-search" id="button_search"></buttton>
-                            </div>-->
+                            </div>
                             <div class="panel-header-pagination" style="margin-right: 10px; margin-left: auto;">
                                 <a onclick="GetUsers(currentPage-1)" class="pagination-arrow-left"></a>
                                 <ul id="pagination-list">
@@ -299,7 +299,7 @@
                 var apiUrl;
                 currentPage = page;
                 console.log(currentPage)
-                apiUrl = api_url+'/api/v1/users/?page='+currentPage+'&size=10';
+                apiUrl = api_url+'/api/v1/users/?page='+currentPage+'&size=10&search='+searchPhrase;
 
                 $.ajax({
                     url: apiUrl,
