@@ -11,7 +11,7 @@
                                 </ol>
                             </li>
                             <li id="nav-serwery" ><a href="index.php">Serwery</a></li>
-                            <li id="nav-partnerzy" ><a href="">Partnerzy</a></li>
+                            <li id="nav-partnerzy" ><a href="partners.php">Partnerzy</a></li>
                             <li id="nav-statystyki" ><a href="">Statystyki</a></li>
                         </ul>
                     </div>
