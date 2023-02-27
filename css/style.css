@@ -656,3 +656,13 @@ nav a {
 nav a {
     color: var(--href-color2);
 }
+
+nav #stats-desc { 
+    display: none; 
+    position: absolute; 
+    list-style-type: none; 
+    background-color: #0d0907; 
+    padding: 10px; 
+    min-width: 300px;
+    border-left: 2px solid var(--href-color);
+}
