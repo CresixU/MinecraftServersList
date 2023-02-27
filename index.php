@@ -118,7 +118,7 @@
             function GetServers(page,size,promoted,search,sort_by) {
                 currentPage = page;
                 if(page<0) currentPage = 0;
-                if(data && page >= data.total%size) page = (data.total%size);
+                if(data && page >= data.total%size) currentPage = (data.total%size)-1;
                 if(search=='' || search == null) search = "";
                 var apiUrl;
                 sizeRecords = size;
@@ -265,7 +265,7 @@
             function ChangePage(page) {
                 $('#pagination-list').empty();
                 var startPage = 1;
-                var maxPages = data.total;
+                var maxPages = data.total%sizeRecords;
                 if(currentPage > 4) startPage = currentPage - 4;
                 if(currentPage+4 < maxPages) maxPages = currentPage+4; 
                 for(var i=startPage; i<=maxPages;i++) {
