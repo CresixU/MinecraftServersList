@@ -260,6 +260,14 @@
                                     </div>
                                     <p class="mt-3" id="panel-content-servers-p"><a href="new-server.php">Dodaj nowy serwer</a></p> 
                                 </div>
+                                <div>
+                                    <div>
+                                        <label for="request-new-gamemode">Nie widzisz swojego trybu gry podczas tworzenia/edytowania serwera? Zaproponuj nowy tryb gry, aby został dodany do listy</label>
+                                        <input type="text" id="request-new-gamemode" placeholder="np. Survival" style="max-width: 300px">
+                                        <button onclick="RequestNewGamemode()" class="simple-button">Wyślij zapytanie</button>
+                                        <p id="request-new-gamemode-response"></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -417,6 +425,25 @@
                     url: api_url+'/api/v2/game-modes/?status=ACCEPTED',
                 }).done(res => {
                     res.content.forEach(x => $('#server-gamemode').append($('<option value="'+x.id+'">'+x.gameMode+'</option>')));
+                });
+            }
+
+            function RequestNewGamemode() {
+                var newGamemode = $('#request-new-gamemode').val();
+                $('request-new-gamemode-response').text('');
+                $.ajax({
+                    url: api_url+'/api/v2/game-modes/',
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"gameMode": "'+newGamemode+'", "autoAccept": '+false+'}',
+                    complete: function(xhr, textStatus) {
+                        console.log("Complete: "+xhr.status + " " +textStatus);
+                        console.log("Complete: "+xhr.responseJSON.message);
+                        if(xhr.status == 200) $('#request-new-gamemode-response').text('Wysłano zapytanie');
+                        else $('#request-new-gamemode-response').text(xhr.responseJSON.message);
+                    } 
+                }).done(res => {
+                    $('#request-new-gamemode').val("");
                 });
             }
             
