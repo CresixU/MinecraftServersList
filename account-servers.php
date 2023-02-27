@@ -262,9 +262,9 @@
                                 </div>
                                 <div>
                                     <div>
-                                        <label for="request-new-gamemode">Nie widzisz swojego trybu gry podczas tworzenia/edytowania serwera? Zaproponuj nowy tryb gry, aby został dodany do listy</label>
+                                        <label for="request-new-gamemode" style="color: #a9a48f">Nie widzisz swojego trybu gry podczas tworzenia/edytowania serwera? Zaproponuj nowy tryb gry, aby został dodany do listy</label>
                                         <input type="text" id="request-new-gamemode" placeholder="np. Survival" style="max-width: 300px">
-                                        <button onclick="RequestNewGamemode()" class="simple-button">Wyślij zapytanie</button>
+                                        <button onclick="RequestNewGamemode()" class="simple-button pt-3">Wyślij zapytanie</button>
                                         <p id="request-new-gamemode-response"></p>
                                     </div>
                                 </div>
