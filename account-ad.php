@@ -264,6 +264,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="js/payment-services.js"></script>
         <script>
             var api_url = "<?php echo $api ?>";
             var data;
@@ -347,32 +348,6 @@
                 else return 'Reklama wygasła';
             }
 
-            function GeneratePaymentTypes() {
-                $.ajax({
-                    url: api_url+'/api/v1/advertisements-payments/available-methods/'
-                }).done(res => {
-                    res.forEach(x => $('#method').append($('<option value="'+x+'">'+ReturnPaymentType(x)+'</option>')));      
-                })
-            }
-            function ReturnPaymentType(type) {
-                switch(type) {
-                    case 'PAYPAL':
-                        return "PayPal";
-                    case 'PAYSAFECARD':
-                        return "PaySafeCard";
-                    case 'G2APAY':
-                        return "G2A Pay";
-                    case 'JUST_PAY':
-                        return "Just Pay";
-                    case 'CASH_BILL_TRANSFER':
-                        return "Przelew gotówkowy";
-                    case 'SMS_CASH_BILL':
-                        return "SMS";
-                    default:
-                        return 'Error';
-                }
-            } 
-
             $('.calculate-price').on('change', function() {
                 if($('#method').val() == null) return;
                 if($('#daysToReserve').val() == '') return;
@@ -412,6 +387,20 @@
                     $('form').append($('<div><a href="'+res.paymentUrl+'" class="btn-green">Przejdź do płatności</a></div>'));
                 })   
             }
+
+            function ButtonAdSave(adId) {
+
+            }
+            function ButtonAdStatistics(adId) {
+
+            }
+            function ButtonAdExtend(adId) {
+                
+            }
+
+
+
+
             ShowAds()
             GeneratePaymentTypes();
             
