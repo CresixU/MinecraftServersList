@@ -88,7 +88,6 @@
                 </div>
             </div>
         </main>
-        <?php require_once("components/statistics.php")?>
         <footer>
             <div class="container">
 
