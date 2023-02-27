@@ -203,7 +203,7 @@
                     data = res.content;
                     $('#waiting-gamemodes-count').text(data.length);
                     if(data.length == 0) return;
-                    data.forEach(x => $('#waiting-gamemodes-list').append($('<tr><td>'+x.addedByUser.login+'</td><td>'+x.gameMode.gameMode+'</td><td><button onclick="GameModeChangeStatus(1,\''+x.gameMode.id+'\')"><i class="icon icon-verified"></i></button></td><td><button onclick="GameModeChangeStatus(\'reject\',\''+x.gameMode.id+'\')"><i class="icon icon-no-verified"></i></button></td></tr>')))
+                    data.forEach(x => $('#waiting-gamemodes-list').append($('<tr><td>'+x.addedByUser.login+'</td><td>'+x.gameMode.gameMode+'</td><td><button onclick="GameModeChangeStatus(1,\''+x.gameMode.id+'\')"><i class="icon icon-verified"></i></button></td><td><button onclick="GameModeChangeStatus(0,\''+x.gameMode.id+'\')"><i class="icon icon-no-verified"></i></button></td></tr>')))
                 })
             };
 
@@ -219,9 +219,9 @@
                 })
             }
 
+            //status: 0 = reject, 1 = accept
             function GameModeChangeStatus(status,id) {
                 var gameStatus;
-                console.log(status);
                 if(status == 0) gameStatus = 'REJECTED';
                 else if(status == 1) gameStatus = 'ACCEPTED';
                 else {
