@@ -154,6 +154,68 @@
         <?php require_once("components/top.php"); ?>
         <main>
             <div class="container">
+
+                <!-- MODAL Stats -->
+                    <div class="modal fade" id="modal_stats" tabindex="-1" role="dialog" aria-labelledby="modal_stats" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Statystyki reklam</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#modal_stats').modal('toggle');">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body p-3">
+                                    <p>Łączna liczba kliknięć: <span id="modal_stats-sum-clicks"></span></p>
+                                    <table class="w-100">
+                                        <thead>
+                                            <tr>
+                                                <td>Data</td>
+                                                <td>Liczba kliknięć</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="modal_stats-table">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal-footer"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                <!-- MODAL Renew -->
+                <div class="modal fade " id="modal_renew" tabindex="-1" role="dialog" aria-labelledby="modal_renew" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Odnowienie reklamy</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#modal_renew').modal('toggle');">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body p-3">
+                                    <input type="text" id="modal_renew-id" style="display: none;">
+                                    <div>
+                                        <label for="modal-method" style="top:0;">Forma płatności</label>
+                                        <select id="modal-method" class="calculate-price">
+                                            <option value="Brak" selected disabled>Wybierz</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="modal-daysToReserve">Dni do rezerwacji</label>
+                                        <input type="text" id="modal-daysToReserve" class="calculate-price">
+                                    </div>
+                                    <div id="modal_renew-button"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" onclick="ButtonAdExtendAction()">Odnów</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#modal_renew').modal('toggle');">Anuluj</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 <div class="row">
                     <div class="col col-12">
                         <div class="panel">
@@ -180,29 +242,8 @@
                                         </div>
                                     </div>
                                     <div class="col col-12">
-                                        <div class="panel-content-ad-storage row w-100">
-                                            <!--
-                                            <div class="ad-storage-item col col-12 col-lg-6">
-                                                <div class="row">
-                                                    <div class="col col-12 edit-ad">
-                                                        <label for="edit-ad-link">Link do strony serwera</label>
-                                                        <input type="text" id="edit-ad-link" placeholder="Link do strony" class="web-link" value="x.link">
-                                                    </div>
-                                                    <div class="col col-12 edit-ad">
-                                                        <label for="edit-ad-file" style="top: 0">Plik obrazu o wymiarach 1920x1270px</label>
-                                                        <input type="file" id="edit-ad-file" class="pl-3" style="margin-left: 20px;" accept="image/png, image/jpeg, image/gif">
-                                                    </div>
-                                                    <div class="col col-12">
-                                                        <p style="text-align: center">Wynajem do x.expiresAt<br>Zostało ReturnRemainDays(x.expiresAt) dni</p>
-                                                    </div>
-                                                    <div class="col col-12" style="justify-content: center; display: flex;">
-                                                        <button onclick="ButtonAdSave()" class="simple-button mx-3">Zapisz</button>
-                                                        <button onclick="ButtonAdStatistics()" class="simple-button mx-3">Statystyki</button>
-                                                        <button onclick="ButtonAdExtend()" class="simple-button mx-3">Przedłuż</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            -->
+                                        <div class="panel-content-ad-storage row w-100 mx-auto">
+
                                         </div>
                                     </div>
                                 </div>
@@ -289,7 +330,6 @@
             function GenerateEmptyAds() {
                 
                 for(var i=0; i<(6-totalAds); i++) {
-                    console.log(i);
                     $('.panel-content-ad-storage').append($('<div class="ad-storage-item col col-12 col-lg-6"><div class="row" style="justify-content: center; display: flex"><div class="col col-12"><p>To miejsce reklamowe jest wolne, możesz je wynająć</p></div><div class="col col-12"><button class="simple-button" onclick="ShowCreateAd()">Wynajmij</button></div></div></div>'));
                 }
             }
@@ -318,8 +358,10 @@
                 }).done(res => {
                     totalAds = res.length;
                     console.log(res);
+                    var i = 0;
                     res.forEach(x => {
-                        $('.panel-content-ad-storage').append($('<div class="ad-storage-item col col-12 col-lg-6"><div class="row"><div class="col col-12 edit-ad"><label for="edit-ad-link">Link do strony serwera</label><input type="text" id="edit-ad-link" placeholder="Link do strony" class="web-link" value="'+x.link+'"></div><div class="col col-12 edit-ad"><label for="edit-ad-file" style="top: 0">Plik obrazu o wymiarach 1920x1270px</label><input type="file" id="edit-ad-file" class="pl-3" style="margin-left: 20px;" accept="image/png, image/jpeg, image/gif"></div><div class="col col-12"><p style="text-align: center">Wynajem do '+ReturnStringDate(x.expiresAt)+'<br>'+ReturnRemainDays(x.expiresAt)+'</p></div><div class="col col-12" style="justify-content: center; display: flex;"><button onclick="ButtonAdSave()" class="simple-button mx-3">Zapisz</button><button onclick="ButtonAdStatistics()" class="simple-button mx-3">Statystyki</button><button onclick="ButtonAdExtend()" class="simple-button mx-3">Przedłuż</button></div></div></div>'))
+                        $('.panel-content-ad-storage').append($('<div class="ad-storage-item col col-12 col-lg-6"><div class="row"><div class="col col-12 edit-ad"><label for="edit-ad-link_'+i+'">Link do strony serwera</label><input type="text" id="edit-ad-link_'+i+'" placeholder="Link do strony" class="web-link" value="'+x.link+'"></div><div class="col col-12 edit-ad"><label for="edit-ad-file_'+i+'" style="top: 0">Zmiana baneru (wymiary 1920x1270px)</label><input type="file" id="edit-ad-file_'+i+'" class="pl-3" style="margin-left: 20px;" accept="image/png, image/jpeg, image/gif"></div><div class="col col-12"><p style="text-align: center">Wynajem do '+ReturnStringDate(x.expiresAt)+'<br>'+ReturnRemainDays(x.expiresAt)+'</p></div><div class="col col-12" style="justify-content: center; display: flex;"><button onclick="ButtonAdSave(\''+i+'\',\''+x.id+'\')" class="simple-button mx-3">Zapisz</button><button onclick="ButtonAdStatistics(\''+x.id+'\')" class="simple-button mx-3">Statystyki</button><button onclick="ButtonAdExtend(\''+x.id+'\')" class="simple-button mx-3">Przedłuż</button></div></div></div>'))
+                        i++;
                     })
                     GenerateEmptyAds();
                 })
@@ -358,7 +400,6 @@
                 $.ajax({
                     url: fullUrl,
                 }).done(res=>{
-                    console.log(res);
                     $('#calculated-price').text(res.price);
                 })
             })
@@ -388,21 +429,71 @@
                 })   
             }
 
-            function ButtonAdSave(adId) {
-
+            function ButtonAdSave(id,adId) {
+                var link = $('#edit-ad-link_'+id).val();
+                $.ajax({
+                    url: api_url+'/api/v1/advertisements/'+adId+'/',
+                    type: 'PATCH',
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"link": "'+link+'"}',
+                    complete: function(xhr, textStatus) {
+                        if(xhr.status != 200) alert(xhr.responseJSON.message);
+                        else alert('Zaaktualizowano dane');
+                    } 
+                })
             }
-            function ButtonAdStatistics(adId) {
-
+            async function ButtonAdStatistics(adId) {
+                $('#modal_stats-table').empty();
+                await $.ajax({
+                    url: api_url+'/api/v1/advertisements/statistics/'+adId+'/clicks/'
+                }).done(res => {
+                    $('#modal_stats-sum-clicks').text(res.clicks);
+                })
+                await $.ajax({
+                        url: api_url+'/api/v1/advertisements/statistics/'+adId+'/'
+                    }).done(res => {
+                        res.forEach(x => $('#modal_stats-table').append($('<tr><td>'+x.date+'</td><td>'+x.clicks+'</td></tr>')));
+                    })
+                $('#modal_stats').modal('toggle'); 
             }
             function ButtonAdExtend(adId) {
-                
+                $('#modal_renew').modal('toggle'); 
+                $('#modal_renew-id').val(adId)
             }
-
+            async function ButtonAdExtendAction() {
+                var adId = $('#modal_renew-id').val();
+                var modalMethod = $('#modal-method').val();
+                var modalDays = $('#modal-daysToReserve').val();
+                await $.ajax({
+                    url: api_url+'/api/v1/advertisements-payments/renew/'+adId+'/',
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"days": '+modalDays+',"method": "'+modalMethod+'"}',
+                    complete: function(xhr, textStatus) {
+                        if(xhr.status != 200) alert(xhr.responseJSON.message);
+                    } 
+                }).done(res => {
+                    var win = window.open(res.payment.url, '_blank');
+                    if (win) {
+                        win.focus();
+                    } else {
+                        alert('Wymagane zezwolenie na wyskakujące okna na stronie. W celu dokonania płatności kliknij w pulsujący zielony guzik');
+                    }
+                    $('#modal_renew-button').append($('<div><a href="'+res.payment.url+'" class="btn-green mt-3">Przejdź do płatności</a></div>'));
+                }) 
+            }
 
 
 
             ShowAds()
-            GeneratePaymentTypes();
+            $.ajax({
+                url: api_url+'/api/v1/advertisements-payments/available-methods/'
+            }).done(res => {
+                res.forEach(x => $('#method').append($('<option value="'+x+'">'+ReturnPaymentType(x)+'</option>')));
+                res.forEach(x => $('#modal-method').append($('<option value="'+x+'">'+ReturnPaymentType(x)+'</option>')));    
+            })
             
         </script>
         
