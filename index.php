@@ -13,6 +13,41 @@
                 cursor: help;
                 color: var(--href-color2);
             }
+            .servers-filter label {
+                margin-top: 10px;
+                width: 100%;
+                color: var(--href-color);
+                position: relative;
+                top: 0px;
+            }
+            .servers-filter .form-control {
+                background: linear-gradient(180deg, rgba(2,0,36,0) 0%, rgba(0,0,0,0.30) 100%);
+                border: none;
+                border-left: 2px solid var(--main-color);
+                border-right: 2px solid var(--main-color);
+                border-radius: 10px;
+                color: #dfd7cc;
+            }
+            .servers-filter .form-control:active, .form-control:focus {
+                background: linear-gradient(180deg, rgba(2,0,36,0) 0%, rgba(0,0,0,0.30) 100%);
+                color: #dfd7cc;
+            }
+            .servers-filter .form-control option {
+                color: #dfd7cc;
+                background-color: black;
+            }
+            .servers-filter > div {
+                padding: 0px 10px;
+                float:left;
+            }
+
+            #ad-servers-list > div {
+                padding: 20px;
+            }
+            #ad-servers-list img {
+                width: 100%;
+                height: 150px;
+            }
         </style>
     </head>
     <body>
@@ -23,7 +58,7 @@
         <main>
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="panel">
                             <div class="panel-header">
                                 <div class="panel-header-title">
@@ -41,8 +76,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="row" id="ad-servers-list" style="margin: 10px 0px;">
+
+                </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="panel">
                             <div class="panel-header">
                                 <div class="panel-header-input">
@@ -79,8 +117,24 @@
                                     
                                     </div>
                                 </div>
-                                <div class="list-footer">
-                                    <span id="last-updated-datetime"> </span>
+                                <div class="list-footer row" style="margin: 10px 0px 0px 0px">
+                                    <div class="col col-6 servers-filter" style="justify-content: space-around;">
+                                        <div style="max-width: 200px">
+                                            <label for="servers-filter-gameversions" class="m-0">Filtruj wersję serwerów</label>
+                                            <select id="servers-filter-gameversions" class="form-control">
+                                                <option value="Brak" selected>Brak filtrowania</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label for="servers-filter-gamemodes" class="m-0">Filtruj tryb gry</label>
+                                            <select id="servers-filter-gamemodes" class="form-control">
+                                                <option value="Brak" selected>Brak filtrowania</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col col-6" style="display: flex;justify-content: flex-end;margin-bottom: 12px;">
+                                        <span id="last-updated-datetime" style="padding-top: 10px;"> </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -126,7 +180,9 @@
                 searchPhrase = search;
                 sortBy = sort_by;
                 apiUrl = api_url+"/api/v1/servers/?page="+currentPage+"&size="+sizeRecords+"&search="+searchPhrase+"&promoted="+isPromoted+"&sort_by="+sortBy;
-
+                if($('#servers-filter-gamemodes').val() != 'Brak') apiUrl += '&game_mode='+$('#servers-filter-gamemodes').val();
+                if($('#servers-filter-gameversions').val() != 'Brak') apiUrl += '&version='+$('#servers-filter-gameversions').val();
+                console.log(apiUrl)
                 $.ajax({
                     url: apiUrl,
                 })
@@ -274,7 +330,38 @@
                     else
                         $('#pagination-list').append($('<li><a onclick="GetServers('+i+','+sizeRecords+','+isPromoted+','+searchPhrase+','+sortBy+')">'+i+'</a></li>'));
                 }
-            }           
+            }  
+            
+            function ShowAdServers() {
+                $.ajax({
+                    url: api_url+'/api/v1/advertisements/?random=true'
+                }).done(res => {
+                    res.forEach(x => {
+                        $('#ad-servers-list').append($('<div class="col col-6"><a href="'+x.link+'"><img src="'+api_url+'/resources/'+x.fileName+'"></a></div>'));
+                    })
+                })
+            }
+            ShowAdServers()
+
+            
+            
+            $.ajax({
+                url: api_url+'/api/v2/game-modes/?status=ACCEPTED&aggregator=BY_SERVERS_COUNT&page=0&size=20',
+            }).done(res => {
+                res.content.forEach(x => $('#servers-filter-gamemodes').append($('<option value="'+x.gameMode+'">'+x.gameMode+'</option>')));
+            });
+            $.ajax({
+                url: api_url+'/api/v1/servers/versions/?aggregator=BY_SERVERS_COUNT',
+            }).done(res => {
+                res.forEach(x => $('#servers-filter-gameversions').append($('<option value="'+x.version+'">'+x.version+'</option>')));
+            });
+
+            $('#servers-filter-gameversions').on('change', function() {
+                GetServers(currentPage,sizeRecords,isPromoted,searchPhrase,sortBy);
+            })
+            $('#servers-filter-gamemodes').on('change', function() {
+                GetServers(currentPage,sizeRecords,isPromoted,searchPhrase,sortBy);
+            })
 
         </script>
     </body>
