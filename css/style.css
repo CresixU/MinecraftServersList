@@ -110,7 +110,8 @@ nav .facebook-likebox .fb-like {
     left:20px;
     color:#fff;
 }
-header {  width:100%;
+header {  
+    width:100%;
     height:348px;
     background:url("../img/bg-header.png") top center no-repeat;
 }
@@ -475,9 +476,9 @@ main .panel .panel-content .promoted-servers-items .promoted-server-item .promot
     filter:brightness(120%);
 }
 .list-footer {  
-    width:755px;
+    width:100%;
     height:58px;
-    background:url("../img/list-footer-bg.png") no-repeat;
+    background:url("../img/list-footer-bg.png") no-repeat right;
     display:flex;
     align-items:center;
     padding-right:25px;
@@ -621,7 +622,8 @@ footer {
 }
 
 .second-header {
-    background: url(../img/header-second-bg.png) no-repeat;
+    width: 100%;
+    background: url(../img/header-second-bg.png) no-repeat left;
     height: 58px;
     align-items: center;
     display: flex;
