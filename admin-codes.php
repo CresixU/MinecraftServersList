@@ -232,13 +232,13 @@
                             <div>
                                 <label for="usage-limit" id="usage-limit-label">Ilość użyć (?)</label>
                                 <input type="text" id="usage-limit" value="1">
-                            </div>-->
+                            </div>
                             <div>
                                 <label for="payment-type" style="top:0">Typ płatności</label>
                                 <select id="payment-type">
                                     <option value="Brak" selected disabled>Wybierz</option>
                                 </select>
-                            </div>
+                            </div>-->
                             <!--<div>
                                 <label for="code-time" id="code-time-label">Długość trwania pakietu w dniach</label>
                                 <input type="number" id="code-time" placeholder="Podaj ilość dni">
@@ -342,31 +342,6 @@
                 }
             }
 
-            function GeneratePaymentTypes() {
-                $.ajax({
-                    url: api_url+'/api/v1/advertisements-payments/available-methods/'
-                }).done(res => {
-                    res.forEach(x => $('#payment-type').append($('<option value="'+x+'">'+ReturnPaymentType(x)+'</option>')));      
-                })
-            }
-            function ReturnPaymentType(type) {
-                switch(type) {
-                    case 'PAYPAL':
-                        return "PayPal";
-                    case 'PAYSAFECARD':
-                        return "PaySafeCard";
-                    case 'G2APAY':
-                        return "G2A Pay";
-                    case 'JUST_PAY':
-                        return "Just Pay";
-                    case 'CASH_BILL_TRANSFER':
-                        return "Przelew gotówkowy";
-                    case 'SMS_CASH_BILL':
-                        return "SMS";
-                    default:
-                        return 'Error';
-                }
-            }
 
             function CreatePromoCode() {
                 var code = $('#code-port').val();
