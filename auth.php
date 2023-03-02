@@ -163,7 +163,7 @@
                         <div id="account-info-box" style="color: red; margin-top:20px;"></div>
                         <div id="account-info-box2" style="color: red; margin-top:20px;"></div>
                         <div id="register-response"></div>
-                        <input type="button" onclick="Register()" class="btn-green" value="Zarejestruj się">
+                        <input type="button" onclick="OnRegister(event)" class="btn-green" value="Zarejestruj się">
                     </form>
                     <button class="simple-button">Wyślij ponownie klucz weryfikacyjny</button>
                 </div>
@@ -209,8 +209,15 @@
             $('.account-register').css('display', 'block');
         }
 
-
-        function Register() {
+        function OnRegister(e) {
+            e.preventDefault();
+            grecaptcha.ready(function() {
+                grecaptcha.execute('6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl', {action: 'submit'}).then(function(token) {
+                    Register(token);
+                });
+            });
+        }
+        function Register(token) {
             var username = $('#account-register-name').val();
             var password = $('#account-register-password').val();
             var password2 = $('#account-register-password2').val();
@@ -250,7 +257,7 @@
                         withCredentials: true
                     },
                     contentType: "application/json; charset=utf-8",
-                    data: '{"login": "'+username+'","password": "'+password+'","passwordConfirm": "'+password2+'","discord": "'+discord+'","email": {"value": "'+email+'"},"emailConfirm": {"value": "'+email2+'"},"acceptsRules": true,"acceptsAdvertisements": '+adsCheckbox+'}',
+                    data: '{"login": "'+username+'","password": "'+password+'","passwordConfirm": "'+password2+'","discord": "'+discord+'","email": {"value": "'+email+'"},"emailConfirm": {"value": "'+email2+'"},"acceptsRules": true,"acceptsAdvertisements": '+adsCheckbox+', "gResponse": "'+token+'"}',
                     complete: function(xhr, textStatus) {
                         console.log("Complete: "+xhr.status + " " +textStatus);
                         if(xhr.status != 200) $('#register-response').html($('<p class="mt-3" style="color: red">'+xhr.responseJSON.message+'</p>'));
