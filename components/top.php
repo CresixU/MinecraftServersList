@@ -44,6 +44,9 @@
     var api_url = "<?php echo $api ?>";
     $.ajax({
         url: api_url+'/api/v1/auth/logged/',
+        xhrFields: {
+            withCredentials: true
+        },
         success: function() {
             $('#nav-logout').css('display','list-item');
         }
