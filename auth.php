@@ -263,11 +263,11 @@
             e.preventDefault();
             grecaptcha.ready(function() {
                 grecaptcha.execute('6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl', {action: 'submit'}).then(function(token) {
-                    Login();
+                    Login(token);
                 });
             });
         }
-        function Login() {
+        function Login(token) {
             var username = $('#account-login-name').val();
             var password = $('#account-login-password').val();
             $.ajax({
@@ -278,7 +278,7 @@
                     withCredentials: true
                 },
                 contentType: "application/json; charset=utf-8",
-                data: '{"login": "'+username+'", "password": "'+password+'"}',
+                data: '{"login": "'+username+'", "password": "'+password+'", "gResponse": "'+token+'"}',
                 complete: function(xhr, textStatus) {
                     console.log("Complete: "+xhr.status + " " +textStatus);
                     if(xhr.status == 200) window.location.replace("index.php");
