@@ -19,6 +19,36 @@
         .star {
             cursor: pointer;
         }
+        .modal-content {
+                background: linear-gradient(to bottom, #110b08, #0e0906 70%);
+                color: #dfd7cc;
+            }
+            .modal-header {
+                border-bottom: none;
+            }
+            .modal-footer {
+                border-top: none;
+            }
+            .modal-title + button {
+                font-size: 200%;
+            }
+
+            label:not(.checkbox-label) {
+                margin-top: 10px;
+                width: 100%;
+                color: var(--href-color);
+                position: relative;
+                top: 10px;
+            }
+            input[type=text],
+            input[type=password] {
+                width: 100%;
+                padding: 8px 12px;
+                color: white;
+                border: none;
+                border-bottom: 2px solid var(--main-color);
+                border-radius: 8px;
+            }
     </style>
 
 </head>
@@ -30,6 +60,32 @@
     <?php require_once("components/top.php"); ?>
     <main>
         <div class="container p-5">
+
+                    <!-- MODAL Renew -->
+                    <div class="modal fade " id="modal_like" tabindex="-1" role="dialog" aria-labelledby="modal_like" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Polub serwer</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#modal_like').modal('toggle');">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body p-3">
+                                    <p>W celu polubienia serwera, należy podać adres E-mail, na który przyjdzie link potwierdzający polubinie</p>
+                                    <div>
+                                        <label for="modal-email">Adres E-mail</label>
+                                        <input type="text" id="modal-email">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" onclick="LikeServerAction()">Wyślij</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#modal_like').modal('toggle');">Anuluj</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
             <div class="server-header p-2">
                 <h1 id="server-data-name" style="margin-left: 15px !important;">Ładowanie danych...</h1>
             </div>
@@ -46,7 +102,7 @@
                     <span style="color">Kliknij w gwiazdkę by ocenić serwer</span>
                 </div>
                 <div class="py-3">
-                    <div onlick="GiveALike()" class="table_filter_button px-3">
+                    <div class="table_filter_button px-3" id="like_button">
                         <span id="server-likes" style="float:left; padding: 10px 0px;"></span><i class="icon icon-likes" style="float:left;"></i> <span style="float:left; padding: 9px 0px;">Lubię to</span>
                     </div>
                 </div>
@@ -279,18 +335,26 @@
         }
 
         //Like server
-        $('.table_filter_button').on('click', function() {
+        $('#like_button').on('click', function() {
+            $('#modal_like').modal('toggle');
+        });
+
+        function LikeServerAction() {
+            var emailInput = $('#modal-email').val();
             $.ajax({
                 url: api_url+'/api/v1/servers/'+data.server.id+'/likes/',
-                type: 'PUT',
+                type: 'POST',
+                dataType: 'json',
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                data: '{"email": "'+emailInput+'"}',
             }).done(res => {
-                $.ajax({
-                    url: api_url+'/api/v1/servers/'+data.server.id+'/likes/',
-                }).done(res => {
-                    $('#server-likes').val(res.likes);
-                })
+                $('#modal_like').modal('toggle');
+                alert("Mail został wysłany. Oczekuje na potwierdzenie");
             })
-        });
+        }
 
         /*
         $('.stars')
