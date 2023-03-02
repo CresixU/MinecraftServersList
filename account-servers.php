@@ -193,6 +193,14 @@
                                                             <textarea name="modal_edit-desc" id="modal_edit-desc" rows="10" placeholder="Twój opis serwera..."
                                                             style="background: transparent; color: white; width: 100%; padding: 10px"></textarea>
                                                         </div>
+                                                        <div>
+                                                            <input type="checkbox" id="addserver-ping-versions">
+                                                            <label for="addserver-ping-versions" class="checkbox-label">Ręcznie dodam wersję serwera</label>
+                                                            <p class="mb-0" style="opacity: 0.5">Jeśli ta opcja jest odznaczona, nasz system zrobi to automatycznie</p>
+                                                        </div>
+                                                        <div id="server-versions-div" style="display: none;">
+                                                            <label for="server-versions" id="server-versions-label" style="top:0;">Wersję serwera</label>
+                                                            <select class="demo1" id="server-versions" multiple>
                                                             </select>
                                                         </div>
                                                         <div id="server-gamemodes-div">
@@ -292,6 +300,7 @@
             var data;
             var userData;
             var gamemodes = [];
+            var versions = [];
             $('#nav-konto').addClass('active');
 
             /*$.ajax({
@@ -371,6 +380,8 @@
                 $('#modal_edit-desc').val(thisServer.server.description);
                 $('#modal_edit').modal('toggle');
 
+                $('.demo1').tokenize2({sortable: true});
+                AddGameVersionsToInput(thisServer);
                 $('.demo2').tokenize2({sortable: true});
                 AddGameModesToInput(thisServer)
                 
@@ -385,6 +396,9 @@
                 var facebookServer = $('#modal_edit-facebook-server').val();
                 var desc = $('#modal_edit-desc').val();
                 GetGameModesFromInput();
+                var pingVersions = $('#addserver-ping-versions').prop('checked');
+                if(pingVersions) GetVersionsFromInput();
+
                 $.ajax({
                     type: 'PUT',
                     url: api_url+'/api/v1/servers/'+thisServer.server.id+'/',
@@ -393,7 +407,7 @@
                         withCredentials: true
                     },
                     contentType: "application/json; charset=utf-8",
-                    data: '{"hostCredentials": {"host:" "'+ip+'","port": "'+port+'",},"serverCredentials": {"name": "'+servername+'","description": "'+desc+'","homepage": "'+homepage+'","facebook": "'+facebookServer+'","discord": "'+discordServer+'""isOnlineModeEnabled": '+isOnlineMode+',},"gameModesCredentials": {"internalGameModes": '+gamemodes+',},}',
+                    data: '{"hostCredentials": {"host": "'+ip+'","port": '+port+',"address": "'+ip+'"},"serverCredentials": {"name": "'+servername+'","description": "'+desc+'","homepage": "'+homepage+'","facebook": "'+facebookServer+'","discord": "'+discordServer+'","isOnlineModeEnabled": '+isOnlineMode+',"pingVersions": '+pingVersions+'},"gameModesCredentials": {"gameModeIds": '+ReturnStringArray(gamemodes)+'},"versionCredentials": {"versions": '+ReturnStringArray(versions)+'}}',
                     success: function(data, textStatus, xhr) {
                         console.log("Success: "+xhr.status + " " +textStatus);
                     },
@@ -403,6 +417,40 @@
                     } 
                 });
             }
+
+            //Wersje gry 
+            function AddGameVersionsToInput(thisServer) {
+                if(thisServer.minecraftServerVersions.length == 0) return;
+                var v = thisServer.minecraftServerVersions.map(x => x.minecraftVersion.version);
+                console.log(v);
+                v.forEach(x => $('#server-versions-div .tokens-container').prepend($('<li class="token" data-value="'+x+'"><a class="dismiss" onclick="DeleteElement(\''+x+'\')"></a><span>'+x+'</span></li>')));
+
+            }
+            //Funkcja zwarająca wszystkie oficialne wersje serwerów mc
+            async function GetMinecraftAllVersions() {
+                await $.ajax({
+                    url: api_url+'/api/v1/servers/versions/',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                }).done(res => {
+                    res.forEach(x => $('#server-versions').append($('<option value="'+x.version+'">'+x.version+'</option>')));
+                })
+            }
+            //Versions
+            function GetVersionsFromInput() {
+                var htmlArray = $('#server-versions-div').children('.tokenize').children('.tokens-container').children('li.token');
+                for(var i = 0; i<htmlArray.length; i++) {
+                    versions[i] = htmlArray[i].attributes[1].textContent;
+                }
+            }
+            $('#addserver-ping-versions').on('change', function() {
+                console.log("Git");
+                if($('#addserver-ping-versions').prop('checked'))
+                    $('#server-versions-div').css('display','block');
+                else 
+                    $('#server-versions-div').css('display','none');
+            })
 
             function AddGameModesToInput(thisServer) {
                 if(thisServer.serverGameModes.length == 0) return;
@@ -452,6 +500,16 @@
                 }).done(res => {
                     $('#request-new-gamemode').val("");
                 });
+            }
+
+            function ReturnStringArray(arr) {
+                var str = '[';
+                for(var i=0; i<arr.length;i++) {
+                    str+='"'+arr[i]+'"';
+                    if(i != arr.length-1) str+=','
+                }
+                str+=']'
+                return str;
             }
             
             
