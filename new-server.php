@@ -92,6 +92,16 @@
                                             <select class="demo2" id="server-gamemode" multiple>
                                             </select>
                                         </div>
+                                        <div>
+                                            <input type="checkbox" id="addserver-ping-versions">
+                                            <label for="addserver-ping-versions" class="checkbox-label">Ręcznie dodam wersję serwera</label>
+                                            <p class="mb-0" style="opacity: 0.5">Jeśli ta opcja jest odznaczona, nasz system zrobi to automatycznie</p>
+                                        </div>
+                                        <div id="server-versions-div" style="display: none;">
+                                            <label for="server-versions" id="server-versions-label" style="top:0;">Wersję serwera</label>
+                                            <select class="demo1" id="server-versions" multiple>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div>
@@ -130,7 +140,7 @@
                                         Dodaj serwer do listy
                                     </p>
                                     Captcha na środku
-                                    <button class="simple-button d-block" style="float:right">Dodaj serwer</button>
+                                    <button class="simple-button d-block" style="float:right" onclick="CreateNewServer()">Dodaj serwer</button>
                                 </div>
 
                             </div>
@@ -159,6 +169,7 @@
             var data;
             var userData;
             var gamemodes = [];
+            var versions = [];
 
             GetMinecraftAllGameModes();
             $('#nav-serwery').addClass('active');
@@ -184,7 +195,11 @@
                     sortable: true,
                     placeholder: "Zacznij wpisywać..."
                 });
-            })
+                $('.demo1').tokenize2({
+                    sortable: true,
+                    placeholder: "Zacznij wpisywać..."
+                });
+             })
 
             function CheckServerMotd() {
                 $('#motd-response').empty();
@@ -233,6 +248,20 @@
                     res.forEach(x => $('#server-versions').append($('<option value="'+x.version+'">'+x.version+'</option>')));
                 })
             }
+            //Versions
+            function GetVersionsFromInput() {
+                var htmlArray = $('#server-versions-div').children('.tokenize').children('.tokens-container').children('li.token');
+                for(var i = 0; i<htmlArray.length; i++) {
+                    versions[i] = htmlArray[i].attributes[1].textContent;
+                }
+            }
+            $('#addserver-ping-versions').on('change', function() {
+                console.log("Git");
+                if($('#addserver-ping-versions').prop('checked'))
+                    $('#server-versions-div').css('display','block');
+                else 
+                    $('#server-versions-div').css('display','none');
+            })
 
             //Gamemodes
             function GetGameModesFromInput() {
@@ -265,7 +294,10 @@
                 var discordServer = $('#addserver-discord-server').val();
                 var facebookServer = $('#addserver-facebook-server').val();
                 var desc = $('#addserver-desc').val();
+                var pingVersions = $('#addserver-ping-versions').prop('checked');
                 GetGameModesFromInput();
+                if(pingVersions) GetVersionsFromInput();
+
                 $.ajax({
                     type: 'POST',
                     url: api_url+'/api/v1/servers/',
@@ -274,7 +306,7 @@
                         withCredentials: true
                     },
                     contentType: "application/json; charset=utf-8",
-                    data: '{"hostCredentials": {"host": "'+ip+'","port": '+port+'},"serverCredentials": {"name": "'+servername+'","description": "'+desc+'","homepage": "'+homepage+'","facebook": "'+facebookServer+'","discord": "'+discordServer+'","isOnlineModeEnabled": '+isOnlineMode+'},"gameModesCredentials": {"internalGameModes": "'+gamemodes+'"}}',
+                    data: '{"hostCredentials": {"host": "'+ip+'","port": '+port+',"address": "'+ip+'"},"serverCredentials": {"name": "'+servername+'","description": "'+desc+'","homepage": "'+homepage+'","facebook": "'+facebookServer+'","discord": "'+discordServer+'","isOnlineModeEnabled": '+isOnlineMode+',"pingVersions": '+pingVersions+'},"gameModesCredentials": {"gameModeIds": '+ReturnStringArray(gamemodes)+'},"versionCredentials": {"versions": '+ReturnStringArray(versions)+'}}',
                     success: function(data, textStatus, xhr) {
                         console.log("Success: "+xhr.status + " " +textStatus);
                     },
@@ -284,6 +316,18 @@
                     } 
                 });
             }
+
+            function ReturnStringArray(arr) {
+                var str = '[';
+                for(var i=0; i<arr.length;i++) {
+                    str+='"'+arr[i]+'"';
+                    if(i != arr.length-1) str+=','
+                }
+                str+=']'
+                return str;
+            }
+
+            GetMinecraftAllVersions()
 
         </script>
     </body>
