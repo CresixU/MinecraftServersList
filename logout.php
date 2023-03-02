@@ -60,7 +60,7 @@
             }).done(res => {
                 $('#info-header').text("Wylogowano");
                 $('#show-info').css('display','block');
-                setTimeout(window.location.replace("index.php"), 5000);
+                setTimeout(window.location.replace("index.php"), 10000);
             });
         </script>
     </body>
