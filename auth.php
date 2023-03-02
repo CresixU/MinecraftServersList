@@ -121,7 +121,7 @@
                         </div>
                         <div id="login-response"></div>
 
-                        <input type="button" class="btn-green" onclick="OnLogin()" value="Zaloguj">
+                        <input type="button" class="btn-green" onclick="OnLogin(event)" value="Zaloguj">
                     </form>
                     <button class="simple-button" onclick="$('#modal_password-reset').modal('toggle');">Nie pamiętam hasła</button><br>
                     
