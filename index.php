@@ -171,7 +171,6 @@
 
             function GetServers(page,size,promoted,search,sort_by) {
                 currentPage = page;
-                if(page<0) currentPage = 0;
                 if(data && page >= data.total%size) currentPage = (data.total%size)-1;
                 if(search=='' || search == null) search = "";
                 var apiUrl;
@@ -179,6 +178,7 @@
                 isPromoted = promoted;
                 searchPhrase = search;
                 sortBy = sort_by;
+                if(currentPage<0) currentPage = 0;
                 apiUrl = api_url+"/api/v1/servers/?page="+currentPage+"&size="+sizeRecords+"&search="+searchPhrase+"&promoted="+isPromoted+"&sort_by="+sortBy;
                 if($('#servers-filter-gamemodes').val() != 'Brak') apiUrl += '&game_mode='+$('#servers-filter-gamemodes').val();
                 if($('#servers-filter-gameversions').val() != 'Brak') apiUrl += '&version='+$('#servers-filter-gameversions').val();
@@ -195,26 +195,31 @@
                         console.log("empty");
                         return;
                     }
-                    var str = 'Ostatnie sprawdzenie: '+data.content[0].serverPingCredentials.addedAt.substr(8,2)+'.'+data.content[0].serverPingCredentials.addedAt.substr(5,2)+'.'+data.content[0].serverPingCredentials.addedAt.substr(0,4)+'  '+data.content[0].serverPingCredentials.addedAt.substr(11,5);
-                    $('#last-updated-datetime').text(str);
+                    if(data.content[0].serverPingCredentials != null) {
+                        var str = 'Ostatnie sprawdzenie: '+data.content[0].serverPingCredentials.addedAt.substr(8,2)+'.'+data.content[0].serverPingCredentials.addedAt.substr(5,2)+'.'+data.content[0].serverPingCredentials.addedAt.substr(0,4)+'  '+data.content[0].serverPingCredentials.addedAt.substr(11,5);
+                        $('#last-updated-datetime').text(str);
+                    }
 
                     for(var i=0;i<data.content.length;i++) {
                         var currentServer = data.content[i];
-                        var onlineLight = 'icon-on';
+                        var onlineLight = 'icon-off';
                         var serverOnlineRatio = 100.00;
                         var onlineModeIcon = 'icon-verified';
                         var starsId;
                         var promotedClass = '';
                         if(currentServer.server.promoted) promotedClass = 'premium';
-                        if(!currentServer.serverPingCredentials.isOnline)  onlineLight = 'icon-off'
+                        if(currentServer.serverPingCredentials != null) {
+                            if(currentServer.serverPingCredentials.isOnline)  onlineLight = 'icon-on'
 
-                        if(currentServer.serverPingCredentials.timesOffline > 0) {
-                            serverOnlineRatio = (currentServer.serverPingCredentials.timesOnline / currentServer.serverPingCredentials.timesOffline).toFixed(2);
+                            if(currentServer.serverPingCredentials.timesOffline > 0) {
+                                serverOnlineRatio = (currentServer.serverPingCredentials.timesOnline / currentServer.serverPingCredentials.timesOffline).toFixed(2);
+                            }
                         }
+                        
 
                         if(!currentServer.server.onlineModeEnabled) onlineModeIcon = 'icon-no-verified';
 
-                        $('.table-list-content').append($('<a href="./server.php?id='+currentServer.server.id+'"><div class="table-list-row '+promotedClass+'"><div class="body-rank">'+(i+1)+'.</div><div class="body-name">'+currentServer.server.name+'</div><div class="body-web">'+currentServer.server.homepage+'</div><div style="margin-left: 5px;" class="body-players">'+currentServer.serverPingCredentials.onlinePlayers+'/'+currentServer.serverPingCredentials.serverSize+' <i style="margin-left: auto; margin-right: 5px;" class="icon '+onlineLight+'"></i></div><div class="body-points">'+currentServer.server.points+'</div><div class="body-ratio">'+serverOnlineRatio+'%</div><div class="body-mode"><i class="icon '+onlineModeIcon+'"></i></div><div class="body-version" title="'+ReturnServerVersions(currentServer.minecraftServerVersions).versionsString+'">'+ReturnServerVersions(currentServer.minecraftServerVersions).formatedVersions+'</div><div class="body-verified"><i class="icon icon-no-verified"></i></div><div class="body-likes">'+currentServer.likes.likes+'</div><div class="body-rate"><div class="stars" id="stars_'+i+'"></div><span>'+currentServer.rate.rate+'</span></div></div></a>'));
+                        $('.table-list-content').append($('<a href="./server.php?id='+currentServer.server.id+'"><div class="table-list-row '+promotedClass+'"><div class="body-rank">'+(i+1)+'.</div><div class="body-name">'+currentServer.server.name+'</div><div class="body-web">'+currentServer.server.homepage+'</div><div style="margin-left: 5px;" class="body-players">'+currentServer.serverPingCredentials?.onlinePlayers+'/'+currentServer.serverPingCredentials?.serverSize+' <i style="margin-left: auto; margin-right: 5px;" class="icon '+onlineLight+'"></i></div><div class="body-points">'+currentServer.server.points+'</div><div class="body-ratio">'+serverOnlineRatio+'%</div><div class="body-mode"><i class="icon '+onlineModeIcon+'"></i></div><div class="body-version" title="'+ReturnServerVersions(currentServer.minecraftServerVersions).versionsString+'">'+ReturnServerVersions(currentServer.minecraftServerVersions).formatedVersions+'</div><div class="body-verified"><i class="icon icon-no-verified"></i></div><div class="body-likes">'+currentServer.likes.likes+'</div><div class="body-rate"><div class="stars" id="stars_'+i+'"></div><span>'+currentServer.rate.rate+'</span></div></div></a>'));
                         ShowStarsRate("stars",i,currentServer.rate.rate);
                         ChangePage(currentPage);
                     }
@@ -346,9 +351,9 @@
             
             
             $.ajax({
-                url: api_url+'/api/v2/game-modes/?status=ACCEPTED&aggregator=BY_SERVERS_COUNT&page=0&size=20',
+                url: api_url+'/api/v2/game-modes/?status=ACCEPTED&aggregator=BY_SERVERS_COUNT&page=0&size=10',
             }).done(res => {
-                res.content.forEach(x => $('#servers-filter-gamemodes').append($('<option value="'+x.gameMode+'">'+x.gameMode+'</option>')));
+                res.content.forEach(x => $('#servers-filter-gamemodes').append($('<option value="'+x.game_mode+'">'+x.game_mode+'</option>')));
             });
             $.ajax({
                 url: api_url+'/api/v1/servers/versions/?aggregator=BY_SERVERS_COUNT',
