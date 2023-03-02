@@ -223,6 +223,7 @@
             var api_url = "<?php echo $api ?>";
             var data;
             var dataHistory;
+            var userData;
             $('#nav-konto').addClass('active');
 
             $.ajax({
@@ -290,7 +291,7 @@
             }
             async function GenerateHistoryTypes() {
                 await $.ajax({
-                    url: api_url+'/api/v1/history/types/'
+                    url: api_url+'/api/v1/history/types/',
                     xhrFields: {
                         withCredentials: true
                     },

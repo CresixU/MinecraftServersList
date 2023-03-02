@@ -173,11 +173,16 @@
                                                             <textarea name="modal_edit-desc" id="modal_edit-desc" rows="10" placeholder="Twój opis serwera..."
                                                             style="background: transparent; color: white; width: 100%; padding: 10px"></textarea>
                                                         </div>
-                                                        <!--<div id="server-versions-div">
-                                                            <label for="server-version" id="server-version-label" style="top:0;">Wersja serwera</label>
-                                                            <select class="demo" id="server-version" multiple>
+                                                        <div>
+                                                            <input type="checkbox" id="addserver-ping-versions">
+                                                            <label for="addserver-ping-versions" class="checkbox-label">Ręcznie dodam wersję serwera</label>
+                                                            <p class="mb-0" style="opacity: 0.5">Jeśli ta opcja jest odznaczona, nasz system zrobi to automatycznie</p>
+                                                        </div>
+                                                        <div id="server-versions-div" style="display: none;">
+                                                            <label for="server-versions" id="server-versions-label" style="top:0;">Wersję serwera</label>
+                                                            <select class="demo1" id="server-versions" multiple>
                                                             </select>
-                                                        </div>-->
+                                                        </div>
                                                         <div id="server-gamemodes-div">
                                                             <label for="server-gamemode" id="server-gamemode-label" style="top:0;">Tryb gry</label>
                                                             <select class="demo2" id="server-gamemode" multiple>
@@ -477,8 +482,8 @@
                 $('#modal_edit-desc').val(thisServer.server.description);
                 $('#modal_edit').modal('toggle');
 
-                //$('.demo').tokenize2({sortable: true});
-                //AddGameVersionsToInput(thisServer);
+                $('.demo1').tokenize2({sortable: true});
+                AddGameVersionsToInput(thisServer);
                 $('.demo2').tokenize2({sortable: true});
                 AddGameModesToInput(thisServer)
                 
@@ -494,6 +499,9 @@
                 var facebookServer = $('#modal_edit-facebook-server').val();
                 var desc = $('#modal_edit-desc').val();
                 GetGameModesFromInput();
+                var pingVersions = $('#addserver-ping-versions').prop('checked');
+                if(pingVersions) GetVersionsFromInput();
+
                 $.ajax({
                     type: 'PUT',
                     url: api_url+'/api/v1/servers/'+thisServer.server.id+'/',
@@ -558,7 +566,7 @@
                 });
             }
 
-            //GetMinecraftAllVersions();
+            GetMinecraftAllVersions();
             GetMinecraftAllGameModes();
             GetServers(0)
 

@@ -274,8 +274,8 @@
             $.ajax({
                 url: api_url+'/api/v1/auth/logged/',
                 xhrFields: {
-                        withCredentials: true
-                    },
+                    withCredentials: true
+                },
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") 
                         window.location.replace("auth.php");
