@@ -332,6 +332,9 @@
                         console.log("Complete: "+xhr.status + " " +textStatus);
                         console.log("Complete: "+xhr.responseJSON.message);
                     } 
+                }).done(res => {
+                    $('#modal_password').modal('toggle');
+                    alert("Hasło zostało zmienione");
                 })
             }
 
