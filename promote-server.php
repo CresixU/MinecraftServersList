@@ -295,6 +295,9 @@
             $('#nav-serwery').addClass('active');    
             $.ajax({
                 url: api_url+'/api/v1/auth/logged/',
+                xhrFields: {
+                        withCredentials: true
+                    },
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") 
                         window.location.replace("auth.php");
@@ -310,6 +313,9 @@
 
                 $.ajax({
                     url: fullUrl,
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res=>{
                     $('#calculated-price').text(res.price);
                 })
@@ -362,7 +368,10 @@
 
             async function ShowOwnerServers() {
                 await $.ajax({
-                    url: api_url+'/api/v1/servers/own/'
+                    url: api_url+'/api/v1/servers/own/',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     data = res;
                     if(data.content.length == 0) return;

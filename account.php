@@ -273,6 +273,9 @@
 
             $.ajax({
                 url: api_url+'/api/v1/auth/logged/',
+                xhrFields: {
+                        withCredentials: true
+                    },
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") 
                         window.location.replace("auth.php");
@@ -324,6 +327,9 @@
                     type: 'PATCH',
                     dataType: 'json',
                     contentType: "application/json; charset=utf-8",
+                    xhrFields: {
+                        withCredentials: true
+                    },
                     data: '{"password": "'+pass1+'", "passwordConfirm": "'+pass2+'"}',
                     success: function(data, textStatus, xhr) {
                         console.log("Success: "+xhr.status + " " +textStatus);
@@ -357,6 +363,9 @@
                     type: 'PATCH',
                     dataType: 'json',
                     contentType: "application/json; charset=utf-8",
+                    xhrFields: {
+                        withCredentials: true
+                    },
                     data: '{"email": {"value": "'+uEmail+'"},"login": "'+uLogin+'","discord": "'+uDiscord+'","acceptsAdvertisements": '+uAds+'}',
                     success: function(data, textStatus, xhr) {
                         console.log("Success: "+xhr.status + " " +textStatus);

@@ -185,6 +185,9 @@
             //Authentication
             $.ajax({
                 url: api_url+'/api/v1/auth/logged/',
+                xhrFields: {
+                        withCredentials: true
+                    },
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") 
                         window.location.replace("auth.php");
@@ -199,6 +202,9 @@
                 $('#waiting-gamemodes-list').empty();
                 await $.ajax({
                     url: api_url+'/api/v2/game-modes/add-requests/?status=WAITING',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     data = res.content;
                     $('#waiting-gamemodes-count').text(data.length);
@@ -211,6 +217,9 @@
                 $('#gamemodes-list').empty();
                 await $.ajax({
                     url: api_url+'/api/v2/game-modes/?status=ACCEPTED',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     data2 = res.content;
                     $('#gamemodes-count').text(data2.length);
@@ -256,6 +265,9 @@
                     url: api_url+'/api/v2/game-modes/',
                     type: 'POST',
                     contentType: "application/json; charset=utf-8",
+                    xhrFields: {
+                        withCredentials: true
+                    },
                     data: '{"gameMode": "'+gamemodeInput+'", "autoAccept": '+true+'}',
                     complete: function(xhr, textStatus) {
                         console.log("Complete: "+xhr.status + " " +textStatus);

@@ -227,6 +227,9 @@
 
             $.ajax({
                 url: api_url+'/api/v1/auth/logged/',
+                xhrFields: {
+                    withCredentials: true
+                },
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") 
                         window.location.replace("auth.php");
@@ -248,6 +251,9 @@
                 }
                 await $.ajax({
                     url: fullUrl,
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     dataHistory = res;
                     $('#operations-count').text(dataHistory.content.length);
@@ -262,6 +268,9 @@
                 $('#payment-list').empty();
                 await $.ajax({
                     url: api_url+'/api/v1/payments/',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     console.log(res)
                     if(res.length < 1) {
@@ -282,6 +291,9 @@
             async function GenerateHistoryTypes() {
                 await $.ajax({
                     url: api_url+'/api/v1/history/types/'
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     res.forEach(x => $('#history-type').append($('<option value="'+x+'">'+x+'</option>')));
                 });

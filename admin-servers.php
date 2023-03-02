@@ -326,6 +326,9 @@
             //Authentication
             $.ajax({
                 url: api_url+'/api/v1/auth/logged/',
+                xhrFields: {
+                    withCredentials: true
+                },
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") 
                         window.location.replace("auth.php");
@@ -353,6 +356,9 @@
 
                 $.ajax({
                     url: apiUrl,
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 })
                 .done(res => {
                     $('.table-list-content').empty();
@@ -451,6 +457,9 @@
                 $.ajax({
                     url: api_url+'/api/v1/servers/'+id+'/',
                     type: 'DELETE',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(alert("Usunięto serwer "+id));
             }
 
@@ -510,6 +519,9 @@
                 $('#modal_history').modal('toggle');
                 $.ajax({
                     url: api_url+'/api/v1/history/server/'+serverId+'/?size=10&page=0',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     res.content.forEach(x => {
                         var t = x.at.substr(8,2)+'.'+x.at.substr(5,2)+'.'+x.at.substr(0,4)+'  '+x.at.substr(11,5);
@@ -527,6 +539,9 @@
             async function GetMinecraftAllVersions() {
                 await $.ajax({
                     url: 'https://launchermeta.mojang.com/mc/game/version_manifest.json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     var serverVersions = res.versions.filter(x => x.type == 'release');
                     serverVersions.forEach(x => $('#server-version').append($('<option value="'+x.id+'">'+x.id+'</option>')));
@@ -535,6 +550,9 @@
             async function GetMinecraftAllGameModes() {
                 $.ajax({
                     url: api_url+'/api/v2/game-modes/?status=ACCEPTED',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     res.content.forEach(x => $('#server-gamemode').append($('<option value="'+x.id+'">'+x.gameMode+'</option>')));
                 });

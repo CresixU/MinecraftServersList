@@ -193,11 +193,8 @@
                                                             <textarea name="modal_edit-desc" id="modal_edit-desc" rows="10" placeholder="Twój opis serwera..."
                                                             style="background: transparent; color: white; width: 100%; padding: 10px"></textarea>
                                                         </div>
-                                                        <!--<div id="server-versions-div">
-                                                            <label for="server-version" id="server-version-label" style="top:0;">Wersja serwera</label>
-                                                            <select class="demo" id="server-version" multiple>
                                                             </select>
-                                                        </div>-->
+                                                        </div>
                                                         <div id="server-gamemodes-div">
                                                             <label for="server-gamemode" id="server-gamemode-label" style="top:0;">Tryb gry</label>
                                                             <select class="demo2" id="server-gamemode" multiple>
@@ -297,7 +294,7 @@
             var gamemodes = [];
             $('#nav-konto').addClass('active');
 
-            $.ajax({
+            /*$.ajax({
                 url: api_url+'/api/v1/auth/logged/',
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") 
@@ -309,11 +306,14 @@
                     $('.panel-header').append($('<div class="col"><a href="admin-servers.php">Panel Administratora</a></div>'))
                 }
             })
-
+*/
 
             async function ShowOwnerServers() {
                 await $.ajax({
-                    url: api_url+'/api/v1/servers/own/'
+                    url: api_url+'/api/v1/servers/own/',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     data = res;
                     if(data.content.length == 0) $('#panel-content-servers-p').prepend('Nie dodano jeszcze żadnego serwera na tym koncie. ')
@@ -350,6 +350,9 @@
                 var id = $('#modal_delete-server-id').text();
                 $.ajax({
                     url: api_url+'/api/v1/servers/'+id+'/',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                     type: 'DELETE',
                 }).done(alert("Usunięto serwer "+id));
             }
@@ -368,8 +371,6 @@
                 $('#modal_edit-desc').val(thisServer.server.description);
                 $('#modal_edit').modal('toggle');
 
-                //$('.demo').tokenize2({sortable: true});
-                //AddGameVersionsToInput(thisServer);
                 $('.demo2').tokenize2({sortable: true});
                 AddGameModesToInput(thisServer)
                 
@@ -423,6 +424,9 @@
             async function GetMinecraftAllGameModes() {
                 $.ajax({
                     url: api_url+'/api/v2/game-modes/?status=ACCEPTED',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     res.content.forEach(x => $('#server-gamemode').append($('<option value="'+x.id+'">'+x.gameMode+'</option>')));
                 });
@@ -435,6 +439,9 @@
                     url: api_url+'/api/v2/game-modes/',
                     type: 'POST',
                     contentType: "application/json; charset=utf-8",
+                    xhrFields: {
+                        withCredentials: true
+                    },
                     data: '{"gameMode": "'+newGamemode+'", "autoAccept": '+false+'}',
                     complete: function(xhr, textStatus) {
                         console.log("Complete: "+xhr.status + " " +textStatus);

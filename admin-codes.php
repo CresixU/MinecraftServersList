@@ -381,7 +381,10 @@
             
             async function GenerateTargets() {
                 await $.ajax({
-                    url: api_url+'/api/v1/promotional-codes/targets/'
+                    url: api_url+'/api/v1/promotional-codes/targets/',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     res.forEach(x => $('#code-target').append($('<option value="'+x+'">'+ReturnTargetType(x)+'</option>')))
                 })
@@ -396,7 +399,10 @@
             async function ShowPromoCodes() {
                 $('#codes-list').empty();
                 await $.ajax({
-                    url: api_url+'/api/v1/promotional-codes/'
+                    url: api_url+'/api/v1/promotional-codes/',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     data = res;
                     data.forEach(x => $('#codes-list').append($('<div class="code-item-around col col-3"><div class="code-item"><button type="button" class="close" aria-label="Close" onclick="DeleteCode(\''+x.id+'\')"><span aria-hidden="true">&times;</span></button><div><p>Kod:</p><p>'+x.code+'</p><p>Zniżka:</p><p>'+x.discountPercent+'%</p><p>Wygasa: </p><p>'+ReturnStringDate(x.expires)+'</p></div></div></div>')));
@@ -411,6 +417,9 @@
                     url: api_url+'/api/v1/promotional-codes/'+id+'/',
                     type: 'DELETE',
                     dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                     contentType: "application/json; charset=utf-8",
                 }).done(res => {
                     alert("Kod został usunięty");

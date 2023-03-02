@@ -345,9 +345,6 @@
                 url: api_url+'/api/v1/servers/'+data.server.id+'/likes/',
                 type: 'POST',
                 dataType: 'json',
-                xhrFields: {
-                    withCredentials: true
-                },
                 contentType: "application/json; charset=utf-8",
                 data: '{"email": "'+emailInput+'"}',
             }).done(res => {

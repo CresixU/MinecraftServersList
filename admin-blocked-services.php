@@ -233,6 +233,9 @@
             //Authentication
             $.ajax({
                 url: api_url+'/api/v1/auth/logged/',
+                xhrFields: {
+                        withCredentials: true
+                    },
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") 
                         window.location.replace("auth.php");
@@ -247,6 +250,9 @@
                 $('#blocked-list-ip').empty();
                 await $.ajax({
                     url: api_url+'/api/v1/blocked-ip/',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     data = res;
                     $('#blocked-ip-count').text(data.length);
@@ -258,6 +264,9 @@
                 $('#blocked-list-domain').empty();
                 await $.ajax({
                     url: api_url+'/api/v1/emails/blocked/',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     data = res;
                     $('#blocked-domains-count').text(data.length);
@@ -282,6 +291,9 @@
                 $('#modal_delete').modal('toggle');
                 $.ajax({
                     url: api_url+'/api/v1/blocked-ip/'+clickedIp.id+'/',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                     type: 'DELETE',
                 }).done(res => {
                     ShowBlockedIp();
@@ -292,6 +304,9 @@
                 $('#modal_delete2').modal('toggle');
                 $.ajax({
                     url: api_url+'/api/v1/emails/blocked/'+clickedIp.id+'/',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                     type: 'DELETE',
                 }).done(res => {
                     ShowBlockedDomain();
@@ -306,6 +321,9 @@
                     url: api_url+'/api/v1/blocked-ip/',
                     type: 'POST',
                     contentType: "application/json; charset=utf-8",
+                    xhrFields: {
+                        withCredentials: true
+                    },
                     data: '{"ip": "'+ip+'"}',
                     complete: function(xhr, textStatus) {
                         if(xhr.status != 200) alert("Tego ip nie można zablokować");
@@ -323,6 +341,9 @@
                     url: api_url+'/api/v1/emails/blocked/',
                     type: 'POST',
                     contentType: "application/json; charset=utf-8",
+                    xhrFields: {
+                        withCredentials: true
+                    },
                     data: '{"value": "'+ip+'"}',
                     complete: function(xhr, textStatus) {
                         if(xhr.status != 200) alert("Tej domeny nie można zablokować");

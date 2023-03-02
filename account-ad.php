@@ -315,6 +315,9 @@
 
             $.ajax({
                 url: api_url+'/api/v1/auth/logged/',
+                xhrFields: {
+                    withCredentials: true
+                },
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") 
                         window.location.replace("auth.php");
@@ -336,6 +339,9 @@
             async function ShowOwnerServers() {
                 await $.ajax({
                     url: api_url+'/api/v1/servers/own/'
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     data = res;
                     if(data.content.length == 0) return;
@@ -355,6 +361,9 @@
 
                 $.ajax({
                     url: api_url+'/api/v1/advertisements/own/',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     totalAds = res.length;
                     console.log(res);
@@ -413,6 +422,9 @@
                     processData: false,
                     contentType: false,
                     cache : false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
                     success : function(data) {
                     },
                     complete: function(xhr, textStatus) {

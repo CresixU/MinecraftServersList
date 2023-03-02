@@ -281,6 +281,9 @@
                 $.ajax({
                     type: 'GET',
                     url: api_url+'/api/v1/auth/logged/',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 })
                 .done(res => {
                     data = res;
@@ -300,6 +303,9 @@
                 url: api_url+'/api/v1/users/password-reset/',
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
+                xhrFields: {
+                        withCredentials: true
+                    },
                 data: '{"email": {"value": "'+resetEmail+'"}}',
                 complete: function(xhr, textStatus) {
                     console.log(xhr)

@@ -276,6 +276,9 @@
             //Authentication
             $.ajax({
                 url: api_url+'/api/v1/auth/logged/',
+                xhrFields: {
+                        withCredentials: true
+                    },
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") 
                         window.location.replace("auth.php");
@@ -303,6 +306,9 @@
 
                 $.ajax({
                     url: apiUrl,
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 })
                 .done(res => {
                     $('#users-list').empty();
@@ -346,6 +352,9 @@
                 var id = $('#modal_delete-user-id').text();
                 $.ajax({
                     url: api_url+'/api/v1/users/'+id+'/',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                     type: 'DELETE',
                 }).done(alert("Usunięto użytkownika "+id));
             }
@@ -390,6 +399,9 @@
                 $('#modal_history').modal('toggle');
                 $.ajax({
                     url: api_url+'/api/v1/history/'+userId+'/?page=0&size=10',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     historyData = res;
                     if(historyData.content.length == 0) return;

@@ -169,6 +169,9 @@
 
             $.ajax({
                 url: api_url+'/api/v1/auth/logged/',
+                xhrFields: {
+                        withCredentials: true
+                    },
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") 
                         window.location.replace("auth.php");
@@ -201,6 +204,9 @@
 
                 $.ajax({
                     url: mcapi_url,
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     if(res.status == 'error')  {
                         $('#motd-response').text("Error. Prawdopodobnie nie odnaleziono serwera");
@@ -219,9 +225,12 @@
             //Funkcja zwarająca wszystkie oficialne wersje serwerów mc
             async function GetMinecraftAllVersions() {
                 await $.ajax({
-                    url: 'https://launchermeta.mojang.com/mc/game/version_manifest.json',
+                    url: api_url+'/api/v1/servers/versions/',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
-                    var results = res.versions.filter(x => x.type == 'release');
+                    res.forEach(x => $('#server-versions').append($('<option value="'+x.version+'">'+x.version+'</option>')));
                 })
             }
 
@@ -235,6 +244,9 @@
             async function GetMinecraftAllGameModes() {
                 $.ajax({
                     url: api_url+'/api/v2/game-modes/?status=ACCEPTED',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     res.content.forEach(x => $('#server-gamemode').append($('<option value="'+x.id+'">'+x.gameMode+'</option>')));
                 });
