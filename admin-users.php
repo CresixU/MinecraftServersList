@@ -98,7 +98,7 @@
             <div class="container">
 
             <!-- MODAL DELETE -->
-            <div class="modal fade" id="modal_delete" tabindex="-1" role="dialog" aria-labelledby="modal_delete" aria-hidden="true">
+                                    <div class="modal fade" id="modal_delete" tabindex="-1" role="dialog" aria-labelledby="modal_delete" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -233,7 +233,7 @@
                                                 <td>E-mail</td>
                                                 <td>MotD</td>
                                                 <td>Rola</td>
-                                                <td colspan="4">Akcje</td>
+                                                <td colspan="3">Akcje</td>
                                             </tr>
                                         </thead>
                                         <tbody id="users-list">
@@ -315,7 +315,7 @@
                     }
 
                     $('#users-count').text(data.total);
-                    data.content.forEach(x => $('#users-list').append($('<tr><td>'+x.id+'</td><td>'+x.login+'</td><td>'+x.email+'</td><td>'+x.motD+'</td><td>'+x.role+'</td><td><button onclick="ModalDelete(\''+x.id+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><button onclick="ModalEdit(\''+x.id+'\')"><i class="bi bi-pencil-square"></i></button</td><td><button onclick="ModalHistory(\''+x.id+'\')"><i class="bi bi-card-text"></i></button></td><td><a href="server.php?id='+x.id+'"><i class="bi bi-card-image"></i></a></td></tr>')))
+                    data.content.forEach(x => $('#users-list').append($('<tr><td>'+x.id+'</td><td>'+x.login+'</td><td>'+x.email+'</td><td>'+x.motD+'</td><td>'+x.role+'</td><td><button onclick="ModalDelete(\''+x.id+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><button onclick="ModalEdit(\''+x.id+'\')"><i class="bi bi-pencil-square"></i></button</td><td><button onclick="ModalHistory(\''+x.id+'\')"><i class="bi bi-card-text"></i></button></td></tr>')))
                     ChangePage(currentPage);
                 });
             }
