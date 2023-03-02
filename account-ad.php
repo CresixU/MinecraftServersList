@@ -338,7 +338,7 @@
             }
             async function ShowOwnerServers() {
                 await $.ajax({
-                    url: api_url+'/api/v1/servers/own/'
+                    url: api_url+'/api/v1/servers/own/',
                     xhrFields: {
                         withCredentials: true
                     },
@@ -408,6 +408,9 @@
 
                 $.ajax({
                     url: fullUrl,
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res=>{
                     $('#calculated-price').text(res.price);
                 })
@@ -449,6 +452,9 @@
                     dataType: 'json',
                     contentType: "application/json; charset=utf-8",
                     data: '{"link": "'+link+'"}',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                     complete: function(xhr, textStatus) {
                         if(xhr.status != 200) alert(xhr.responseJSON.message);
                         else alert('Zaaktualizowano dane');
@@ -458,12 +464,18 @@
             async function ButtonAdStatistics(adId) {
                 $('#modal_stats-table').empty();
                 await $.ajax({
-                    url: api_url+'/api/v1/advertisements/statistics/'+adId+'/clicks/'
+                    url: api_url+'/api/v1/advertisements/statistics/'+adId+'/clicks/',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                 }).done(res => {
                     $('#modal_stats-sum-clicks').text(res.clicks);
                 })
                 await $.ajax({
-                        url: api_url+'/api/v1/advertisements/statistics/'+adId+'/'
+                        url: api_url+'/api/v1/advertisements/statistics/'+adId+'/',
+                        xhrFields: {
+                            withCredentials: true
+                        },
                     }).done(res => {
                         res.forEach(x => $('#modal_stats-table').append($('<tr><td>'+x.date+'</td><td>'+x.clicks+'</td></tr>')));
                     })
@@ -483,6 +495,9 @@
                     dataType: 'json',
                     contentType: "application/json; charset=utf-8",
                     data: '{"days": '+modalDays+',"method": "'+modalMethod+'"}',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                     complete: function(xhr, textStatus) {
                         if(xhr.status != 200) alert(xhr.responseJSON.message);
                     } 
@@ -502,6 +517,9 @@
             ShowAds()
             $.ajax({
                 url: api_url+'/api/v1/advertisements-payments/available-methods/'
+                xhrFields: {
+                        withCredentials: true
+                    },
             }).done(res => {
                 res.forEach(x => $('#method').append($('<option value="'+x+'">'+ReturnPaymentType(x)+'</option>')));
                 res.forEach(x => $('#modal-method').append($('<option value="'+x+'">'+ReturnPaymentType(x)+'</option>')));    

@@ -310,8 +310,7 @@
                 },
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") 
-                        //window.location.replace("auth.php");
-                        console.log("ez");
+                        window.location.replace("auth.php");
                 }
             }).done(res => {
                 userData = res;
