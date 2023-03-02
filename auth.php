@@ -121,7 +121,7 @@
                         </div>
                         <div id="login-response"></div>
 
-                        <input type="button" class="btn-green" onclick="Login()" value="Zaloguj">
+                        <input type="button" class="btn-green" onclick="OnLogin()" value="Zaloguj">
                     </form>
                     <button class="simple-button" onclick="$('#modal_password-reset').modal('toggle');">Nie pamiętam hasła</button><br>
                     
@@ -183,6 +183,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/password-requirements.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl"></script>
     <script>
         var api_url = "<?php echo $api ?>";
         var data;
@@ -258,7 +259,14 @@
 
 
         }
-
+        function OnLogin(e) {
+            e.preventDefault();
+            grecaptcha.ready(function() {
+                grecaptcha.execute('6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl', {action: 'submit'}).then(function(token) {
+                    Login();
+                });
+            });
+        }
         function Login() {
             var username = $('#account-login-name').val();
             var password = $('#account-login-password').val();
@@ -276,18 +284,6 @@
                     if(xhr.status == 200) window.location.replace("index.php");
                     else $('#login-response').html($('<p class="mt-3" style="color: red">'+xhr.responseJSON.message+'</p>'));
                 } 
-            })
-            .done(res => {
-                $.ajax({
-                    type: 'GET',
-                    url: api_url+'/api/v1/auth/logged/',
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                })
-                .done(res => {
-                    data = res;
-                })
             });
         }
 
