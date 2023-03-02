@@ -303,7 +303,7 @@
             var versions = [];
             $('#nav-konto').addClass('active');
 
-            /*$.ajax({
+            $.ajax({
                 url: api_url+'/api/v1/auth/logged/',
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") 
@@ -315,7 +315,7 @@
                     $('.panel-header').append($('<div class="col"><a href="admin-servers.php">Panel Administratora</a></div>'))
                 }
             })
-*/
+
 
             async function ShowOwnerServers() {
                 await $.ajax({
