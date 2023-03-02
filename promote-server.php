@@ -117,11 +117,8 @@
                             <div class="panel-content pb-5">
                                 <div>
                                     <h2>Promowanie serwera</h2>
-                                    <p>Na czym polega i co zyskujesz na umieszczeniu swojego serwera na liście serwerów promowanych:</p>
+                                    <p class="mb-0 pb-0">Na czym polega i co zyskujesz na umieszczeniu swojego serwera na liście serwerów promowanych:</p>
                                     <ul class="mx-3">
-                                        <li>
-                                            Aby promować swój serwer musisz posiadać Tokeny, które wymieniasz na jeden z pakietów pozwalający na umieszczenie serwera na liście serwerwów promowanych.
-                                        </li>
                                         <li>
                                             Goście odwiedzający nasz serwis mogą obejrzeć wszystkie promowane serwery w galerii na górze strony. System rozpoczyna prezentację od ostatno wyświetlonego serwera, indywidualnie dla każdego gościa odwiedzającego nasz serwis.
                                         </li>
@@ -132,62 +129,50 @@
                                             Gracze zauważają to, że inwestujesz w rozwój i promocję swojego serwera
                                         </li>
                                     </ul>
-                                    <div class="d-flex justify-content-center">
-                                        <button class="simple-button" style="margin-right: 20px;">Kup tokeny</button>
-                                        <button class="simple-button" style="margin-left: 20px;">Promuj serwer</button>
-                                    </div>
                                 </div>
                                 <div>
                                     <div class="second-header mb-0 pr-4" style="padding-right: 20px;">
-                                        <p style="width: 50%" class="mb-0">Kup tokeny</p>
-                                        <p style="width: 50%; text-align: right;" class="mb-0">Twoje tokeny: 123</p>
+                                        <p class="mb-0">Promuj serwer</p>
                                     </div>
-                                    <div class="mx-auto" style="max-width: 500px; width: 100%; padding: 20px 15px;">
+                                    <div class="mx-auto" style="max-width: 500px; width: 100%; padding: 20px 15px;" id="form">
                                         <div>
-                                            <label for="payment-method" id="payment-method-label" style="top:0">Metoda płatności</label>
-                                            <select name="payment-method" id="payment-method">
-                                                <option value="Brak" selected disabled>Wybierz metodę płatności</option>
-                                                <option value="przelew">Przelew</option>
-                                                <option value="blik">BLIK</option>
-                                                <option value="przelew_tradycyjny">Przelew tradycyjny</option>
-                                                <option value="sms">SMS Premium</option>
-                                                <option value="paypal">Paypal</option>
-                                                <option value="psc">PaySafeCard</option>
+                                            <label for="serverId" style="top:0;">Serwer</label>
+                                            <select id="serverId" name="serverId">
+                                                <option value="Brak" selected disabled>Wybierz</option>
                                             </select>
                                         </div>
                                         <div>
-                                            <label for="tokens" id="tokens-label">Ilość tokenów</label>
-                                            <input type="text" id="tokens" placeholder="Wpisz tutaj ile tokenów chcesz kupić...">
-                                        </div>
-                                        <div>
-                                            <label for="money" id="money-label">Cena w PLN</label>
-                                            <input type="number" id="money-port" placeholder="---">
-                                        </div>
-                                        <div>
-                                            <label for="email" id="email-label">Adres e-mail</label>
-                                            <input type="text" id="email" placeholder="example@ex.com">
-                                        </div>
-                                        <div>
-                                            <label for="select-server" id="select-server-label" style="top:0">Metoda płatności</label>
-                                            <select name="select-server" id="select-server">
-                                                <option value="Brak" selected disabled>Wybierz serwer</option>
-                                                <option value="ID">hypixel.com</option>
-                                                <option value="ID2">hakuna-matata.pl</option>
+                                            <label for="method" style="top:0;">Forma płatności</label>
+                                            <select id="method" class="calculate-price" name="method">
+                                                <option value="Brak" selected disabled>Wybierz</option>
                                             </select>
                                         </div>
-                                        <div class="mt-4 row">
-                                            <div class="col col-6">
-                                                <input type="checkbox" id="account-register-rules">
-                                                <label for="account-register-rules" class="not-label">Akceptuje regulamin</label>
-                                            </div>
-                                            <div class="col col-6">
-                                                <button class="simple-button mt-1">Przejdź do płatności</button>
-                                            </div>
+                                        <div>
+                                            <label for="daysToReserve">Dni promowania</label>
+                                            <select id="daysToReserve" class="calculate-price" name="daysToReserve">
+                                                <option value="Brak" selected disabled>Wybierz</option>
+                                                <option value="3">3 dni</option>
+                                                <option value="7">7 dni</option>
+                                                <option value="14">14 dni</option>
+                                                <option value="30">30 dni</option>
+                                                <option value="60">60 dni</option>
+                                                <option value="90">90 dni</option>
+                                            </select>
                                         </div>
-                                        
+                                        <div>
+                                            <label for="promotionalCode">Kod promocyjny</label>
+                                            <input type="text" id="promotionalCode" class="calculate-price" name="promotionalCode">
+                                        </div>
+                                        <div class="mt-3">
+                                            <p style="text-align: right">Cena: <span id="calculated-price">0</span> zł</p>
+                                        </div>
+                                        <div id="createAd-response"></div>
+                                        <div>
+                                            <input type="button" value="Promuj serwer" class="simple-button mx-auto" onclick="SendData()">
+                                        </div>
                                     </div>
                                 </div>
-                                <!-- PAKIETY PROMOWANIA -->
+                                <!-- PAKIETY PROMOWANIA 
                                 <div>
                                     <p class="second-header mb-0">Pakiety promowania</p>
                                     <div class="row">
@@ -284,7 +269,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -303,10 +288,92 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="js/payment-services.js"></script>
         <script>
             var api_url = "<?php echo $api ?>";
             var data;
-            $('#nav-serwery').addClass('active');            
+            $('#nav-serwery').addClass('active');    
+            $.ajax({
+                url: api_url+'/api/v1/auth/logged/',
+                complete: function(xhr, textStatus) {
+                    if(xhr.status != "200") 
+                        window.location.replace("auth.php");
+                } 
+            });
+            
+            $('.calculate-price').on('change', function() {
+                if($('#method').val() == null) return;
+                if($('#daysToReserve').val() == null) return;
+
+                var fullUrl = api_url+'/api/v1/advertisements-payments/calculate/?days='+$("#daysToReserve").val()+'&method='+$('#method').val();
+                if($('#promotionalCode').val() != '') fullUrl += '&promotionalCode='+$('#promotionalCode').val();
+
+                $.ajax({
+                    url: fullUrl,
+                }).done(res=>{
+                    $('#calculated-price').text(res.price);
+                })
+            })
+
+            function SendData() {
+                var server = $('#serverId').val();
+                var paymentMethod = $('#method').val();
+                var days = $('#daysToReserve').val();
+                var code = $('#promotionalCode').val();
+                if(server == null) {
+                    alert('Nie wybrano serwera');
+                    return;
+                }
+                if(paymentMethod == null) {
+                    alert('Nie wybrano typu płatności');
+                    return;
+                }
+                if(days == '' || days == null) {
+                    alert('Nie podano ilości dni');
+                    return;
+                }
+                if(code == '' || code == null) code == "none";
+
+                $.ajax({
+                    url : api_url+'/api/v1/promote-payments/',
+                    type: 'POST',
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"method": "'+paymentMethod+'","days": '+days+',"serverId": "'+server+'","promoCode": "'+code+'"}',
+                    success : function(data) {
+                    },
+                    complete: function(xhr, textStatus) {
+                        if(xhr.status != 200) $('#createAd-response').html($('<p class="mt-3" style="color: red">'+xhr.responseJSON.message+'</p>'));
+                    }
+                }).done(res => {
+                    console.log(res);
+                    var win = window.open(res.payment.url, '_blank');
+                    if (win) {
+                        win.focus();
+                    } else {
+                        alert('Wymagane zezwolenie na wyskakujące okna na stronie. W celu dokonania płatności kliknij w pulsujący zielony guzik');
+                    }
+                    $('#form').append($('<div><a href="'+res.payment.url+'" class="btn-green">Przejdź do płatności</a></div>'));
+                })  
+            }
+
+            async function ShowOwnerServers() {
+                await $.ajax({
+                    url: api_url+'/api/v1/servers/own/'
+                }).done(res => {
+                    data = res;
+                    if(data.content.length == 0) return;
+                    data.content.forEach(x => {
+                        $('#serverId').append($('<option value="'+x.server.id+'">'+x.server.name+'</option>'));   
+                    });
+                })
+            }
+
+            GeneratePaymentTypes();
+            ShowOwnerServers();
         </script>
     </body>
 </html>
