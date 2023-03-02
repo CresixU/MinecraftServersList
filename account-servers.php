@@ -307,7 +307,7 @@
                 url: api_url+'/api/v1/auth/logged/',
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") 
-                        window.location.replace("auth.php");
+                        //window.location.replace("auth.php");
                 }
             }).done(res => {
                 userData = res;
