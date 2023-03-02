@@ -57,6 +57,9 @@
             url: api_url+'/api/v1/auth/logout/',
             type: 'DELETE',
             success: console.log('logout'),
+            xhrFields: {
+                withCredentials: true
+            },
         }).done(res => {
             window.location.replace('index.php');
         })
@@ -79,7 +82,7 @@
         }).done(res => {
             $('#stats-online-servers').text(res.numberOfOnlineServers+'/'+res.numberOfServers);
             $('#stats-users').text(res.numberOfUsers);
-            $('#stats-server-users').text('0 / 0');
+            $('#stats-server-users').text(res.numberOfOnlinePlayers);
         })
     }
 
