@@ -543,16 +543,15 @@
                     })
                 })
             }
-
+            //Funkcja zwarająca wszystkie oficialne wersje serwerów mc
             async function GetMinecraftAllVersions() {
                 await $.ajax({
-                    url: 'https://launchermeta.mojang.com/mc/game/version_manifest.json',
+                    url: api_url+'/api/v1/servers/versions/',
                     xhrFields: {
                         withCredentials: true
                     },
                 }).done(res => {
-                    var serverVersions = res.versions.filter(x => x.type == 'release');
-                    serverVersions.forEach(x => $('#server-version').append($('<option value="'+x.id+'">'+x.id+'</option>')));
+                    res.forEach(x => $('#server-versions').append($('<option value="'+x.version+'">'+x.version+'</option>')));
                 })
             }
             async function GetMinecraftAllGameModes() {
