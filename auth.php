@@ -103,6 +103,29 @@
                         </div>
                     </div>
 
+                    <!-- Resend mail activation modal -->
+                    <div class="modal fade" id="modal_activation" tabindex="-1" role="dialog" aria-labelledby="modal_activation" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Wyślij ponownie mail aktywacyjny</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#modal_activation').modal('toggle');">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <label for="modal_activation-input">Podaj mail</label>
+                                    <input type="text" id="modal_activation-input" placeholder="example@mail.com">
+                                    <div id="modal_activation-response"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" onclick="ModalActivationAction()">Wyślij</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#modal_activation').modal('toggle');">Anuluj</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
             <div class="account-authentication row">
                 <div class="col col-12" style="justify-content: center; display: flex;">
                     <div><a onclick="ShowLogin()">Zaloguj się</a></div>
@@ -165,7 +188,7 @@
                         <div id="register-response"></div>
                         <input type="button" onclick="OnRegister(event)" class="btn-green" value="Zarejestruj się">
                     </form>
-                    <button class="simple-button">Wyślij ponownie klucz weryfikacyjny</button>
+                    <button class="simple-button" onclick="$('#modal_activation').modal('toggle');">Wyślij ponownie klucz weryfikacyjny</button>
                 </div>
             </div>
         </div>
@@ -315,6 +338,30 @@
                     console.log("Complete: "+xhr.status + " " +textStatus);
                     if(xhr.status == 200) $('#modal_reset-response').html($('<p class="mt-3" style="color: green">Link resetujący hasło został wysłany na podany adres mailowy</p>'));
                     else $('#modal_reset-response').html($('<p class="mt-3" style="color: red">'+xhr.responseJSON.message+'</p>'));
+                } 
+            });
+        }
+        function ModalActivationAction() {
+            var activationEmail = $('#modal_activation-input').val();
+            if(activationEmail == '') {
+                alert("Nie podano maila");
+                return;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: api_url+'/api/v1/auth/resend-activation/',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                xhrFields: {
+                        withCredentials: true
+                    },
+                data: '{"email": "'+activationEmail+'"}',
+                complete: function(xhr, textStatus) {
+                    console.log(xhr)
+                    console.log("Complete: "+xhr.status + " " +textStatus);
+                    if(xhr.status == 200) $('#modal_activation-response').html($('<p class="mt-3" style="color: green">Link aktywacyjny został ponownie wysłany na podany adres mailowy</p>'));
+                    else $('#modal_activation-response').html($('<p class="mt-3" style="color: red">'+xhr.responseJSON.message+'</p>'));
                 } 
             });
         }
