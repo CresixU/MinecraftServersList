@@ -19,36 +19,23 @@
         .star {
             cursor: pointer;
         }
-        .modal-content {
-                background: linear-gradient(to bottom, #110b08, #0e0906 70%);
-                color: #dfd7cc;
-            }
-            .modal-header {
-                border-bottom: none;
-            }
-            .modal-footer {
-                border-top: none;
-            }
-            .modal-title + button {
-                font-size: 200%;
-            }
 
-            label:not(.checkbox-label) {
-                margin-top: 10px;
-                width: 100%;
-                color: var(--href-color);
-                position: relative;
-                top: 10px;
-            }
-            input[type=text],
-            input[type=password] {
-                width: 100%;
-                padding: 8px 12px;
-                color: white;
-                border: none;
-                border-bottom: 2px solid var(--main-color);
-                border-radius: 8px;
-            }
+        label:not(.checkbox-label) {
+            margin-top: 10px;
+            width: 100%;
+            color: var(--href-color);
+            position: relative;
+            top: 10px;
+        }
+        input[type=text],
+        input[type=password] {
+            width: 100%;
+            padding: 8px 12px;
+            color: white;
+            border: none;
+            border-bottom: 2px solid var(--main-color);
+            border-radius: 8px;
+        }
     </style>
 
 </head>

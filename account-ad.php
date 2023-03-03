@@ -71,20 +71,6 @@
                 color: #73d6fa;
             }
 
-            .modal-content {
-                background: linear-gradient(to bottom, #110b08, #0e0906 70%);
-                color: #dfd7cc;
-            }
-            .modal-header {
-                border-bottom: none;
-            }
-            .modal-footer {
-                border-top: none;
-            }
-            .modal-title + button {
-                font-size: 200%;
-            }
-
             label:not(.checkbox-label) {
                 margin-top: 10px;
                 width: 100%;

@@ -68,20 +68,6 @@
                 color: #73d6fa;
             }
 
-            .modal-content {
-                background: linear-gradient(to bottom, #110b08, #0e0906 70%);
-                color: #dfd7cc;
-            }
-            .modal-header {
-                border-bottom: none;
-            }
-            .modal-footer {
-                border-top: none;
-            }
-            .modal-title + button {
-                font-size: 200%;
-            }
-
             label:not(.checkbox-label) {
                 margin-top: 10px;
                 width: 100%;
@@ -196,7 +182,7 @@
                                                         <div>
                                                             <input type="checkbox" id="addserver-ping-versions">
                                                             <label for="addserver-ping-versions" class="checkbox-label">Ręcznie dodam wersję serwera</label>
-                                                            <p class="mb-0" style="opacity: 0.5">Jeśli ta opcja jest odznaczona, nasz system zrobi to automatycznie</p>
+                                                            <p class="mb-0" style="opacity: 0.5; font-size: 13px;">Jeśli ta opcja jest odznaczona, nasz system zrobi to automatycznie</p>
                                                         </div>
                                                         <div id="server-versions-div" style="display: none;">
                                                             <label for="server-versions" id="server-versions-label" style="top:0;">Wersję serwera</label>
@@ -456,6 +442,7 @@
             })
 
             function AddGameModesToInput(thisServer) {
+                $('#server-versions-div .tokens-container').children('.token').remove();
                 if(thisServer.serverGameModes.length == 0) return;
                 if($('#server-gamemodes-div .tokens-container').children().length > 1) return;
                 var gm = thisServer.serverGameModes;
