@@ -55,19 +55,6 @@
             background-color: var(--main-color);
             padding: 5px;
         }
-        .modal-content {
-            background: linear-gradient(to bottom, #110b08, #0e0906 70%);
-            color: #dfd7cc;
-        }
-        .modal-header {
-            border-bottom: none;
-        }
-        .modal-footer {
-            border-top: none;
-        }
-        .modal-title + button {
-            font-size: 200%;
-        }
 
     </style>
 
@@ -79,6 +66,20 @@
     <?php require_once("components/top.php"); ?>
     <main>
         <div class="container p-5">
+
+                    <!-- Modal info modal -->
+                    <div class="modal fade" id="modal_info" tabindex="-1" role="dialog" aria-labelledby="modal_info" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content p-3">
+                                <div class="modal-body">
+                                    <h3 id="modal_info-text"></h3>
+                                </div>
+                                <div class="modal-footer" style="justify-content: center;">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="$('#modal_info').modal('toggle');">Okej</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Reset password modal -->
                     <div class="modal fade" id="modal_password-reset" tabindex="-1" role="dialog" aria-labelledby="modal_password-reset" aria-hidden="true">
@@ -336,10 +337,13 @@
                 complete: function(xhr, textStatus) {
                     console.log(xhr)
                     console.log("Complete: "+xhr.status + " " +textStatus);
-                    if(xhr.status == 200) $('#modal_reset-response').html($('<p class="mt-3" style="color: green">Link resetujący hasło został wysłany na podany adres mailowy</p>'));
+                    if(xhr.status == 200) {
+                        $('#modal_info-text').text("Link resetujący hasło został wysłany na podany adres mailowy");
+                        $('#modal_info').modal('toggle');
+                    }
                     else $('#modal_reset-response').html($('<p class="mt-3" style="color: red">'+xhr.responseJSON.message+'</p>'));
                 } 
-            });
+            })
         }
         function ModalActivationAction() {
             var activationEmail = $('#modal_activation-input').val();
@@ -360,7 +364,10 @@
                 complete: function(xhr, textStatus) {
                     console.log(xhr)
                     console.log("Complete: "+xhr.status + " " +textStatus);
-                    if(xhr.status == 200) $('#modal_activation-response').html($('<p class="mt-3" style="color: green">Link aktywacyjny został ponownie wysłany na podany adres mailowy</p>'));
+                    if(xhr.status == 200) {
+                        $('#modal_info-text').text("Link aktywacyjny został ponownie wysłany na podany adres mailowy");
+                        $('#modal_info').modal('toggle');
+                    }
                     else $('#modal_activation-response').html($('<p class="mt-3" style="color: red">'+xhr.responseJSON.message+'</p>'));
                 } 
             });
