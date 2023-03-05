@@ -178,7 +178,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary" onclick="ModalEditAction()">Zapisz</button>
+                                                    <button type="button" class="btn btn-primary" onclick="OnModalEditAction(event)">Zapisz</button>
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#modal_edit').modal('toggle');">Anuluj</button>
                                                 </div>
                                             </div>
@@ -483,7 +483,15 @@
                 AddGameModesToInput(thisServer)
                 
             }
-            function ModalEditAction() {
+            function OnModalEditAction(e) {
+                e.preventDefault();
+                grecaptcha.ready(function() {
+                    grecaptcha.execute('6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl', {action: 'submit'}).then(function(token) {
+                        Register(token);
+                    });
+                });
+            }
+            function ModalEditAction(token) {
                 //Send api request edit server
                 var servername = $('#modal_edit-servername').val();
                 var ip = $('#modal_edit-ip').val();
@@ -505,7 +513,7 @@
                         withCredentials: true
                     },
                     contentType: "application/json; charset=utf-8",
-                    data: '{"hostCredentials": {"host:" "'+ip+'","port": "'+port+'",},"serverCredentials": {"name": "'+servername+'","description": "'+desc+'","homepage": "'+homepage+'","facebook": "'+facebookServer+'","discord": "'+discordServer+'""isOnlineModeEnabled": '+isOnlineMode+',},"gameModesCredentials": {"internalGameModes": '+gamemodes+',},}',
+                    data: '{"hostCredentials": {"host:" "'+ip+'","port": "'+port+'",},"serverCredentials": {"name": "'+servername+'","description": "'+desc+'","homepage": "'+homepage+'","facebook": "'+facebookServer+'","discord": "'+discordServer+'""isOnlineModeEnabled": '+isOnlineMode+',},"gameModesCredentials": {"internalGameModes": '+gamemodes+',}, "gResponse": "'+token+'",}',
                     success: function(data, textStatus, xhr) {
                         console.log("Success: "+xhr.status + " " +textStatus);
                     },

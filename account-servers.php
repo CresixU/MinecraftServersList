@@ -198,7 +198,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary" onclick="ModalEditAction()">Zapisz</button>
+                                                    <button type="button" class="btn btn-primary" onclick="OnEditModalAction(event)">Zapisz</button>
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#modal_edit').modal('toggle');">Anuluj</button>
                                                 </div>
                                             </div>
@@ -375,7 +375,15 @@
                 AddGameModesToInput(thisServer)
                 
             }
-            function ModalEditAction() {
+            function OnEditModalAction(e) {
+                e.preventDefault();
+                grecaptcha.ready(function() {
+                    grecaptcha.execute('6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl', {action: 'submit'}).then(function(token) {
+                        ModalEditAction(token)
+                    });
+                });
+            }
+            function ModalEditAction(token) {
                 var servername = $('#modal_edit-servername').val();
                 var ip = $('#modal_edit-ip').val();
                 var port = $('#modal_edit-port').val();
@@ -396,7 +404,7 @@
                         withCredentials: true
                     },
                     contentType: "application/json; charset=utf-8",
-                    data: '{"hostCredentials": {"host": "'+ip+'","port": '+port+',"address": "'+ip+'"},"serverCredentials": {"name": "'+servername+'","description": "'+desc+'","homepage": "'+homepage+'","facebook": "'+facebookServer+'","discord": "'+discordServer+'","isOnlineModeEnabled": '+isOnlineMode+',"pingVersions": '+pingVersions+'},"gameModesCredentials": {"gameModeIds": '+ReturnStringArray(gamemodes)+'},"versionCredentials": {"versions": '+ReturnStringArray(versions)+'}}',
+                    data: '{"hostCredentials": {"host": "'+ip+'","port": '+port+',"address": "'+ip+'"},"serverCredentials": {"name": "'+servername+'","description": "'+desc+'","homepage": "'+homepage+'","facebook": "'+facebookServer+'","discord": "'+discordServer+'","isOnlineModeEnabled": '+isOnlineMode+',"pingVersions": '+pingVersions+'},"gameModesCredentials": {"gameModeIds": '+ReturnStringArray(gamemodes)+'},"versionCredentials": {"versions": '+ReturnStringArray(versions)+'}, "gResponse": "'+token+'"}',
                     success: function(data, textStatus, xhr) {
                         console.log("Success: "+xhr.status + " " +textStatus);
                     },
