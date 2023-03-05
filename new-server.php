@@ -140,7 +140,7 @@
                                         Dodaj serwer do listy
                                     </p>
                                     Captcha na środku
-                                    <button class="simple-button d-block" style="float:right" onclick="CreateNewServer()">Dodaj serwer</button>
+                                    <button class="simple-button d-block" style="float:right" onclick="OnCreate(event)">Dodaj serwer</button>
                                 </div>
 
                             </div>
@@ -237,6 +237,15 @@
                 })
             }
 
+            function OnCreate(e) {
+                e.preventDefault();
+                grecaptcha.ready(function() {
+                    grecaptcha.execute('6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl', {action: 'submit'}).then(function(token) {
+                        CreateNewServer(token);
+                    });
+                });
+            }
+
             //Funkcja zwarająca wszystkie oficialne wersje serwerów mc
             async function GetMinecraftAllVersions() {
                 await $.ajax({
@@ -285,7 +294,7 @@
             }
 
             //Create Server
-            function CreateNewServer() {
+            function CreateNewServer(token) {
                 var servername = $('#addserver-servername').val();
                 var ip = $('#addserver-ip').val();
                 var port = $('#addserver-port').val();
@@ -306,7 +315,7 @@
                         withCredentials: true
                     },
                     contentType: "application/json; charset=utf-8",
-                    data: '{"hostCredentials": {"host": "'+ip+'","port": '+port+',"address": "'+ip+'"},"serverCredentials": {"name": "'+servername+'","description": "'+desc+'","homepage": "'+homepage+'","facebook": "'+facebookServer+'","discord": "'+discordServer+'","isOnlineModeEnabled": '+isOnlineMode+',"pingVersions": '+pingVersions+'},"gameModesCredentials": {"gameModeIds": '+ReturnStringArray(gamemodes)+'},"versionCredentials": {"versions": '+ReturnStringArray(versions)+'}}',
+                    data: '{"hostCredentials": {"host": "'+ip+'","port": '+port+',"address": "'+ip+'"},"serverCredentials": {"name": "'+servername+'","description": "'+desc+'","homepage": "'+homepage+'","facebook": "'+facebookServer+'","discord": "'+discordServer+'","isOnlineModeEnabled": '+isOnlineMode+',"pingVersions": '+pingVersions+'},"gameModeCredentials": {"gameModeIds": '+ReturnStringArray(gamemodes)+'},"versionCredentials": {"versions": '+ReturnStringArray(versions)+'}, "gResponse": "'+token+'"}',
                     success: function(data, textStatus, xhr) {
                         console.log("Success: "+xhr.status + " " +textStatus);
                     },
