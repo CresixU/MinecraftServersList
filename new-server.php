@@ -139,7 +139,6 @@
                                     <p class="second-header mb-0">
                                         Dodaj serwer do listy
                                     </p>
-                                    Captcha na środku
                                     <button class="simple-button d-block" style="float:right" onclick="OnCreate(event)">Dodaj serwer</button>
                                 </div>
 
