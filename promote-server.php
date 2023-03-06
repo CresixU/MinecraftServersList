@@ -293,7 +293,7 @@
             var api_url = "<?php echo $api ?>";
             var data;
             $('#nav-serwery').addClass('active');    
-            $.ajax({
+            /*$.ajax({
                 url: api_url+'/api/v1/auth/logged/',
                 xhrFields: {
                         withCredentials: true
@@ -302,7 +302,7 @@
                     if(xhr.status != "200") 
                         window.location.replace("auth.php");
                 } 
-            });
+            });*/
             
             $('.calculate-price').on('change', function() {
                 if($('#method').val() == null) return;
@@ -348,7 +348,7 @@
                         withCredentials: true
                     },
                     contentType: "application/json; charset=utf-8",
-                    data: `{"method": "${paymentMethod}","days": ${days},"serverId": "${server}","promoCode": ${code.length === 0 ? null : '"'+code+'"'}}`,
+                    data: `{"method": "${paymentMethod}","days": ${days},"serverId": "${server}","promoCode": ${code ? null : '"'+code+'"'}}`,
                     success : function(data) {
                     },
                     complete: function(xhr, textStatus) {
