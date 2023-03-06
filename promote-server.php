@@ -308,7 +308,7 @@
                 if($('#method').val() == null) return;
                 if($('#daysToReserve').val() == null) return;
 
-                var fullUrl = api_url+'/api/v1/advertisements-payments/calculate/?days='+$("#daysToReserve").val()+'&method='+$('#method').val();
+                var fullUrl = api_url+'/api/v1/promote-payments/calculate/?days='+$("#daysToReserve").val()+'&method='+$('#method').val();
                 if($('#promotionalCode').val() != '') fullUrl += '&promotionalCode='+$('#promotionalCode').val();
 
                 $.ajax({
