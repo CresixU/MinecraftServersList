@@ -338,7 +338,7 @@
                     alert('Nie podano ilości dni');
                     return;
                 }
-                if(code == '' || code == null) code == "none";
+                if(code == '') code = null;
 
                 $.ajax({
                     url : api_url+'/api/v1/promote-payments/',
