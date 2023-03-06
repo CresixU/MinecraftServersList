@@ -346,7 +346,7 @@
             function ShowAds() {
 
                 $.ajax({
-                    url: api_url+'/api/v1/advertisements/own/',
+                    url: api_url+'/api/v1/banner/own/',
                     xhrFields: {
                         withCredentials: true
                     },
@@ -389,7 +389,7 @@
                 if($('#method').val() == null) return;
                 if($('#daysToReserve').val() == '') return;
 
-                var fullUrl = api_url+'/api/v1/advertisements-payments/calculate/?days='+$("#daysToReserve").val()+'&method='+$('#method').val();
+                var fullUrl = api_url+'/api/v1/banner-payments/calculate/?days='+$("#daysToReserve").val()+'&method='+$('#method').val();
                 if($('#promotionalCode').val() != '') fullUrl += '&promotionalCode='+$('#promotionalCode').val();
 
                 $.ajax({
@@ -405,7 +405,7 @@
             function SendData() {
                 var vcfData = new FormData($('#adform')[0]); 
                 $.ajax({
-                    url : api_url+'/api/v1/advertisements-payments/',
+                    url : api_url+'/api/v1/banner-payments/',
                     type : "POST",
                     data : vcfData,
                     processData: false,
@@ -433,7 +433,7 @@
             function ButtonAdSave(id,adId) {
                 var link = $('#edit-ad-link_'+id).val();
                 $.ajax({
-                    url: api_url+'/api/v1/advertisements/'+adId+'/',
+                    url: api_url+'/api/v1/banner/'+adId+'/',
                     type: 'PATCH',
                     dataType: 'json',
                     contentType: "application/json; charset=utf-8",
@@ -450,7 +450,7 @@
             async function ButtonAdStatistics(adId) {
                 $('#modal_stats-table').empty();
                 await $.ajax({
-                    url: api_url+'/api/v1/advertisements/statistics/'+adId+'/clicks/',
+                    url: api_url+'/api/v1/banner/statistics/'+adId+'/clicks/',
                     xhrFields: {
                         withCredentials: true
                     },
@@ -458,7 +458,7 @@
                     $('#modal_stats-sum-clicks').text(res.clicks);
                 })
                 await $.ajax({
-                        url: api_url+'/api/v1/advertisements/statistics/'+adId+'/',
+                        url: api_url+'/api/v1/banner/statistics/'+adId+'/',
                         xhrFields: {
                             withCredentials: true
                         },
@@ -476,7 +476,7 @@
                 var modalMethod = $('#modal-method').val();
                 var modalDays = $('#modal-daysToReserve').val();
                 await $.ajax({
-                    url: api_url+'/api/v1/advertisements-payments/renew/'+adId+'/',
+                    url: api_url+'/api/v1/banner-payments/renew/'+adId+'/',
                     type: 'POST',
                     dataType: 'json',
                     contentType: "application/json; charset=utf-8",
@@ -502,7 +502,7 @@
 
             ShowAds()
             $.ajax({
-                url: api_url+'/api/v1/advertisements-payments/available-methods/'
+                url: api_url+'/api/v1/banner-payments/available-methods/'
                 xhrFields: {
                         withCredentials: true
                     },
