@@ -344,7 +344,7 @@
             
             function ShowAdServers() {
                 $.ajax({
-                    url: api_url+'/api/v1/advertisements/?random=true'
+                    url: api_url+'/api/v1/banner/?random=true'
                 }).done(res => {
                     res.forEach(x => {
                         $('#ad-servers-list').append($('<div class="col col-6"><a href="'+x.link+'"><img src="'+api_url+'/resources/'+x.fileName+'"></a></div>'));
