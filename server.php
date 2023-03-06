@@ -310,8 +310,11 @@
             $.ajax({
                 type: 'PUT',
                 contentType: "application/json; charset=utf-8",
-                url: api_url+'/api/v1/servers/'+serverId+'/rates/',
+                url: api_url+'/api/v2/servers/'+serverId+'/rates/',
                 data: '{"rate": "'+number+'", "description": ""}',
+                xhrFields: {
+                    withCredentials: true
+                },
             })
             .done(res => {
                 console.log(res);
@@ -334,6 +337,9 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 data: '{"email": "'+emailInput+'"}',
+                xhrFields: {
+                    withCredentials: true
+                },
             }).done(res => {
                 $('#modal_like').modal('toggle');
                 alert("Mail został wysłany. Oczekuje na potwierdzenie");

@@ -207,8 +207,13 @@
                         var onlineModeIcon = 'icon-verified';
                         var starsId;
                         var promotedClass = '';
+                        var onlinePlayers = 0;
+                        var serverSize = 0;
                         if(currentServer.server.promoted) promotedClass = 'premium';
                         if(currentServer.serverPingCredentials != null) {
+                            onlinePlayers = currentServer.serverPingCredentials.onlinePlayers;
+                            serverSize = currentServer.serverPingCredentials.serverSize;
+                            
                             if(currentServer.serverPingCredentials.isOnline)  onlineLight = 'icon-on'
 
                             if(currentServer.serverPingCredentials.timesOffline > 0) {
@@ -219,7 +224,7 @@
 
                         if(!currentServer.server.onlineModeEnabled) onlineModeIcon = 'icon-no-verified';
 
-                        $('.table-list-content').append($('<a href="./server.php?id='+currentServer.server.id+'"><div class="table-list-row '+promotedClass+'"><div class="body-rank">'+(i+1)+'.</div><div class="body-name">'+currentServer.server.name+'</div><div class="body-web">'+currentServer.server.homepage+'</div><div style="margin-left: 5px;" class="body-players">'+currentServer.serverPingCredentials?.onlinePlayers+'/'+currentServer.serverPingCredentials?.serverSize+' <i style="margin-left: auto; margin-right: 5px;" class="icon '+onlineLight+'"></i></div><div class="body-points">'+currentServer.server.points+'</div><div class="body-ratio">'+serverOnlineRatio+'%</div><div class="body-mode"><i class="icon '+onlineModeIcon+'"></i></div><div class="body-version" title="'+ReturnServerVersions(currentServer.minecraftServerVersions).versionsString+'">'+ReturnServerVersions(currentServer.minecraftServerVersions).formatedVersions+'</div><div class="body-verified"><i class="icon icon-no-verified"></i></div><div class="body-likes">'+currentServer.likes.likes+'</div><div class="body-rate"><div class="stars" id="stars_'+i+'"></div><span>'+currentServer.rate.rate+'</span></div></div></a>'));
+                        $('.table-list-content').append($('<a href="./server.php?id='+currentServer.server.id+'"><div class="table-list-row '+promotedClass+'"><div class="body-rank">'+(i+1)+'.</div><div class="body-name">'+currentServer.server.name+'</div><div class="body-web">'+currentServer.server.homepage+'</div><div style="margin-left: 5px;" class="body-players">'+onlinePlayers+'/'+serverSize+' <i style="margin-left: auto; margin-right: 5px;" class="icon '+onlineLight+'"></i></div><div class="body-points">'+currentServer.server.points+'</div><div class="body-ratio">'+serverOnlineRatio+'%</div><div class="body-mode"><i class="icon '+onlineModeIcon+'"></i></div><div class="body-version" title="'+ReturnServerVersions(currentServer.minecraftServerVersions).versionsString+'">'+ReturnServerVersions(currentServer.minecraftServerVersions).formatedVersions+'</div><div class="body-verified"><i class="icon icon-no-verified"></i></div><div class="body-likes">'+currentServer.likes.likes+'</div><div class="body-rate"><div class="stars" id="stars_'+i+'"></div><span>'+currentServer.rate.rate+'</span></div></div></a>'));
                         ShowStarsRate("stars",i,currentServer.rate.rate);
                         ChangePage(currentPage);
                     }
