@@ -369,7 +369,9 @@
                         var onlineLight = 'icon-on';
                         var serverOnlineRatio = 100.00;
                         var onlineModeIcon = 'icon-verified';
-                        var lastOnline = currentServer.serverPingCredentials.addedAt.substr(8,2)+'.'+currentServer.serverPingCredentials.addedAt.substr(5,2)+'.'+currentServer.serverPingCredentials.addedAt.substr(0,4)+'  '+currentServer.serverPingCredentials.addedAt.substr(11,5)
+                        var lastOnline = "??";
+                        if(currentServer.serverPingCredentials != null)
+                            lastOnline = currentServer.serverPingCredentials.addedAt.substr(8,2)+'.'+currentServer.serverPingCredentials.addedAt.substr(5,2)+'.'+currentServer.serverPingCredentials.addedAt.substr(0,4)+'  '+currentServer.serverPingCredentials.addedAt.substr(11,5)
                         if(currentServer.server.promoted) promotedClass = 'premium';
                         if(!currentServer.serverPingCredentials.isOnline)  onlineLight = 'icon-off';
 

@@ -273,7 +273,7 @@
             }
             function ReturnServerValue(x) {
                 if(!x) return "";
-                return x;
+                return x.address;
             }
             async function GenerateHistoryTypes() {
                 await $.ajax({

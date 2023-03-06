@@ -213,6 +213,7 @@
         <script>
             var api_url = "<?php echo $api ?>";
             var data;
+            var data2;
             var userData;
             var clickedIp;
             $('#nav-konto').addClass('active');
@@ -240,7 +241,7 @@
                         withCredentials: true
                     },
                 }).done(res => {
-                    data = res;
+                    data2 = res;
                     $('#blocked-ip-count').text(data.length);
                     data.forEach(x => $('#blocked-list-ip').append($('<tr><td>'+x.ip+'</td><td><button onclick="ModalDeleteIp(\''+x.id+'\')"><i class="bi bi-trash3-fill"></i></button></td></tr>')))
                 })
@@ -261,7 +262,7 @@
             };
 
             function ModalDeleteIp(id) {
-                clickedIp = data.find(x => x.id == id);
+                clickedIp = data2.find(x => x.id == id);
                 $('#modal_delete-ip').text(clickedIp.ip);
                 $('#modal_delete-id').text(clickedIp.id);
                 $('#modal_delete').modal('toggle');

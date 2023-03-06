@@ -331,7 +331,7 @@
             }
             function ReturnServerValue(x) {
                 if(!x) return "";
-                return x;
+                return x.address;
             }
             function ReturnPaymentValue(x) {
                 if(!x) return "";
