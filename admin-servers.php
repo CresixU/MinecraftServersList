@@ -302,6 +302,7 @@
         <script src="autocomplete/tokenize2.js"></script>
         <script type="text/javascript" src="js/server-service.js"></script>
         <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://www.google.com/recaptcha/api.js?render=6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl"></script>
         <script>
             var api_url = "<?php echo $api ?>";
             var data;
