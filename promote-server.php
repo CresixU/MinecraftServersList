@@ -348,7 +348,7 @@
                         withCredentials: true
                     },
                     contentType: "application/json; charset=utf-8",
-                    data: '{"method": "'+paymentMethod+'","days": '+days+',"serverId": "'+server+'","promoCode": "'+code+'"}',
+                    data: `{"method": "${paymentMethod}","days": ${days},"serverId": "${server}","promoCode": ${code.length === 0 ? null : '"'+code+'"'}}`,
                     success : function(data) {
                     },
                     complete: function(xhr, textStatus) {
