@@ -373,7 +373,7 @@
                         if(currentServer.serverPingCredentials != null)
                             lastOnline = currentServer.serverPingCredentials.addedAt.substr(8,2)+'.'+currentServer.serverPingCredentials.addedAt.substr(5,2)+'.'+currentServer.serverPingCredentials.addedAt.substr(0,4)+'  '+currentServer.serverPingCredentials.addedAt.substr(11,5)
                         if(currentServer.server.promoted) promotedClass = 'premium';
-                        if(!currentServer.serverPingCredentials.isOnline)  onlineLight = 'icon-off';
+                        if(currentServer.serverPingCredentials != null && !currentServer.serverPingCredentials.isOnline)  onlineLight = 'icon-off';
 
                         if(currentServer.serverPingCredentials.timesOffline > 0) {
                             serverOnlineRatio = (currentServer.serverPingCredentials.timesOnline / currentServer.serverPingCredentials.timesOffline).toFixed(2);

@@ -1,6 +1,6 @@
 function GeneratePaymentTypes() {
     $.ajax({
-        url: api_url+'/api/v1/advertisements-payments/available-methods/'
+        url: api_url+'/api/v1/promote-payments/available-methods/'
     }).done(res => {
         res.forEach(x => $('#method').append($('<option value="'+x+'">'+ReturnPaymentType(x)+'</option>')));      
     })
