@@ -210,7 +210,7 @@
                 $('#server-data-ip').text(data.serverHostCredentials.address);
                 $('#server-data-port').text(data.serverHostCredentials.port);
                 if(!data.serverPingCredentials.isOnline) onlineLight = 'icon-off';
-                $('#server-data-status').append($('<i class="icon '+onlineLight+'"></i> <span style="display:block; float: left;">'+data.serverPingCredentials.onlinePlayers+'/'+data.serverPingCredentials.serverSize+'</span>'));
+                $('#server-data-status').html($('<i class="icon '+onlineLight+'"></i> <span style="display:block; float: left;">'+data.serverPingCredentials.onlinePlayers+'/'+data.serverPingCredentials.serverSize+'</span>'));
                 $('#server-data-top').text(data.stats.maxPlayers);
                 $('#server-data-last-online').text(data.serverPingCredentials.addedAt.substr(8,2)+'.'+data.serverPingCredentials.addedAt.substr(5,2)+'.'+data.serverPingCredentials.addedAt.substr(0,4)+'  '+data.serverPingCredentials.addedAt.substr(11,5));
                 $('#server-data-page').text(data.server.homepage);
@@ -312,9 +312,6 @@
                 contentType: "application/json; charset=utf-8",
                 url: api_url+'/api/v2/servers/'+serverId+'/rates/',
                 data: '{"rate": "'+number+'", "description": ""}',
-                xhrFields: {
-                    withCredentials: true
-                },
             })
             .done(res => {
                 console.log(res);
