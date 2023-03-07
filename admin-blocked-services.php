@@ -242,8 +242,8 @@
                     },
                 }).done(res => {
                     data2 = res;
-                    $('#blocked-ip-count').text(data.length);
-                    data.forEach(x => $('#blocked-list-ip').append($('<tr><td>'+x.ip+'</td><td><button onclick="ModalDeleteIp(\''+x.id+'\')"><i class="bi bi-trash3-fill"></i></button></td></tr>')))
+                    $('#blocked-ip-count').text(data2.length);
+                    data2.forEach(x => $('#blocked-list-ip').append($('<tr><td>'+x.ip+'</td><td><button onclick="ModalDeleteIp(\''+x.id+'\')"><i class="bi bi-trash3-fill"></i></button></td></tr>')))
                 })
             };
 
@@ -313,9 +313,9 @@
                     },
                     data: '{"ip": "'+ip+'"}',
                     complete: function(xhr, textStatus) {
-                        if(xhr.status != 200) alert("Tego ip nie można zablokować");
                         console.log("Complete: "+xhr.status + " " +textStatus);
                         console.log("Complete: "+xhr.responseJSON.message);
+                        alert(xhr.responseJSON.message);
                     } 
                 }).done(res => {
                     ShowBlockedIp();
@@ -333,9 +333,9 @@
                     },
                     data: '{"value": "'+ip+'"}',
                     complete: function(xhr, textStatus) {
-                        if(xhr.status != 200) alert("Tej domeny nie można zablokować");
                         console.log("Complete: "+xhr.status + " " +textStatus);
                         console.log("Complete: "+xhr.responseJSON.message);
+                        alert(xhr.responseJSON.message);
                     } 
                 }).done(res => {
                     ShowBlockedDomain();

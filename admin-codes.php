@@ -372,10 +372,10 @@
                     },
                     complete: function(xhr, textStatus) {
                         console.log("Complete: "+xhr.status + " " +textStatus);
-                        //console.log("Complete: "+xhr.responseJSON.message);
+                        console.log("Complete: "+xhr.responseJSON.message);
+                        alert(xhr.responseJSON.message);
                     } 
                 }).done(res => {
-                    alert("Kod został utworzony");
                     ShowPromoCodes();
                 });
             }
