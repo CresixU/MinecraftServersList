@@ -192,6 +192,10 @@
                                         <label for="modal-daysToReserve">Dni do rezerwacji</label>
                                         <input type="text" id="modal-daysToReserve" class="calculate-price">
                                     </div>
+                                    <div>
+                                        <label for="modal_promotionalCode">Kod promocyjny</label>
+                                        <input type="text" id="modal_promotionalCode" class="calculate-price">
+                                    </div>
                                     <div id="modal_renew-button"></div>
                                 </div>
                                 <div class="modal-footer">
@@ -475,12 +479,13 @@
                 var adId = $('#modal_renew-id').val();
                 var modalMethod = $('#modal-method').val();
                 var modalDays = $('#modal-daysToReserve').val();
+                var modalCode = $('#modal_promotionalCode').val();
                 await $.ajax({
                     url: api_url+'/api/v1/banner-payments/renew/'+adId+'/',
                     type: 'POST',
                     dataType: 'json',
                     contentType: "application/json; charset=utf-8",
-                    data: '{"days": '+modalDays+',"method": "'+modalMethod+'"}',
+                    data: '{"days": '+modalDays+',"method": "'+modalMethod+'", "promoCode": "'+modalCode+'"}',
                     xhrFields: {
                         withCredentials: true
                     },
