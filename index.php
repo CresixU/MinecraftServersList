@@ -366,6 +366,9 @@
                 $.ajax({
                     type: 'POST',
                     url: api_url+'/api/v1/banner/statistics/'+id+'/',
+                    xhrFields: {
+                        withCredentials: true
+                    },
                     complete: function(xhr, textStatus) {
                         console.log("Complete: "+xhr.status + " " +textStatus);
                         window.open($('#'+id).data('href'),"_blank");
