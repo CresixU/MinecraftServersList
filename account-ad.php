@@ -266,8 +266,8 @@
                                             <input type="text" id="daysToReserve" class="calculate-price" name="daysToReserve">
                                         </div>
                                         <div>
-                                            <label for="promotionalCode">Kod promocyjny</label>
-                                            <input type="text" id="promotionalCode" class="calculate-price" name="promotionalCode">
+                                            <label for="promoCode">Kod promocyjny</label>
+                                            <input type="text" id="promoCode" class="calculate-price" name="promoCode">
                                         </div>
                                         <div class="mt-3">
                                             <p style="text-align: right">Cena: <span id="calculated-price">0</span> zł</p>
@@ -395,7 +395,7 @@
                 if($('#daysToReserve').val() == '') return;
 
                 var fullUrl = api_url+'/api/v1/banner-payments/calculate/?days='+$("#daysToReserve").val()+'&method='+$('#method').val();
-                if($('#promotionalCode').val() != '') fullUrl += '&promotionalCode='+$('#promotionalCode').val();
+                if($('#promoCode').val() != '') fullUrl += '&promotionalCode='+$('#promoCode').val();
 
                 $.ajax({
                     url: fullUrl,
