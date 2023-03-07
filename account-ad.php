@@ -184,17 +184,17 @@
                                     <input type="text" id="modal_renew-id" style="display: none;">
                                     <div>
                                         <label for="modal_method" style="top:0;">Forma płatności</label>
-                                        <select id="modal_method" class="calculate-price2">
+                                        <select id="modal_method" class="calculate_price2">
                                             <option value="Brak" selected disabled>Wybierz</option>
                                         </select>
                                     </div>
                                     <div>
                                         <label for="modal_daysToReserve">Dni do rezerwacji</label>
-                                        <input type="text" id="modal_daysToReserve" class="calculate-price2">
+                                        <input type="text" id="modal_daysToReserve" class="calculate_price2">
                                     </div>
                                     <div>
                                         <label for="modal_promotionalCode">Kod promocyjny</label>
-                                        <input type="text" id="modal_promotionalCode" class="calculate-price2">
+                                        <input type="text" id="modal_promotionalCode" class="calculate_price2">
                                     </div>
                                     <p style="text-align: right">Cena: <span id="calculated-price2">0</span> zł</p>
                                     <div id="modal_renew-button"></div>
