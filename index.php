@@ -48,6 +48,14 @@
                 width: 100%;
                 height: 150px;
             }
+            .server-url a {
+                text-decoration: none;
+                color: #bed484;
+                transition: all .3s;
+            }
+            .server-url a:hover {
+                color: #b0db3e;
+            }
         </style>
     </head>
     <body>
@@ -322,7 +330,7 @@
 
                         if(!currentServer.server.onlineModeEnabled) onlineModeIcon = 'icon-no-verified';
 
-                        $('.promoted-servers-items').append($('<div class="promoted-server-item"><div class="promoted-server-title">MinecraftServerName</div><div class="promoted-server-players"><i class="icon icon-players"></i><div class="server-players-number">'+currentServer.serverPingCredentials.onlinePlayers+'/'+currentServer.serverPingCredentials.serverSize+'</div><i class="icon '+onlineLight+'"></i></div><div class="promoted-server-rate"><i class="icon icon-rate"></i><div class="rate-number">'+currentServer.rate.rate+'</div><div class="stars" id="starsP_'+i+'"> </div> </div><div class="promoted-server-mode"><i class="icon icon-www"></i><div class="promoted-server-status">Online mode: <i class="icon '+onlineModeIcon+'"></i></div></div><div class="promoted-server-version"><i class="icon icon-version"></i><div class="version-number" title="'+ReturnServerVersions(currentServer.minecraftServerVersions).versionsString+'">Wersja serwera: '+ReturnServerVersions(currentServer.minecraftServerVersions).formatedVersions+'</div></div><div class="promoted-server-web"><div class="server-url">'+currentServer.server.homepage+'</div></div></div>'));
+                        $('.promoted-servers-items').append($('<div class="promoted-server-item"><div class="promoted-server-title">'+currentServer.server.name+'</div><div class="promoted-server-players"><i class="icon icon-players"></i><div class="server-players-number">'+currentServer.serverPingCredentials.onlinePlayers+'/'+currentServer.serverPingCredentials.serverSize+'</div><i class="icon '+onlineLight+'"></i></div><div class="promoted-server-rate"><i class="icon icon-rate"></i><div class="rate-number">'+currentServer.rate.rate+'</div><div class="stars" id="starsP_'+i+'"> </div> </div><div class="promoted-server-mode"><i class="icon icon-www"></i><div class="promoted-server-status">Online mode: <i class="icon '+onlineModeIcon+'"></i></div></div><div class="promoted-server-version"><i class="icon icon-version"></i><div class="version-number" title="'+ReturnServerVersions(currentServer.minecraftServerVersions).versionsString+'">Wersja serwera: '+ReturnServerVersions(currentServer.minecraftServerVersions).formatedVersions+'</div></div><div class="promoted-server-web"><div class="server-url"><a href="'+currentServer.server.homepage+'">'+currentServer.server.homepage+'</a></div></div></div>'));
                         ShowStarsRate("starsP",i,currentServer.rate.rate);
                     }
                 });
