@@ -319,7 +319,7 @@
                     var onlineMode = "Tak";
                     data.content.forEach(x => {
                         if(!x.server.onlineModeEnabled) onlineMode = "Nie";
-                        $('#servers-list').append($('<tr><td>'+x.stats.placeInRanking+'</td><td>'+x.server.name+'</td><td>'+x.serverHostCredentials.address+'</td><td>'+x.serverHostCredentials.port+'</td><td>'+onlineMode+'</td><td class="version" title="'+ReturnServerVersions(x.minecraftServerVersions).versionsString+'">'+ReturnServerVersions(x.minecraftServerVersions).formatedVersions+'</td><td>'+x.server.points+'</td><td><button onclick="ModalDelete(\''+x.server.id+'\',\''+x.server.name+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><button onclick="ModalEdit(\''+x.server.id+'\')"><i class="bi bi-pencil-square"></i></button></td><td><a href="server.php?id='+x.server.id+'"><i class="bi bi-card-image"></i></a></td></tr>'))
+                        $('#servers-list').append($('<tr><td>'+x.stats.placeInRanking+'</td><td>'+x.server.name+'</td><td>'+x.serverHostCredentials.address+'</td><td>'+x.serverHostCredentials.port+'</td><td>'+onlineMode+'</td><td class="version" title="'+(ReturnServerVersions(currentServer.minecraftServerVersions).versionsString ?? '?')+'">'+(ReturnServerVersions(currentServer.minecraftServerVersions).formatedVersions ?? '?')+'</td><td>'+x.server.points+'</td><td><button onclick="ModalDelete(\''+x.server.id+'\',\''+x.server.name+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><button onclick="ModalEdit(\''+x.server.id+'\')"><i class="bi bi-pencil-square"></i></button></td><td><a href="server.php?id='+x.server.id+'"><i class="bi bi-card-image"></i></a></td></tr>'))
                     })
                     ;
                 })
