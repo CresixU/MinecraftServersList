@@ -187,7 +187,7 @@
 
             <!-- MODAL HISTORY -->
                                     <div class="modal fade" id="modal_history" tabindex="-1" role="dialog" aria-labelledby="modal_history" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-dialog" role="document"  style="max-width: 900px">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">Historia zmian ip serwera</h5>
