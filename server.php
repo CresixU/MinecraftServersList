@@ -209,10 +209,21 @@
                 $('#server-data-name').text(data.server.name);
                 $('#server-data-ip').text(data.serverHostCredentials.address);
                 $('#server-data-port').text(data.serverHostCredentials.port);
-                if(!data.serverPingCredentials.isOnline) onlineLight = 'icon-off';
-                $('#server-data-status').html($('<i class="icon '+onlineLight+'"></i> <span style="display:block; float: left;">'+data.serverPingCredentials.onlinePlayers+'/'+data.serverPingCredentials.serverSize+'</span>'));
+                if(data.serverPingCredentials != null) {
+                    if(!data.serverPingCredentials.isOnline) onlineLight = 'icon-off';
+                    $('#server-data-status').html($('<i class="icon '+onlineLight+'"></i> <span style="display:block; float: left;">'+data.serverPingCredentials.onlinePlayers+'/'+data.serverPingCredentials.serverSize+'</span>'));
+                    $('#server-data-last-online').text(data.serverPingCredentials.addedAt.substr(8,2)+'.'+data.serverPingCredentials.addedAt.substr(5,2)+'.'+data.serverPingCredentials.addedAt.substr(0,4)+'  '+data.serverPingCredentials.addedAt.substr(11,5));
+                    if(data.serverPingCredentials.timesOffline > 0)
+                        serverOnlineRatio = (data.serverPingCredentials.timesOnline / data.serverPingCredentials.timesOffline).toFixed(2);
+                }
+                else {
+                    $('#server-data-status').html($('<i class="icon icon-off"></i> <span style="display:block; float: left;">0/0</span>'));
+                    $('#server-data-last-online').text("??");
+                }
+                
+                
                 $('#server-data-top').text(data.stats.maxPlayers);
-                $('#server-data-last-online').text(data.serverPingCredentials.addedAt.substr(8,2)+'.'+data.serverPingCredentials.addedAt.substr(5,2)+'.'+data.serverPingCredentials.addedAt.substr(0,4)+'  '+data.serverPingCredentials.addedAt.substr(11,5));
+                
                 $('#server-data-page').text(data.server.homepage);
                 $('#server-data-facebook').text(data.server.facebook);
                 $('#server-data-discord').text(data.server.discord);
@@ -220,8 +231,7 @@
                 if(data.server.onlineModeEnabled) $('#server-data-online-mode').text("Tak");
                 else $('#server-data-online-mode').text("Nie");
                 $('#server-data-points').text(data.server.points);
-                if(data.serverPingCredentials.timesOffline > 0)
-                    serverOnlineRatio = (data.serverPingCredentials.timesOnline / data.serverPingCredentials.timesOffline).toFixed(2);
+                
                 $('#server-data-ratio').text(serverOnlineRatio+'%');
                 $('#server-data-rank').text(data.stats.placeInRanking);
                 $('#server-data-added').text(data.server.addedAt.substr(8,2)+'.'+data.server.addedAt.substr(5,2)+'.'+data.server.addedAt.substr(0,4)+'  '+data.server.addedAt.substr(11,5));
