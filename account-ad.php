@@ -531,7 +531,7 @@
                     },
             }).done(res => {
                 res.forEach(x => $('#method').append($('<option value="'+x+'">'+ReturnPaymentType(x)+'</option>')));
-                res.forEach(x => $('#modal-method').append($('<option value="'+x+'">'+ReturnPaymentType(x)+'</option>')));    
+                res.forEach(x => $('#modal_method').append($('<option value="'+x+'">'+ReturnPaymentType(x)+'</option>')));    
             })
             
         </script>
