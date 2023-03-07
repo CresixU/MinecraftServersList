@@ -312,6 +312,9 @@
                 contentType: "application/json; charset=utf-8",
                 url: api_url+'/api/v2/servers/'+serverId+'/rates/',
                 data: '{"rate": "'+number+'", "description": ""}',
+                xhrFields: {
+                    withCredentials: true
+                },
             })
             .done(res => {
                 console.log(res);
