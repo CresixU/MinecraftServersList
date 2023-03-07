@@ -242,7 +242,7 @@
             .done(res => {
                 chartData = res;
                 for(var k=0;k<chartData.content.length;k++) {
-                    if(chartData.content[k].onlinePlayers > 0) {
+                    if(chartData.content[k].onlinePlayers >= 0) {
                         time.push(chartData.content[k].addedAt);
                         players.push(chartData.content[k].onlinePlayers);
                     }
