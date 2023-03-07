@@ -183,19 +183,20 @@
                                 <div class="modal-body p-3">
                                     <input type="text" id="modal_renew-id" style="display: none;">
                                     <div>
-                                        <label for="modal-method" style="top:0;">Forma płatności</label>
-                                        <select id="modal-method" class="calculate-price">
+                                        <label for="modal_method" style="top:0;">Forma płatności</label>
+                                        <select id="modal_method" class="calculate-price2">
                                             <option value="Brak" selected disabled>Wybierz</option>
                                         </select>
                                     </div>
                                     <div>
-                                        <label for="modal-daysToReserve">Dni do rezerwacji</label>
-                                        <input type="text" id="modal-daysToReserve" class="calculate-price">
+                                        <label for="modal_daysToReserve">Dni do rezerwacji</label>
+                                        <input type="text" id="modal_daysToReserve" class="calculate-price2">
                                     </div>
                                     <div>
                                         <label for="modal_promotionalCode">Kod promocyjny</label>
-                                        <input type="text" id="modal_promotionalCode" class="calculate-price">
+                                        <input type="text" id="modal_promotionalCode" class="calculate-price2">
                                     </div>
+                                    <p style="text-align: right">Cena: <span id="calculated-price2">0</span> zł</p>
                                     <div id="modal_renew-button"></div>
                                 </div>
                                 <div class="modal-footer">
@@ -405,6 +406,23 @@
                     $('#calculated-price').text(res.price);
                 })
             })
+            //Modal
+            $('.calculate_price2').on('change', function() {
+                if($('#modal_method').val() == null) return;
+                if($('#modal_daysToReserve').val() == '') return;
+
+                var fullUrl = api_url+'/api/v1/banner-payments/calculate/?days='+$("#modal_daysToReserve").val()+'&method='+$('#modal_method').val();
+                if($('#modal_promotionalCode').val() != '') fullUrl += '&promotionalCode='+$('#modal_promotionalCode').val();
+
+                $.ajax({
+                    url: fullUrl,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                }).done(res=>{
+                    $('#calculated-price2').text(res.price);
+                })
+            })
 
             function SendData() {
                 var vcfData = new FormData($('#adform')[0]); 
@@ -477,8 +495,8 @@
             }
             async function ButtonAdExtendAction() {
                 var adId = $('#modal_renew-id').val();
-                var modalMethod = $('#modal-method').val();
-                var modalDays = $('#modal-daysToReserve').val();
+                var modalMethod = $('#modal_method').val();
+                var modalDays = $('#modal_daysToReserve').val();
                 var modalCode = $('#modal_promotionalCode').val();
                 await $.ajax({
                     url: api_url+'/api/v1/banner-payments/renew/'+adId+'/',
