@@ -502,7 +502,7 @@
 
             ShowAds()
             $.ajax({
-                url: api_url+'/api/v1/banner-payments/available-methods/'
+                url: api_url+'/api/v1/banner-payments/available-methods/',
                 xhrFields: {
                         withCredentials: true
                     },
