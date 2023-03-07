@@ -490,7 +490,7 @@
                 e.preventDefault();
                 grecaptcha.ready(function() {
                     grecaptcha.execute('6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl', {action: 'submit'}).then(function(token) {
-                        Register(token);
+                        ModalEditAction(token);
                     });
                 });
             }
