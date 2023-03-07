@@ -355,12 +355,23 @@
                     url: api_url+'/api/v1/banner/?random=true'
                 }).done(res => {
                     res.forEach(x => {
-                        $('#ad-servers-list').append($('<div class="col col-6"><a href="'+x.link+'"><img src="'+api_url+'/resources/'+x.fileName+'"></a></div>'));
+                        $('#ad-servers-list').append($('<div class="col col-6"><img data-href="'+x.url+'" onclick="BannerClick(event,\''+x.id+'\')" src="'+api_url+'/resources/'+x.fileName+'"></div>'));
                     })
                 })
             }
             ShowAdServers()
 
+            function BannerClick(e,id) {
+                e.PreventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: api_url+'/api/v1/advertisements/statistics/'+id+'/',
+                    complete: function(xhr, textStatus) {
+                        console.log("Complete: "+xhr.status + " " +textStatus);
+                        window.open(e.currentTarget.data('href'),"_blank");
+                    } 
+                })
+            }
             
             
             $.ajax({
