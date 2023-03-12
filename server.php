@@ -36,6 +36,18 @@
             border-bottom: 2px solid var(--main-color);
             border-radius: 8px;
         }
+        table a {
+            color: var(--href-color);
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        table a:hover {
+            color: var(--href-color2);
+        }
+        #server-data-ip {
+            cursor: pointer;
+        }
+
     </style>
 
 </head>
@@ -102,7 +114,7 @@
                 <table style="width: 100%;">
                     <tr>
                         <td style="width: 50%; max-width: 500px">Adres serwera:</td>
-                        <td id="server-data-ip">Ładowanie danych...</td>
+                        <td id="server-data-ip" onclick="CopyOnClick()">Ładowanie danych...</td>
                     </tr>
                     <tr>
                         <td>Port:</td>
@@ -224,9 +236,9 @@
                 
                 $('#server-data-top').text(data.stats.maxPlayers);
                 
-                $('#server-data-page').text(data.server.homepage);
-                $('#server-data-facebook').text(data.server.facebook);
-                $('#server-data-discord').text(data.server.discord);
+                $('#server-data-page').html($('<a href="'+data.server.homepage+'">'+data.server.homepage+'</a>'));
+                $('#server-data-facebook').html($('<a href="'+data.server.facebook+'">'+data.server.facebook+'</a>'));
+                $('#server-data-discord').html($('<a href="'+data.server.discord+'">'+data.server.discord+'</a>'));
                 $('#server-data-version').text(ReturnServerVersions(data.minecraftServerVersions).versionsString);
                 if(data.server.onlineModeEnabled) $('#server-data-online-mode').text("Tak");
                 else $('#server-data-online-mode').text("Nie");
@@ -354,6 +366,14 @@
                 $('#modal_like').modal('toggle');
                 alert("Mail został wysłany. Oczekuje na potwierdzenie");
             })
+        }
+
+        function CopyOnClick() {
+            var copyText = document.getElementById("server-data-ip");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+            alert('Skopiowano ip serwera');
         }
 
         /*
