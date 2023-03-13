@@ -32,14 +32,7 @@
         <main>
             <div class="container">
                 <div class="message-box">
-                    <?php 
-                        if(isset($_GET['hash'])) {
-                            echo '<h2 id="info-header" class="mb-3">Konto zostało aktywowane</h2>';
-                        }
-                        else {
-                            echo '<h2 id="info-header" class="mb-3">Nie udało się aktywować konta</h2>';
-                        }
-                    ?>
+                    <h2 id="info-header" class="mb-3">Oczekiwanie na odpowiedź serwera...</h2>
                     <p id="show-info" >Aby wrócić <a href="index.php">Kliknij tutaj</a></p>
                 </div>
             </div>
@@ -60,6 +53,19 @@
         <script>
             var api_url = "<?php echo $api ?>";
             $('#nav-konto').addClass('active');
+            var hash = "<?php echo $_GET['hash'] ?>"
+            $('#nav-serwery').addClass('active');
+            $.ajax({
+                type: 'GET',
+                url: api_url+'/api/v1/auth/activate/'+hash+'/',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                complete: function(xhr, textStatus) {
+                    console.log("Complete: "+xhr.status + " " +textStatus);
+                    if(xhr.status != 200) $('#info-header').text(xhr.responseJSON.message);
+                    else $('#info-header').text("Konto zostało aktywowane");
+                } 
+            })
         </script>
     </body>
 </html>
