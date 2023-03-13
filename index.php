@@ -56,6 +56,27 @@
             .server-url a:hover {
                 color: #b0db3e;
             }
+            .filters {
+                color: #dfd7cc;
+            }
+            .filters ul {
+                list-style-type: none;
+                margin-top: 10px;
+            }
+            .filters li {
+                color: #b1a697;
+                font-size: 120%;
+                cursor: pointer;
+                margin: 5px 0px;
+                transition: all 0.5s;
+            }
+            .filters li:hover {
+                color: var(--href-color2);
+            }
+            .filters p {
+                padding-left: 32px;
+                color: var(--href-color);
+            }
         </style>
     </head>
     <body>
@@ -126,7 +147,7 @@
                                     </div>
                                 </div>
                                 <div class="list-footer row" style="margin: 10px 0px 0px 0px">
-                                    <div class="col col-6 servers-filter" style="justify-content: space-around;">
+                                    <!--<div class="col col-6 servers-filter" style="justify-content: space-around;">
                                         <div style="max-width: 200px">
                                             <label for="servers-filter-gameversions" class="m-0">Filtruj wersję serwerów</label>
                                             <select id="servers-filter-gameversions" class="form-control">
@@ -139,10 +160,35 @@
                                                 <option value="Brak" selected>Brak filtrowania</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="col col-6" style="display: flex;justify-content: flex-end;margin-bottom: 12px;">
                                         <span id="last-updated-datetime" style="padding-top: 10px;"> </span>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="panel filters">
+                            <div class="panel-header">
+                                <h3>Filtrowanie serwerów</h3>
+                            </div>
+                            <div class="panel-content row">
+                                <div class="col col-6">
+                                    <h4 class="text-center">Filtruj po trybie gry</h4>
+                                    <p>Aktualnie wybrane filtrowanie: <span id="gamemode-selected-filter">Brak </span></p>
+                                    <ul id="servers-filter-gamemodes">
+                                        <li onclick="FilterByGamemode('Brak')">Wszystkie tryby gry serwerów Minecraft</li>
+                                    </ul>
+                                </div>
+                                <div class="col col-6">
+                                    <h4 class="text-center">Filtruj po wersji serwera</h4>
+                                    <p>Aktualnie wybrane filtrowanie: <span id="gameversion-selected-filter">Brak </span></p>
+                                    <ul id="servers-filter-gameversions">
+                                    <li onclick="FilterByGameversion('Brak')">Wszystkie wersje serwerów Minecraft</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -174,6 +220,8 @@
             var sortBy = 'likes';
             var filterByLikesASC = false;
             var filterByRatingASC = false;
+            var gamemodeFilter = 'Brak';
+            var gameversionFilter = 'Brak';
 
             $('#nav-serwery').addClass('active');
 
@@ -188,8 +236,8 @@
                 sortBy = sort_by;
                 if(currentPage<0) currentPage = 0;
                 apiUrl = api_url+"/api/v1/servers/?page="+currentPage+"&size="+sizeRecords+"&search="+searchPhrase+"&promoted="+isPromoted+"&sort_by="+sortBy;
-                if($('#servers-filter-gamemodes').val() != 'Brak') apiUrl += '&game_mode='+$('#servers-filter-gamemodes').val();
-                if($('#servers-filter-gameversions').val() != 'Brak') apiUrl += '&version='+$('#servers-filter-gameversions').val();
+                if(gamemodeFilter != 'Brak') apiUrl += '&game_mode='+gamemodeFilter;
+                if(gameversionFilter != 'Brak') apiUrl += '&version='+gameversionFilter;
                 console.log(apiUrl)
                 $.ajax({
                     url: apiUrl,
@@ -378,22 +426,28 @@
             
             
             $.ajax({
-                url: api_url+'/api/v2/game-modes/?status=ACCEPTED&aggregator=BY_SERVERS_COUNT&page=0&size=10',
+                url: api_url+'/api/v2/game-modes/?status=ACCEPTED&aggregator=BY_SERVERS_COUNT&page=0&size=50',
             }).done(res => {
-                res.content.forEach(x => $('#servers-filter-gamemodes').append($('<option value="'+x.game_mode+'">'+x.game_mode+'</option>')));
+                res.content.forEach(x => $('#servers-filter-gamemodes').append($('<li onclick="FilterByGamemode(\''+x.game_mode+'\')">Serwer Minecraft '+x.game_mode+'</li>')));
             });
             $.ajax({
                 url: api_url+'/api/v1/servers/versions/?aggregator=BY_SERVERS_COUNT',
             }).done(res => {
-                res.forEach(x => $('#servers-filter-gameversions').append($('<option value="'+x.version+'">'+x.version+'</option>')));
+                res.forEach(x => $('#servers-filter-gameversions').append($('<li onclick="FilterByGameversion(\''+x.version+'\')">Serwery Minecraft '+x.version+'</li>')));
             });
 
-            $('#servers-filter-gameversions').on('change', function() {
+
+            function FilterByGamemode(gamemode) {
+                gamemodeFilter = gamemode;
+                $('#gamemode-selected-filter').text(gamemodeFilter);
                 GetServers(currentPage,sizeRecords,isPromoted,searchPhrase,sortBy);
-            })
-            $('#servers-filter-gamemodes').on('change', function() {
+            }
+
+            function FilterByGameversion(version) {
+                gameversionFilter = version;
+                $('#gameversion-selected-filter').text(gameversionFilter);
                 GetServers(currentPage,sizeRecords,isPromoted,searchPhrase,sortBy);
-            })
+            }
 
         </script>
     </body>
