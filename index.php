@@ -428,12 +428,14 @@
             $.ajax({
                 url: api_url+'/api/v2/game-modes/?status=ACCEPTED&aggregator=BY_SERVERS_COUNT&page=0&size=50',
             }).done(res => {
-                res.content.forEach(x => $('#servers-filter-gamemodes').append($('<li onclick="FilterByGamemode(\''+x.game_mode+'\')">Serwer Minecraft '+x.game_mode+'</li>')));
+                var availableGM = res.content.filter(x => x.servers_count > 0);
+                availableGM.forEach(x => $('#servers-filter-gamemodes').append($('<li onclick="FilterByGamemode(\''+x.game_mode+'\')">Serwer Minecraft '+x.game_mode+'</li>')));
             });
             $.ajax({
                 url: api_url+'/api/v1/servers/versions/?aggregator=BY_SERVERS_COUNT',
             }).done(res => {
-                res.forEach(x => $('#servers-filter-gameversions').append($('<li onclick="FilterByGameversion(\''+x.version+'\')">Serwery Minecraft '+x.version+'</li>')));
+                var availableGV = res.filter(x => x.servers_count > 0);
+                availableGV.forEach(x => $('#servers-filter-gameversions').append($('<li onclick="FilterByGameversion(\''+x.version+'\')">Serwery Minecraft '+x.version+'</li>')));
             });
 
 
