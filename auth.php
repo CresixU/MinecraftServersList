@@ -209,9 +209,12 @@
     <script type="text/javascript" src="js/password-requirements.js"></script>
     <script src="https://www.google.com/recaptcha/api.js?render=6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl"></script>
     <script>
+        var newUser = <?php if(isset($_GET['new_user']) && $_GET['new_user'] == '1') echo 'true'; else echo 'false'; ?>;
         var api_url = "<?php echo $api ?>";
         var data;
-        $('#nav-konto').addClass('active');
+
+        if(!newUser) ShowLogin(); 
+        else ShowRegister();
 
         ShowPasswordRequirements('account-register-password','account-info-box');
         $('#account-register-password').on('input', function() {
@@ -227,10 +230,14 @@
         function ShowLogin() {
             $('.account-login').css('display' ,'block');
             $('.account-register').css('display', 'none');
+            $('#nav-konto').addClass('active');
+            $('#nav-register').removeClass('active');
         }
         function ShowRegister() {
             $('.account-login').css('display' ,'none');
             $('.account-register').css('display', 'block');
+            $('#nav-register').addClass('active');
+            $('#nav-konto').removeClass('active');
         }
 
         function OnRegister(e) {
