@@ -178,7 +178,7 @@
                         </div>
                         <div class="mt-4">
                             <input type="checkbox" id="account-register-rules">
-                            <label for="account-register-rules">Akceptuje regulamin</label>
+                            <label for="account-register-rules">Akceptuje <a href="">regulamin</a></label>
                         </div>
                         <div class="mt-4">
                             <input type="checkbox" id="account-register-ads" checked>
