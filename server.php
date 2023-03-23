@@ -47,7 +47,32 @@
         #server-data-ip {
             cursor: pointer;
         }
-
+        table thead tr td:nth-child(1) {
+            background-image: url("img/row/row_head_bg.png");
+            padding-left: 10px;
+            color: var(--href-color);
+        }
+        table tbody tr td:nth-child(1) {
+            background-image: url("img/row/row_left.png");
+            width: 10px;
+            height: 38px;
+        } 
+        table tbody tr td:nth-child(2) {
+            background-image: url("img/row/row_bg.png");
+        } 
+        table tbody tr td:nth-child(3) {
+            background-image: url("img/row/row_middle.png");
+            width: 10px;
+            height: 38px;
+        } 
+        table tbody tr td:nth-child(4) {
+            background-image: url("img/row/row_bg.png");
+        } 
+        table tbody tr td:nth-child(5) {
+            background-image: url("img/row/row_right.png");
+            width: 10px;
+            height: 38px;
+        } 
     </style>
 
 </head>
@@ -60,7 +85,7 @@
     <main>
         <div class="container p-5">
 
-                    <!-- MODAL Renew -->
+                    <!-- MODAL Like -->
                     <div class="modal fade " id="modal_like" tabindex="-1" role="dialog" aria-labelledby="modal_like" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
@@ -75,6 +100,7 @@
                                     <div>
                                         <label for="modal-email">Adres E-mail</label>
                                         <input type="text" id="modal-email">
+                                        <p style="color: red" id="modal_like-message"></p>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -108,66 +134,88 @@
             </div>
             
             <div class="server-data-list mb-5 mt-2" >
-                <div class="server-data-list-header mb-2">
-                    Informacje o serwerze
-                </div>
                 <table style="width: 100%;">
-                    <tr>
-                        <td style="width: 50%; max-width: 500px">Adres serwera:</td>
-                        <td id="server-data-ip" onclick="CopyOnClick()">Ładowanie danych...</td>
-                    </tr>
-                    <tr>
-                        <td>Port:</td>
-                        <td id="server-data-port">??</td>
-                    </tr>
-                    <tr>
-                        <td>Status:</td>
-                        <td id="server-data-status"></td>
-                    </tr>
-                    <tr>
-                        <td>Top players:</td>
-                        <td id="server-data-top">??</td>
-                    </tr>
-                    <tr>
-                        <td>Ostatnio online:</td>
-                        <td id="server-data-last-online">??</td>
-                    </tr>
-                    <tr>
-                        <td>Strona serwera:</td>
-                        <td id="server-data-page">??</td>
-                    </tr>
-                    <tr>
-                        <td>Facebook serwera:</td>
-                        <td id="server-data-facebook">??</td>
-                    </tr>
-                    <tr>
-                        <td>Discord serwera:</td>
-                        <td id="server-data-discord">??</td>
-                    </tr>
-                    <tr>
-                        <td>Wersja serwera:</td>
-                        <td id="server-data-version">Nie sprecyzowano</td>
-                    </tr>
-                    <tr>
-                        <td>Online mode:</td>
-                        <td id="server-data-online-mode">??</td>
-                    </tr>
-                    <tr>
-                        <td>Punkty:</td>
-                        <td id="server-data-points">??</td>
-                    </tr>
-                    <tr>
-                        <td>Ratio online:</td>
-                        <td id="server-data-ratio">??</td>
-                    </tr>
-                    <tr>
-                        <td>Miejsce w rankingu:</td>
-                        <td id="server-data-rank">??</td>
-                    </tr>
-                    <tr>
-                        <td>Data dodania na listę:</td>
-                        <td id="server-data-added">??</td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <td colspan="5">Informacje o serwerze</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td style="width: 50%; max-width: 500px">Adres serwera:</td>
+                            <td></td>
+                            <td id="server-data-ip" onclick="CopyOnClick()">Ładowanie danych...</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Port:</td>
+                            <td></td>
+                            <td id="server-data-port">??</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                        <td></td>
+                            <td>Status:</td>
+                            <td></td>
+                            <td id="server-data-status"></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                        <td></td>
+                            <td>Top players:</td>
+                            <td></td>
+                            <td id="server-data-top">??</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                        <td></td>
+                            <td>Ostatnio online:</td>
+                            <td></td>
+                            <td id="server-data-last-online">??</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                        <td></td>
+                            <td>Strona serwera:</td>
+                            <td></td>
+                            <td id="server-data-page">??</td>
+                            <td></td>
+                        </tr>
+                        <tr> <td></td>
+                            <td>Facebook serwera:</td><td></td>
+                            <td id="server-data-facebook">??</td><td></td>
+                        </tr>
+                        <tr><td></td>
+                            <td>Discord serwera:</td><td></td>
+                            <td id="server-data-discord">??</td><td></td>
+                        </tr>
+                        <tr><td></td>
+                            <td>Wersja serwera:</td><td></td>
+                            <td id="server-data-version">Nie sprecyzowano</td><td></td>
+                        </tr>
+                        <tr><td></td>
+                            <td>Online mode:</td><td></td>
+                            <td id="server-data-online-mode">??</td><td></td>
+                        </tr>
+                        <tr><td></td>
+                            <td>Punkty:</td><td></td>
+                            <td id="server-data-points">??</td><td></td>
+                        </tr>
+                        <tr><td></td>
+                            <td>Ratio online:</td><td></td>
+                            <td id="server-data-ratio">??</td><td></td>
+                        </tr>
+                        <tr><td></td>
+                            <td>Miejsce w rankingu:</td><td></td>
+                            <td id="server-data-rank">??</td><td></td>
+                        </tr>
+                        <tr><td></td>
+                            <td>Data dodania na listę:</td><td></td>
+                            <td id="server-data-added">??</td><td></td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
             <div class="server-data-chart my-5">
@@ -270,7 +318,7 @@
                     }
                 }
                 chart.data.datasets[0].data = players.reverse();
-                chart.data.labels = time.map(t => t.substr(11,5)).reverse();
+                chart.data.labels = time.map(t => (t.substr(0,10) + ' ' + t.substr(11,5))).reverse();
 
                 chart.update();
             })
@@ -362,12 +410,16 @@
                 xhrFields: {
                     withCredentials: true
                 },
+                complete: function(xhr, textStatus) {
+                    console.log("Complete: "+xhr.status + " " +textStatus);
+                    if(xhr.status != 200) $('#modal_like-message').text(xhr.responseJSON.message);
+                }
             }).done(res => {
                 $('#modal_like').modal('toggle');
                 alert("Mail został wysłany. Oczekuje na potwierdzenie");
             })
         }
-
+        
         function CopyOnClick() {
             var copyText = document.getElementById("server-data-ip");
             copyText.select();
