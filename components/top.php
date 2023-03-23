@@ -31,8 +31,8 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <a href="" class="logo">
-                    <img src="img/logo.png" alt="">
+                <a href="index.php" class="logo">
+                    <img src="img/logo.png">
                 </a>
             </div>
         </div>
