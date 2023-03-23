@@ -629,6 +629,10 @@ footer {
 
 .simple-button {
     color: var(--href-color);
+    transition: all 0.3s;
+}
+.silme-button:hover {
+    color: var(--href-color2);
 }
 
 .simple-button::after {
