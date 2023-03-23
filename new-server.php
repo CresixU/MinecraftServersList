@@ -135,13 +135,14 @@
                                     </div>
 
                                 </div>
-                                <div>
+                                <div class="pb-5">
                                     <p class="second-header mb-0">
                                         Dodaj serwer do listy
                                     </p>
-                                    <button class="simple-button d-block" style="float:right" onclick="OnCreate(event)">Dodaj serwer</button>
+                                    <div class="px-3"> 
+                                        <button class="btn-green mx-auto" style="float:right" onclick="OnCreate(event)">Dodaj serwer</button>
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -184,8 +185,10 @@
                         withCredentials: true
                     },
                 complete: function(xhr, textStatus) {
-                    if(xhr.status != "200") 
+                    if(xhr.status != "200") {
                         window.location.replace("auth.php");
+                    }
+
                 } 
             }).done(res => {
                 userData = res;
