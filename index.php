@@ -65,7 +65,6 @@
             }
             .filters li {
                 color: #b1a697;
-                font-size: 120%;
                 cursor: pointer;
                 margin: 5px 0px;
                 transition: all 0.5s;
@@ -76,6 +75,13 @@
             .filters p {
                 padding-left: 32px;
                 color: var(--href-color);
+            }
+
+            .banner {
+                border: 2px solid rgb(40, 120, 31);
+                padding: 40px 20px !important;
+                justify-content: center;
+                display: flex;
             }
         </style>
     </head>
@@ -105,8 +111,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" id="ad-servers-list" style="margin: 10px 0px;">
-
+                <div class="row px-3" id="ad-servers-list" style="margin: 10px 0px;">
+                    
                 </div>
                 <div class="row">
                     <div class="col-12">
@@ -133,7 +139,7 @@
                                         <div class="head-rank">Rank.</div>
                                         <div class="head-name">Nazwa Serwera</div>
                                         <div class="head-web">Strona Serwera</div>
-                                        <div class="head-players"><i class="icon icon-players"></i></div>
+                                        <div class="head-players table_filter_button" data-filter="players"><i class="icon icon-players"></i></div>
                                         <div class="head-points"><i class="icon icon-points"></i></div>
                                         <div class="head-ratio"><i class="icon icon-ratio"></i></div>
                                         <div class="head-mode"><i class="icon icon-online"></i></div>
@@ -147,21 +153,7 @@
                                     </div>
                                 </div>
                                 <div class="list-footer row" style="margin: 10px 0px 0px 0px">
-                                    <!--<div class="col col-6 servers-filter" style="justify-content: space-around;">
-                                        <div style="max-width: 200px">
-                                            <label for="servers-filter-gameversions" class="m-0">Filtruj wersję serwerów</label>
-                                            <select id="servers-filter-gameversions" class="form-control">
-                                                <option value="Brak" selected>Brak filtrowania</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label for="servers-filter-gamemodes" class="m-0">Filtruj tryb gry</label>
-                                            <select id="servers-filter-gamemodes" class="form-control">
-                                                <option value="Brak" selected>Brak filtrowania</option>
-                                            </select>
-                                        </div>
-                                    </div>-->
-                                    <div class="col col-6" style="display: flex;justify-content: flex-end;margin-bottom: 12px;">
+                                    <div class="col col-12" style="display: flex;justify-content: flex-end;margin-bottom: 12px;">
                                         <span id="last-updated-datetime" style="padding-top: 10px;"> </span>
                                     </div>
                                 </div>
@@ -173,7 +165,9 @@
                     <div class="col-12">
                         <div class="panel filters">
                             <div class="panel-header">
-                                <h3>Filtrowanie serwerów</h3>
+                                <div class="panel-header-title">
+                                    Filtrowanie serwerów
+                                </div>
                             </div>
                             <div class="panel-content row">
                                 <div class="col col-6">
@@ -220,6 +214,7 @@
             var sortBy = 'likes';
             var filterByLikesASC = false;
             var filterByRatingASC = false;
+            var filterByPlayersASC = false;
             var gamemodeFilter = 'Brak';
             var gameversionFilter = 'Brak';
 
@@ -326,7 +321,7 @@
             }
 
             //Filter by likes, rating, promoted
-            //Possible filter likes, -likes, rate, -rate
+            //Possible filter likes, -likes, rate, -rate, +players, -players
             $('.table_filter_button').on('click', function() {
                 if($(this).data('filter') == 'likes') {
                     if(filterByLikesASC) {
@@ -346,6 +341,16 @@
                     else {
                         filterByRatingASC = true;
                         sortBy = 'rate';
+                    }
+                }
+                if($(this).data('filter') == 'players') {
+                    if(filterByPlayersASC) {
+                        filterByPlayersASC = false;
+                        sortBy = '-players';
+                    }
+                    else {
+                        filterByPlayersASC = true;
+                        sortBy = '+players';
                     }
                 }
                 GetServers(currentPage,sizeRecords,isPromoted,searchPhrase,sortBy);
@@ -402,7 +407,11 @@
                 $.ajax({
                     url: api_url+'/api/v1/banner/?random=true'
                 }).done(res => {
-                    console.log(res)
+                    if(res.length % 2 == 0)
+                        $('#ad-servers-list').append($('<div class="col col-6"><div class="banner"><a href="account-ad.php"><button class="simple-button">Wynajmij miejsce reklamowe</button></a></div></div>'), $('<div class="col col-6"><div class="banner"><a href="account-ad.php"><button class="simple-button">Wynajmij miejsce reklamowe</button></a></div></div>'));
+                    else
+                        $('#ad-servers-list').append($('<div class="col col-6"><div class="banner"><a href="account-ad.php"><button class="simple-button">Wynajmij miejsce reklamowe</button></a></div></div>'));
+
                     res.forEach(x => {
                         $('#ad-servers-list').append($('<div class="col col-6"><img data-href="'+x.link+'" onclick="BannerClick(event,\''+x.id+'\')" id="'+x.id+'" src="'+api_url+'/resources/'+x.fileName+'"></div>'));
                     })
