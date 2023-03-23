@@ -407,7 +407,7 @@
                 })
             })
             //Modal
-            $('.calculate_price2').on('change', function() {
+            $('.calculate_price2').on('input', function() {
                 if($('#modal_method').val() == null) return;
                 if($('#modal_daysToReserve').val() == '') return;
 
