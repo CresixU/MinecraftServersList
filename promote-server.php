@@ -168,7 +168,7 @@
                                         </div>
                                         <div id="createAd-response"></div>
                                         <div>
-                                            <input type="button" value="Promuj serwer" class="simple-button mx-auto" onclick="SendData()">
+                                            <input type="button" value="Promuj serwer" class="btn-green mx-auto" onclick="SendData()">
                                         </div>
                                     </div>
                                 </div>
@@ -304,7 +304,7 @@
                 } 
             });
             
-            $('.calculate-price').on('change', function() {
+            $('.calculate-price').on('input', function() {
                 if($('#method').val() == null) return;
                 if($('#daysToReserve').val() == null) return;
 
