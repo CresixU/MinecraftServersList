@@ -4,10 +4,18 @@
             <div class="col-6">
                 <div class="menu">
                     <ul>
-                        <li id="nav-konto"><a href="auth.php?new_user=0">Logowanie</a></li>
-                        <li id="nav-register"><a href="auth.php?new_user=1">Rejestracja</a></li>
-                        <li id="nav-serwery" ><a href="index.php">Serwery</a></li>
-                        <li id="nav-partnerzy" ><a href="partners.php">Partnerzy</a></li>
+                        <li id="nav-konto" class="nav-element">
+                            <a href="auth.php?new_user=0">Logowanie</a>
+                        </li>
+                        <li id="nav-register" class="nav-element">
+                            <a href="auth.php?new_user=1">Rejestracja</a>
+                        </li>
+                        <li id="nav-serwery"  class="nav-element">
+                            <a href="index.php">Serwery</a>
+                        </li>
+                        <li id="nav-partnerzy"  class="nav-element">
+                            <a href="partners.php">Partnerzy</a>
+                        </li>
                         <li id="nav-statystyki" onclick="ToggleStats()"><a style="position: relative;">Statystyki
                             <ol id="stats-desc">
                                 <li>Serwery online: <span id="stats-online-servers"></span></li>

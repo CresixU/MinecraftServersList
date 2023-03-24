@@ -77,14 +77,14 @@ nav .menu ul {
     padding-left:25px;
 
 }
-nav .menu ul li.active  {  
+/*nav .menu ul li.active  {  
     min-width:130px;
     height:92px;
     background:url("../img/menu-bg.png") repeat-x;
     display:flex;
     align-items:center;
     justify-content:center;
-}
+}*/
 nav .menu ul li.active a  {  
     color:#ffe5b2;
 }
@@ -682,4 +682,29 @@ nav #stats-desc {
 }
 .modal-title + button {
     font-size: 200% !important;
+}
+
+.nav-element {
+    transition: all 0.3s;
+}
+.nav-element.active {
+    color: var(--href-color2);
+}
+.nav-element.active::after {
+    content: '';
+    position: relative;
+    display: flex;
+    border-bottom: 2px solid green;
+    width: 100%;
+}
+.nav-element::after {
+    content: '';
+    position: relative;
+    display: flex;
+    border-bottom: 2px solid green;
+    width: 0px;
+    transition: all 0.3s;
+}
+.nav-element:hover:after {
+    width: 100%;
 }
