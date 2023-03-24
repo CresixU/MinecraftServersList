@@ -130,8 +130,9 @@
                                         <p class="mb-0" style="padding-right: 20px">Pozostało <span id="addserver-desc-chars">5000</span> znaków</p>
                                     </div>
                                     <div>
-                                        <textarea name="addserver-desc" id="addserver-desc" rows="10" placeholder="Twój opis serwera..."
-                                        style="background: transparent; color: white; width: 100%; padding: 10px"></textarea>
+                                        <!--<textarea name="addserver-desc" id="addserver-desc" rows="10" placeholder="Twój opis serwera..."
+                                        style="background: transparent; color: white; width: 100%; padding: 10px"></textarea>-->
+                                        <div id="editor"></div>
                                     </div>
 
                                 </div>
@@ -165,6 +166,7 @@
         <script src="autocomplete/tokenize2.js"></script>
         <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://www.google.com/recaptcha/api.js?render=6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl"></script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
         <script>
             var api_url = "<?php echo $api ?>";
             var data;
@@ -177,6 +179,10 @@
 
             $('#addserver-desc').on('input', function() {
                 $('#addserver-desc-chars').text(5000 - $('#addserver-desc').val().length );
+            });
+            //wysiwyg
+            $('#editor').on('input', function() {
+                $('#addserver-desc-chars').text(5000 - $('#editor').val().length );
             })
 
             $.ajax({
@@ -186,7 +192,7 @@
                     },
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") {
-                        window.location.replace("auth.php");
+                        //window.location.replace("auth.php");
                     }
 
                 } 
@@ -305,7 +311,8 @@
                 var homepage = $('#addserver-website').val();
                 var discordServer = $('#addserver-discord-server').val();
                 var facebookServer = $('#addserver-facebook-server').val();
-                var desc = $('#addserver-desc').val();
+                //var desc = $('#addserver-desc').val();
+                var desc = $('#editor').val();
                 var pingVersions = $('#addserver-ping-versions').prop('checked');
                 GetGameModesFromInput();
                 if(pingVersions) GetVersionsFromInput();
@@ -342,6 +349,13 @@
 
             GetMinecraftAllVersions()
 
+        </script>
+        <script>
+            ClassicEditor
+                .create( document.querySelector( '#editor' ) )
+                .catch( error => {
+                    console.error( error );
+                } );
         </script>
     </body>
 </html>
