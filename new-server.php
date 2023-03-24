@@ -132,7 +132,7 @@
                                     <div>
                                         <!--<textarea name="addserver-desc" id="addserver-desc" rows="10" placeholder="Twój opis serwera..."
                                         style="background: transparent; color: white; width: 100%; padding: 10px"></textarea>-->
-                                        <div id="editor"></div>
+                                        <textarea id="editor"></textarea>
                                     </div>
 
                                 </div>
@@ -167,6 +167,17 @@
         <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://www.google.com/recaptcha/api.js?render=6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+        <script>
+            var editor;
+            ClassicEditor
+                .create( document.querySelector( '#editor' ) )
+                .then( newEditor => {
+                    editor = newEditor;
+                } )
+                .catch( error => {
+                    console.error( error );
+                } );
+        </script>
         <script>
             var api_url = "<?php echo $api ?>";
             var data;
@@ -312,7 +323,7 @@
                 var discordServer = $('#addserver-discord-server').val();
                 var facebookServer = $('#addserver-facebook-server').val();
                 //var desc = $('#addserver-desc').val();
-                var desc = $('#editor').val();
+                var desc = editor.getData();
                 var pingVersions = $('#addserver-ping-versions').prop('checked');
                 GetGameModesFromInput();
                 if(pingVersions) GetVersionsFromInput();
@@ -349,13 +360,6 @@
 
             GetMinecraftAllVersions()
 
-        </script>
-        <script>
-            ClassicEditor
-                .create( document.querySelector( '#editor' ) )
-                .catch( error => {
-                    console.error( error );
-                } );
         </script>
     </body>
 </html>
