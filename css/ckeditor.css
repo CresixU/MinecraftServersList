@@ -1,0 +1,77 @@
+:root {
+    --header-color: #fceec7;
+    --elements-color: #ffe396;
+    --bg-color: #110b08;
+    --border-color: #201915;
+    --text-color: #dfd7cc;
+}
+
+.ck-toolbar {
+    border-color: transparent !important;
+    background-color: transparent !important;
+}
+.ck-toolbar__separator {
+    background-color: var(--border-color) !important;
+}
+.ck-button {
+    color: var(--header-color) !important;
+}
+.ck-button:hover {
+    background-color: #2a2a2a !important;
+}
+.ck-input {
+    background-color: var(--border-color) !important;
+    color: var(--text-color) !important;
+}
+.ck:focus {
+    border-color: var(--elements-color) !important;
+    box-shadow: var(--elements-color) !important;
+}
+/* Paragraph panel */
+.ck-list__item {
+    background-color: var(--bg-color) !important;
+    color: var(--header-color) !important;
+}
+/* media button panel */
+.ck-dropdown__panel {
+    background-color: var(--bg-color) !important;
+    border-color: var(--border-color) !important;
+}
+.ck-labeled-field-view__status {
+    color: var(--text-color) !important;
+}
+/* table button panel */
+.ck-insert-table-dropdown__label {
+    color: var(--text-color) !important;
+}
+.ck-insert-table-dropdown-grid-box.ck-on {
+    border-color: var(--elements-color) !important;
+}
+.ck-insert-table-dropdown-grid-box.ck-off {
+    border-color: #808080a4 !important;
+}
+/* Highlighted color of button where hover sub div */
+.ck-on {
+    background-color: var(--border-color) !important;
+}
+
+/* URL button panel */
+.ck-link-form {
+    background-color: var(--bg-color) !important;
+}
+.ck-balloon-panel {
+    border-color: var(--border-color) !important;
+}
+.ck-label {
+    color: var(--header-color) !important;
+    background-color: var(--border-color) !important;
+}
+/* Editor */
+.ck-editor__editable {
+    background-color: var(--bg-color) !important;
+    border-color: #282828 !important;
+    color: var(--text-color) !important;
+}
+blockquote {
+    border-color: var(--border-color) !important;
+}
