@@ -46,13 +46,15 @@
 }
 .ck-insert-table-dropdown-grid-box.ck-on {
     border-color: var(--elements-color) !important;
+    background-color: var(--border-color) !important;
 }
 .ck-insert-table-dropdown-grid-box.ck-off {
     border-color: #808080a4 !important;
 }
 /* Highlighted color of button where hover sub div */
-.ck-on {
-    background-color: var(--border-color) !important;
+.ck-button.ck-on {
+    background-color: var(--bg-color) !important;
+    border-color: var(--header-color) !important;
 }
 
 /* URL button panel */

@@ -7,7 +7,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
         <link rel="stylesheet" href="autocomplete/tokenize2.css">
-        
+        <link rel="stylesheet" href="css/ckeditor.css">
 
         <style>
             body {
@@ -156,8 +156,9 @@
                                                             <label for="modal_edit-facebook-server" style="font-size:70%; color: #b9b9b9; position: relative; top: -5px">Adres URL musi zawierać <b>https://</b> na początku.</label>
                                                         </div>
                                                         <div>
-                                                            <textarea name="modal_edit-desc" id="modal_edit-desc" rows="10" placeholder="Twój opis serwera..."
-                                                            style="background: transparent; color: white; width: 100%; padding: 10px"></textarea>
+                                                            <!--<textarea name="modal_edit-desc" id="modal_edit-desc" rows="10" placeholder="Twój opis serwera..."
+                                                            style="background: transparent; color: white; width: 100%; padding: 10px"></textarea>-->
+                                                            <textarea id="editor"></textarea>
                                                         </div>
                                                         <div>
                                                             <input type="checkbox" id="addserver-ping-versions">
@@ -303,6 +304,8 @@
         <script type="text/javascript" src="js/server-service.js"></script>
         <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://www.google.com/recaptcha/api.js?render=6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl"></script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+        <script src="js/ckeditor.js"></script>
         <script>
             var api_url = "<?php echo $api ?>";
             var data;
@@ -323,7 +326,9 @@
                 },
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") 
+                    {
                         window.location.replace("auth.php");
+                    }
                 } 
             }).done(res => {
                 userData = res;
@@ -477,7 +482,8 @@
                 $('#modal_edit-discord-server').val(thisServer.server.discord);
                 $('#modal_edit-discord-owner').val(thisServer.owner.discord);
                 $('#modal_edit-facebook-server').val(thisServer.server.facebook);
-                $('#modal_edit-desc').val(thisServer.server.description);
+                //$('#modal_edit-desc').val(thisServer.server.description);
+                editor.setData(thisServer.server.htmlDescription);
                 $('#modal_edit').modal('toggle');
 
                 $('.demo1').tokenize2({sortable: true});

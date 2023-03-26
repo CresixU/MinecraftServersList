@@ -1,11 +1,7 @@
-//import AutoImage from '../node_modules/@ckeditor/ckeditor5-image/src/autoimage.js';
-
 var editor;
 
 ClassicEditor
-    .create( document.querySelector( '#editor' ) ), {
-        plugins: [ , AutoImage ]
-    }
+    .create( document.querySelector( '#editor' ) )
     .then( newEditor => {
         editor = newEditor;
     } )

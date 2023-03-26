@@ -168,7 +168,7 @@
         <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://www.google.com/recaptcha/api.js?render=6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
-        <script type="module" src="js/ckeditor.js"></script>
+        <script src="js/ckeditor.js"></script>
         <script>
             var api_url = "<?php echo $api ?>";
             var data;
@@ -179,9 +179,9 @@
             GetMinecraftAllGameModes();
             $('#nav-serwery').addClass('active');
 
-            $('#addserver-desc').on('input', function() {
+            /*$('#addserver-desc').on('input', function() {
                 $('#addserver-desc-chars').text(5000 - $('#addserver-desc').val().length );
-            });
+            });*/
             //wysiwyg
             $('#editor').on('input', function() {
                 $('#addserver-desc-chars').text(5000 - $('#editor').val().length );
@@ -194,7 +194,7 @@
                     },
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") {
-                        //window.location.replace("auth.php");
+                        window.location.replace("auth.php");
                     }
 
                 } 
