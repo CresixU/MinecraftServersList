@@ -12,3 +12,15 @@ function ReturnServerVersions(versionsArray) {
 
     return obj;
 }
+
+//Return false on fail
+function ValidateInput(id) {
+    if($(id).val().length == 0) {
+        $(id).css("border-bottom","2px solid red");
+        return false;
+    }
+    else {
+        $(id).css("border-bottom", "2px solid var(--main-color)");
+        return true;
+    }
+}

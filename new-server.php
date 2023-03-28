@@ -57,95 +57,97 @@
                                     Dodaj nowy serwer
                                 </div>
                             </div>
-                            <div class="panel-content pb-5">
-                                <p style="padding-left: 20px;">
-                                    Pola oznaczone <span style="color:red"> * </span> są wymagane.
-                                </p>
-                                <div>
-                                    <p class="second-header mb-0">Weryfikacja</p>
-                                    <p>Przed przejściem do wypełniania dalszej częsci formularza ustaw swojemu serwerowi następujący MOTD (Message of the day - Wiadomość dnia)</p>
-                                    <h3 id="desired-motd">www.minecraft-list.pl#<span id="user-name"></span></h3>
-                                    <p>Weryfikacja jest konieczna, aby pewne było, że serwer, który dodajesz na listę należy do Ciebie</p>
-                                    <button class="simple-button" onclick="CheckServerMotd()">Sprawdź MOTD</button>
-                                    <p id="motd-response"></p>
-                                </div>
-                                <div>
-                                    <p class="second-header mb-0">Nazwa i adres serwera</p>
-                                    <div class="mx-auto" style="max-width: 500px; width: 100%; padding: 20px 15px;">
-                                        <div>
-                                            <label for="addserver-servername" id="addserver-servername-label">Nazwa serwera</label>
-                                            <input type="text" id="addserver-servername" placeholder="Minecraft Server">
-                                        </div>
-                                        <div>
-                                            <label for="addserver-ip" id="addserver-ip-label">Adres IP lub domena serwera</label>
-                                            <input type="text" id="addserver-ip" placeholder="mój-server.pl">
-                                        </div>
-                                        <div>
-                                            <label for="addserver-port" id="addserver-port-label">Port</label>
-                                            <input type="text" id="addserver-port" value="25565" placeholder="Domyślnie 25565">
-                                        </div>
-                                        <div class="mt-3">
-                                            <input type="checkbox" id="addserver-onlinemode">
-                                            <label for="addserver-onlinemode" class="checkbox-label">Online Mode</label>
-                                        </div>
-                                        <div id="server-gamemodes-div">
-                                            <label for="server-gamemode" id="server-gamemode-label" style="top:0;">Tryb gry</label>
-                                            <select class="demo2" id="server-gamemode" multiple>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <input type="checkbox" id="addserver-ping-versions">
-                                            <label for="addserver-ping-versions" class="checkbox-label">Ręcznie dodam wersję serwera</label>
-                                            <p class="mb-0" style="opacity: 0.5">Jeśli ta opcja jest odznaczona, nasz system zrobi to automatycznie</p>
-                                        </div>
-                                        <div id="server-versions-div" style="display: none;">
-                                            <label for="server-versions" id="server-versions-label" style="top:0;">Wersję serwera</label>
-                                            <select class="demo1" id="server-versions" multiple>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <p class="second-header mb-0">Socialmedia</p>
-                                    <div  class="mx-auto" style="max-width: 500px; width: 100%; padding: 20px 15px;">
-                                        <div>
-                                            <label for="addserver-website" id="addserver-website-label">Strona serwera</label>
-                                            <input type="text" id="addserver-website" placeholder="http://example.com">
-                                            <label for="addserver-website" style="font-size:70%; color: #b9b9b9; position: relative; top: -5px">Adres URL musi zawierać <b>http://</b> na początku.</label>
-                                        </div>
-                                        <div>
-                                            <label for="addserver-discord-server" id="addserver-discord-server-label">Link do Discorda serwera</label>
-                                            <input type="text" id="addserver-discord-server" placeholder="http://example.com">
-                                            <label for="addserver-discord-server" style="font-size:70%; color: #b9b9b9; position: relative; top: -5px">Adres URL musi zawierać <b>https://</b> na początku.</label>
-                                        </div>
-                                        <div>
-                                            <label for="addserver-facebook-server" id="addserver-facebook-server-label">Link do strony serwera na Facebooku</label>
-                                            <input type="text" id="addserver-facebook-server" placeholder="http://example.com">
-                                            <label for="addserver-facebook-server" style="font-size:70%; color: #b9b9b9; position: relative; top: -5px">Adres URL musi zawierać <b>https://</b> na początku.</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="second-header mb-0 d-flex">
-                                        <p class="mb-0" style="margin-right: auto;">Dodatkowe informacje o serwerze</p>
-                                        <p class="mb-0" style="padding-right: 20px">Pozostało <span id="addserver-desc-chars">5000</span> znaków</p>
+                            <form id="myForm">
+                                <div class="panel-content pb-5">
+                                    <p style="padding-left: 20px;">
+                                        Pola oznaczone <span style="color:red"> * </span> są wymagane.
+                                    </p>
+                                    <div>
+                                        <p class="second-header mb-0">Weryfikacja</p>
+                                        <p>Przed przejściem do wypełniania dalszej częsci formularza ustaw swojemu serwerowi następujący MOTD (Message of the day - Wiadomość dnia)</p>
+                                        <h3 id="desired-motd">www.minecraft-list.pl#<span id="user-name"></span></h3>
+                                        <p>Weryfikacja jest konieczna, aby pewne było, że serwer, który dodajesz na listę należy do Ciebie</p>
+                                        <button class="simple-button" onclick="CheckServerMotd()">Sprawdź MOTD</button>
+                                        <p id="motd-response"></p>
                                     </div>
                                     <div>
-                                        <!--<textarea name="addserver-desc" id="addserver-desc" rows="10" placeholder="Twój opis serwera..."
-                                        style="background: transparent; color: white; width: 100%; padding: 10px"></textarea>-->
-                                        <textarea id="editor"></textarea>
+                                        <p class="second-header mb-0">Nazwa i adres serwera</p>
+                                        <div class="mx-auto" style="max-width: 500px; width: 100%; padding: 20px 15px;">
+                                            <div>
+                                                <label for="addserver-servername" id="addserver-servername-label">Nazwa serwera<span style="color:red">*</span></label>
+                                                <input type="text" id="addserver-servername" placeholder="Minecraft Server" required>
+                                            </div>
+                                            <div>
+                                                <label for="addserver-ip" id="addserver-ip-label">Adres IP lub domena serwera<span style="color:red">*</span></label>
+                                                <input type="text" id="addserver-ip" placeholder="mój-server.pl" required>
+                                            </div>
+                                            <div>
+                                                <label for="addserver-port" id="addserver-port-label">Port<span style="color:red">*</span></label>
+                                                <input type="text" id="addserver-port" value="25565" placeholder="Domyślnie 25565" required>
+                                            </div>
+                                            <div class="mt-3">
+                                                <input type="checkbox" id="addserver-onlinemode">
+                                                <label for="addserver-onlinemode" class="checkbox-label">Online Mode</label>
+                                            </div>
+                                            <div id="server-gamemodes-div">
+                                                <label for="server-gamemode" id="server-gamemode-label" style="top:0;">Tryb gry</label>
+                                                <select class="demo2" id="server-gamemode" multiple>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <input type="checkbox" id="addserver-ping-versions">
+                                                <label for="addserver-ping-versions" class="checkbox-label">Ręcznie dodam wersję serwera</label>
+                                                <p class="mb-0" style="opacity: 0.5">Jeśli ta opcja jest odznaczona, nasz system zrobi to automatycznie</p>
+                                            </div>
+                                            <div id="server-versions-div" style="display: none;">
+                                                <label for="server-versions" id="server-versions-label" style="top:0;">Wersję serwera</label>
+                                                <select class="demo1" id="server-versions" multiple>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div>
+                                        <p class="second-header mb-0">Socialmedia</p>
+                                        <div  class="mx-auto" style="max-width: 500px; width: 100%; padding: 20px 15px;">
+                                            <div>
+                                                <label for="addserver-website" id="addserver-website-label">Strona serwera</label>
+                                                <input type="text" id="addserver-website" placeholder="http://example.com">
+                                                <label for="addserver-website" style="font-size:70%; color: #b9b9b9; position: relative; top: -5px">Adres URL musi zawierać <b>http://</b> na początku.</label>
+                                            </div>
+                                            <div>
+                                                <label for="addserver-discord-server" id="addserver-discord-server-label">Link do Discorda serwera</label>
+                                                <input type="text" id="addserver-discord-server" placeholder="http://example.com">
+                                                <label for="addserver-discord-server" style="font-size:70%; color: #b9b9b9; position: relative; top: -5px">Adres URL musi zawierać <b>https://</b> na początku.</label>
+                                            </div>
+                                            <div>
+                                                <label for="addserver-facebook-server" id="addserver-facebook-server-label">Link do strony serwera na Facebooku</label>
+                                                <input type="text" id="addserver-facebook-server" placeholder="http://example.com">
+                                                <label for="addserver-facebook-server" style="font-size:70%; color: #b9b9b9; position: relative; top: -5px">Adres URL musi zawierać <b>https://</b> na początku.</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="second-header mb-0 d-flex">
+                                            <p class="mb-0" style="margin-right: auto;">Dodatkowe informacje o serwerze<span style="color:red">*</span></p>
+                                            <p class="mb-0" style="padding-right: 20px">Pozostało <span id="addserver-desc-chars">5000</span> znaków</p>
+                                        </div>
+                                        <div>
+                                            <!--<textarea name="addserver-desc" id="addserver-desc" rows="10" placeholder="Twój opis serwera..."
+                                            style="background: transparent; color: white; width: 100%; padding: 10px"></textarea>-->
+                                            <textarea id="editor"></textarea>
+                                        </div>
 
-                                </div>
-                                <div class="pb-5">
-                                    <p class="second-header mb-0">
-                                        Dodaj serwer do listy
-                                    </p>
-                                    <div class="px-3"> 
-                                        <button class="btn-green mx-auto" style="float:right" onclick="OnCreate(event)">Dodaj serwer</button>
+                                    </div>
+                                    <div class="pb-5">
+                                        <p class="second-header mb-0">
+                                            Dodaj serwer do listy
+                                        </p>
+                                        <div class="px-3"> 
+                                            <button class="btn-green mx-auto" style="float:right" onclick="OnCreate(event)">Dodaj serwer</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -169,6 +171,7 @@
         <script src="https://www.google.com/recaptcha/api.js?render=6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
         <script src="js/ckeditor.js"></script>
+        <script src="js/server-service.js" type="text/javascript"></script>
         <script>
             var api_url = "<?php echo $api ?>";
             var data;
@@ -194,7 +197,7 @@
                     },
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") {
-                        window.location.replace("auth.php");
+                        //window.location.replace("auth.php");
                     }
 
                 } 
@@ -250,6 +253,13 @@
 
             function OnCreate(e) {
                 e.preventDefault();
+
+                $("#myForm")[0].reportValidity();
+                if( !ValidateInput('#addserver-servername') || !ValidateInput('#addserver-ip') || !ValidateInput('#addserver-port')) {
+                    alert("Uzupełnij wymagane pola");
+                    return;
+                }
+        
                 grecaptcha.ready(function() {
                     grecaptcha.execute('6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl', {action: 'submit'}).then(function(token) {
                         CreateNewServer(token);
