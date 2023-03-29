@@ -321,7 +321,7 @@
                     xhrFields: {
                         withCredentials: true
                     },
-                    data: '{"ip": "'+ip+'", "port": "'+port+'"}',
+                    data: JSON.stringify({ip, port}),
                     complete: function(xhr, textStatus) {
                         console.log("Complete: "+xhr.status + " " +textStatus);
                         console.log("Complete: "+xhr.responseJSON.message);
