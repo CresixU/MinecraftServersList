@@ -303,7 +303,17 @@
 
 
             function AddBlockedIp() {
-                var ip = $('#input-ip').val();
+                var fullip = $('#input-ip').val();
+                var ip;
+                var port = null;
+                if(fullip.includes(':'))
+                {
+                    var tab = fullip.split(':');
+                    ip = tab[0];
+                    port = tab[1];
+                }
+                else ip = fullip;
+
                 $.ajax({
                     url: api_url+'/api/v1/blocked-ip/',
                     type: 'POST',
@@ -311,7 +321,7 @@
                     xhrFields: {
                         withCredentials: true
                     },
-                    data: '{"ip": "'+ip+'"}',
+                    data: '{"ip": "'+ip+'", "port": "'+port+'"}',
                     complete: function(xhr, textStatus) {
                         console.log("Complete: "+xhr.status + " " +textStatus);
                         console.log("Complete: "+xhr.responseJSON.message);
