@@ -129,7 +129,7 @@
                                     <div>
                                         <div class="second-header mb-0 d-flex">
                                             <p class="mb-0" style="margin-right: auto;">Dodatkowe informacje o serwerze<span style="color:red">*</span></p>
-                                            <p class="mb-0" style="padding-right: 20px">Pozostało <span id="addserver-desc-chars">5000</span> znaków</p>
+                                            <!--<p class="mb-0" style="padding-right: 20px">Pozostało <span id="addserver-desc-chars">5000</span> znaków</p>-->
                                         </div>
                                         <div>
                                             <!--<textarea name="addserver-desc" id="addserver-desc" rows="10" placeholder="Twój opis serwera..."
@@ -185,11 +185,7 @@
             /*$('#addserver-desc').on('input', function() {
                 $('#addserver-desc-chars').text(5000 - $('#addserver-desc').val().length );
             });*/
-            //wysiwyg
-            $('#editor').on('input', function() {
-                $('#addserver-desc-chars').text(5000 - $('#editor').val().length );
-            })
-
+            
             $.ajax({
                 url: api_url+'/api/v1/auth/logged/',
                 xhrFields: {
