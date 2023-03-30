@@ -249,6 +249,7 @@
         <script src="//code.jquery.com/jquery.min.js"></script>
         <script src="autocomplete/tokenize2.js"></script>
         <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <script src="js/validator.js"></script>
         <script>
             var api_url = "<?php echo $api ?>";
             var data;
@@ -356,6 +357,10 @@
                 
             }
             function ModalEditAction() {
+                if( !ValidateInput('#modal_edit-email') || !ValidateInput('#modal_edit-login')) {
+                    alert("Uzupełnij wymagane pola");
+                    return;
+                }
                 var userEmail = $('#modal_edit-email').val();
                 var userLogin = $('#modal_edit-login').val();
                 var userDiscord = $('#modal_edit-discord').val();

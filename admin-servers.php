@@ -306,6 +306,7 @@
         <script src="https://www.google.com/recaptcha/api.js?render=6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
         <script src="js/ckeditor.js"></script>
+        <script src="js/validator.js"></script>
         <script>
             var api_url = "<?php echo $api ?>";
             var data;
@@ -493,6 +494,12 @@
                 
             }
             function OnModalEditAction(e) {
+                if( !ValidateInput('#modal_edit-servername')
+                    || !ValidateInput('#modal_edit-ip')
+                    || !ValidateInput('#modal_edit-port')) {
+                    alert("Uzupełnij wymagane pola");
+                    return;
+                }
                 e.preventDefault();
                 grecaptcha.ready(function() {
                     grecaptcha.execute('6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl', {action: 'submit'}).then(function(token) {
