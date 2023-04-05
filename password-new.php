@@ -110,7 +110,7 @@
                         withCredentials: true
                     },
                     contentType: "application/json; charset=utf-8",
-                    data: '{"hash": "'+hash+'","password": "'+pass1+'", "passwordConfirm": "'+pass2+'"}',
+                    data: '{"hash": "'+hash+'","newPassword": "'+pass1+'", "passwordConfirm": "'+pass2+'"}',
                     success: function(data, textStatus, xhr) {
                         console.log("Success: "+xhr.status + " " +textStatus);
                     },
