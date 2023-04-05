@@ -205,6 +205,7 @@ main .panel .panel-header .panel-header-pagination ul a {
     margin:0 2px;
     color:#a58f71;
     transition:color .2s ease-in-out;
+    cursor: pointer;
 }
 main .panel .panel-header .panel-header-pagination ul a.active,main .panel .panel-header .panel-header-pagination ul a:hover {  
     color:#fff7c9;
