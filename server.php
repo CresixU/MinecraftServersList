@@ -422,11 +422,11 @@
         }
         
         function CopyOnClick() {
-            var copyText = document.getElementById("server-data-ip");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(copyText.value);
-            alert('Skopiowano ip serwera');
+            var text = document.getElementById("server-data-ip").innerHTML;
+            navigator.clipboard.writeText(text);
+            console.log('Content copied to clipboard');
+
+            //alert('Skopiowano ip serwera');
         }
 
         /*
