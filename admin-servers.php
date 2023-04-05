@@ -346,7 +346,7 @@
             //Servers
             function GetServers(page) {
                 if(page<0) page = 0;
-                if(data && page >= data.total%size) page = (data.total%size);
+                if(data && page >= Math.ceil(data.total/size)) currentPage = Math.ceil(data.total/size)-1;
                 var apiUrl;
                 currentPage = page;
                 console.log(currentPage)
@@ -397,12 +397,12 @@
             function ChangePage(page) {
                 $('#pagination-list').empty();
                 var startPage = 1;
-                var maxPages = (data.total%size);
+                var maxPages = Math.ceil(data.total/sizeRecords);
                 if(currentPage > 4) startPage = currentPage - 4;
                 if(currentPage+4 < maxPages) maxPages = currentPage+4; 
                 for(var i=startPage; i<=maxPages;i++) {
                     if(i==currentPage+1) 
-                        $('#pagination-list').append($('<li><a onclick="GetServers('+(i-1)+')" class="active">'+i+'</a></li>'));
+                        $('#pagination-list').append($('<li><a class="active">'+i+'</a></li>'));
                     else
                         $('#pagination-list').append($('<li><a onclick="GetServers('+(i-1)+')">'+i+'</a></li>'));
                 }

@@ -227,7 +227,6 @@
             $('#nav-serwery').addClass('active');
 
             function GetServers(page,size,promoted,search,sort_by) {
-                console.log("page")
                 currentPage = page;
                 if(data && page >= Math.ceil(data.total/size)) currentPage = Math.ceil(data.total/size)-1;
                 if(search=='' || search == null) search = "";
@@ -404,9 +403,9 @@
                 if(currentPage+4 < maxPages) maxPages = currentPage+4; 
                 for(var i=startPage; i<=maxPages;i++) {
                     if(i==currentPage+1) 
-                        $('#pagination-list').append($('<li><a onclick="GetServers('+i+','+sizeRecords+','+isPromoted+','+searchPhrase+','+sortBy+')" class="active">'+i+'</a></li>'));
+                        $('#pagination-list').append($('<li><a class="active">'+i+'</a></li>'));
                     else
-                        $('#pagination-list').append($('<li><a onclick="GetServers('+i+','+sizeRecords+','+isPromoted+','+searchPhrase+','+sortBy+')">'+i+'</a></li>'));
+                        $('#pagination-list').append($('<li><a onclick="GetServers('+(i-1)+','+sizeRecords+','+isPromoted+',searchPhrase, sortBy)">'+i+'</a></li>'));
                 }
             }  
             
