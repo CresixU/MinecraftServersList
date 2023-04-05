@@ -61,7 +61,7 @@
                         </div>
                         <p class="mt-2" id="password-messager"></p>
                         <p style="color: red" id="password-info"></p>
-                        <button class="simple-button mt-3">Ustaw nowe hasło</button>
+                        <button class="mt-3 btn-green mx-auto" onclick="ChangePasswordAction()">Ustaw nowe hasło</button>
                     </div>
                     
                 </div>
