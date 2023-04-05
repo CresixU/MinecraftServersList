@@ -293,7 +293,8 @@
                         console.log("Complete: "+xhr.status + " " +textStatus);
                         if(xhr.status != 200) $('#register-response').html($('<p class="mt-3" style="color: red">'+xhr.responseJSON.message+'</p>'));
                         else {
-                            $('#modal_info-text').text("Potwierdź rezerwację poprzez link wysłany na podany adres mailowy.");
+                            $('#modal_info-text').text("Potwierdź rejestrację poprzez link wysłany na podany adres mailowy.");
+                            $('#register-response').html('');
                             $('#modal_info').modal('toggle');
                         }
                     } 
