@@ -346,9 +346,9 @@
             //Servers
             function GetServers(page) {
                 if(page<0) page = 0;
+                currentPage = page;
                 if(data && page >= Math.ceil(data.total/size)) currentPage = Math.ceil(data.total/size)-1;
                 var apiUrl;
-                currentPage = page;
                 console.log(currentPage)
                 apiUrl = api_url+"/api/v1/servers/?page="+currentPage+"&size="+size+"&search="+searchPhrase+"&promoted=false&sort_by=likes";
 
