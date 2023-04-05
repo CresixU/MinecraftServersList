@@ -13,6 +13,12 @@
                 cursor: help;
                 color: var(--href-color2);
             }
+            .body-web {
+                overflow: hidden;
+            }
+            .body-web:hover {
+                overflow: visible;
+            }
             .servers-filter label {
                 margin-top: 10px;
                 width: 100%;
@@ -127,10 +133,10 @@
                                     <div class="promoting-switch"><div class="switch-button" id="button_switch_premium"></div></div>
                                 </div>
                                 <div class="panel-header-pagination">
-                                    <a onclick="GetServers(currentPage-1,sizeRecords,isPromoted,searchPhrase,sortBy)" class="pagination-arrow-left"></a>
+                                    <a onclick="GetServers(currentPage-=1,sizeRecords,isPromoted,searchPhrase,sortBy)" class="pagination-arrow-left"></a>
                                     <ul id="pagination-list">
                                     </ul>
-                                    <a onclick="GetServers(currentPage+1,sizeRecords,isPromoted,searchPhrase,sortBy)" class="pagination-arrow-right"></a>
+                                    <a onclick="GetServers(currentPage+=1,sizeRecords,isPromoted,searchPhrase,sortBy)" class="pagination-arrow-right"></a>
                                 </div>
                             </div>
                             <div class="panel-content panel-list-content">
@@ -221,8 +227,9 @@
             $('#nav-serwery').addClass('active');
 
             function GetServers(page,size,promoted,search,sort_by) {
+                console.log("page")
                 currentPage = page;
-                if(data && page >= data.total%size) currentPage = (data.total%size)-1;
+                if(data && page >= Math.ceil(data.total/size)) currentPage = Math.ceil(data.total/size)-1;
                 if(search=='' || search == null) search = "";
                 var apiUrl;
                 sizeRecords = size;
@@ -277,8 +284,8 @@
 
                         $('.table-list-content').append($('<a href="./server.php?id='+currentServer.server.id+'"><div class="table-list-row '+promotedClass+'"><div class="body-rank">'+(i+1)+'.</div><div class="body-name">'+currentServer.server.name+'</div><div class="body-web">'+currentServer.server.homepage+'</div><div style="margin-left: 5px;" class="body-players">'+onlinePlayers+'/'+serverSize+' <i style="margin-left: auto; margin-right: 5px;" class="icon '+onlineLight+'"></i></div><div class="body-points">'+currentServer.server.points+'</div><div class="body-ratio">'+serverOnlineRatio+'%</div><div class="body-mode"><i class="icon '+onlineModeIcon+'"></i></div><div class="body-version" title="'+(ReturnServerVersions(currentServer.minecraftServerVersions).versionsString ?? '?')+'">'+(ReturnServerVersions(currentServer.minecraftServerVersions).formatedVersions ?? '?')+'</div><div class="body-verified"><i class="icon icon-no-verified"></i></div><div class="body-likes">'+currentServer.likes.likes+'</div><div class="body-rate"><div class="stars" id="stars_'+i+'"></div><span>'+currentServer.rate.rate+'</span></div></div></a>'));
                         ShowStarsRate("stars",i,currentServer.rate.rate);
-                        ChangePage(currentPage);
                     }
+                    ChangePage(currentPage);
                 });
             }
 
@@ -392,7 +399,7 @@
             function ChangePage(page) {
                 $('#pagination-list').empty();
                 var startPage = 1;
-                var maxPages = data.total%sizeRecords;
+                var maxPages = Math.ceil(data.total/sizeRecords);
                 if(currentPage > 4) startPage = currentPage - 4;
                 if(currentPage+4 < maxPages) maxPages = currentPage+4; 
                 for(var i=startPage; i<=maxPages;i++) {
