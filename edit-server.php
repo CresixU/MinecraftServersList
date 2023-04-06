@@ -182,7 +182,6 @@
                 $('#edit-facebook-server').val(thisServer.server.facebook);
                 //$('#edit-desc').val(thisServer.server.description);
                 editor.setData(thisServer.server.htmlDescription);
-                $('#edit').modal('toggle');
 
                 $('.demo1').tokenize2({sortable: true});
                 AddGameVersionsToInput(thisServer);
@@ -199,6 +198,10 @@
                 });
             }
             function ModalEditAction(token) {
+                if( !ValidateInput('#addserver-servername') || !ValidateInput('#addserver-ip') || !ValidateInput('#addserver-port')) {
+                    alert("Uzupełnij wymagane pola");
+                    return;
+                }
                 var servername = $('#edit-servername').val();
                 var ip = $('#edit-ip').val();
                 var port = $('#edit-port').val();
@@ -206,7 +209,7 @@
                 var homepage = $('#edit-website').val();
                 var discordServer = $('#edit-discord-server').val();
                 var facebookServer = $('#edit-facebook-server').val();
-                var desc = $('#edit-desc').val();
+                var desc = editor.getData();
                 GetGameModesFromInput();
                 var pingVersions = $('#addserver-ping-versions').prop('checked');
                 if(pingVersions) GetVersionsFromInput();
@@ -222,6 +225,8 @@
                     data: '{"hostCredentials": {"host": "'+ip+'","port": '+port+',"address": "'+ip+'"},"serverCredentials": {"name": "'+servername+'","description": "'+desc+'","homepage": "'+homepage+'","facebook": "'+facebookServer+'","discord": "'+discordServer+'","isOnlineModeEnabled": '+isOnlineMode+',"pingVersions": '+pingVersions+'},"gameModeCredentials": {"gameModeIds": '+ReturnStringArray(gamemodes)+'},"versionCredentials": {"versions": '+ReturnStringArray(versions)+'}, "gResponse": "'+token+'"}',
                     success: function(data, textStatus, xhr) {
                         console.log("Success: "+xhr.status + " " +textStatus);
+                        alert("Zaaktualizowany serwer");
+                        window.location.replace("account-servers.php");
                     },
                     complete: function(xhr, textStatus) {
                         console.log("Complete: "+xhr.status + " " +textStatus);

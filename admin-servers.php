@@ -516,7 +516,7 @@
                 var homepage = $('#modal_edit-website').val();
                 var discordServer = $('#modal_edit-discord-server').val();
                 var facebookServer = $('#modal_edit-facebook-server').val();
-                var desc = $('#modal_edit-desc').val();
+                var desc = editor.getData();
                 GetGameModesFromInput();
                 var pingVersions = $('#addserver-ping-versions').prop('checked');
                 if(pingVersions) GetVersionsFromInput();
