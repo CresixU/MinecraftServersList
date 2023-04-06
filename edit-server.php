@@ -148,6 +148,7 @@
         <script src="https://www.google.com/recaptcha/api.js?render=6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
         <script src="js/ckeditor.js"></script>
+        <script src="js/validator.js"></script>
         <script>
             var api_url = "<?php echo $api ?>";
             var data;
@@ -155,6 +156,8 @@
             var gamemodes = [];
             var versions = [];
             $('#nav-konto').addClass('active');
+            $('.demo1').tokenize2({sortable: true});
+            $('.demo2').tokenize2({sortable: true});
 
             $.ajax({
                 url: api_url+'/api/v1/auth/logged/',
@@ -182,10 +185,8 @@
                 $('#edit-facebook-server').val(thisServer.server.facebook);
                 //$('#edit-desc').val(thisServer.server.description);
                 editor.setData(thisServer.server.htmlDescription);
-
-                $('.demo1').tokenize2({sortable: true});
+  
                 AddGameVersionsToInput(thisServer);
-                $('.demo2').tokenize2({sortable: true});
                 AddGameModesToInput(thisServer)
                 
             }
@@ -320,8 +321,9 @@
                 })
             }
             
-            GetOwnerServers();
             GetMinecraftAllGameModes();
+            GetOwnerServers();
+            
             
         </script>
         
