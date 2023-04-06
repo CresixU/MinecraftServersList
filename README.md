@@ -1,3 +1,3 @@
 # MinecraftServersList
 
-Frontend for website
+Frontend for API
