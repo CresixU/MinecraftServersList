@@ -216,14 +216,15 @@
                 var serverIp = $('#addserver-ip').val();
                 if(serverIp == '') {
                     $('#motd-response').text("Ip serwera nie zostało ustawione poniżej");
-                    return;
+                    return false;
                 }
                     
                 var serverPort = $('#addserver-port').val();
                 if(serverIp == '') {
                     $('#motd-response').text("Port serwera nie został ustawiony poniżej");
-                    return;
+                    return false;
                 }
+
                    
                 var mcapi_url = 'https://mcapi.us/server/status?ip='+serverIp+'&port='+serverPort;
 
@@ -235,16 +236,18 @@
                 }).done(res => {
                     if(res.status == 'error')  {
                         $('#motd-response').text("Error. Prawdopodobnie nie odnaleziono serwera");
-                        return;
+                        return false;
                     }
                     if(res.motd_json != $('#desired-motd').text()) {
                         var desired_motd = $("#desired-motd").text();
                         $('#motd-response').append($('<p>MOTD nie został ustawiony poprawnie<br> Wymagany MOTD: '+desired_motd+'<br>Twoje MOTD: '+res.motd_json+'</p>'));
-                        return;
+                        return false;
                     }
                     $('#motd-response').append($('<p color="var(--main-color)">MOTD zostało zweryfikowane</p>'))
-                        
+                    
+                    return true;
                 })
+                
             }
 
             function OnCreate(e) {
@@ -312,6 +315,8 @@
 
             //Create Server
             function CreateNewServer(token) {
+                if(!CheckServerMotd()) return;
+
                 var servername = $('#addserver-servername').val();
                 var ip = $('#addserver-ip').val();
                 var port = $('#addserver-port').val();
