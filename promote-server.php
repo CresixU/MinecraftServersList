@@ -343,7 +343,8 @@
                         withCredentials: true
                     },
                     contentType: "application/json; charset=utf-8",
-                    data: `{"method": "${paymentMethod}","days": ${days},"serverId": "${server}","promoCode": ${code ? '"'+code+'"' : null}}`,
+                    //data: `{"method": "${paymentMethod}","days": ${days},"serverId": "${server}","promoCode": ${code ? '"'+code+'"' : null}}`,
+                    data: JSON.stringify({method: paymentMethod, days, serverId: server, promoCode: code});
                     success : function(data) {
                     },
                     complete: function(xhr, textStatus) {
