@@ -128,11 +128,13 @@
                     </div>
 
             <div class="account-authentication row">
+                <!--
                 <div class="col col-12" style="justify-content: center; display: flex;">
                     <div><a onclick="ShowLogin()">Zaloguj się</a></div>
                     <div style="border-left: 2px solid rgba(44, 148, 33,0.5); margin: 0px 10px;"></div>
                     <div><a onclick="ShowRegister()">Zarejestruj się</a></div>
                 </div>
+                -->
                 <div class="account-login col-12 col-md-12" style="display: none;">
                     <form >
                         <div>
