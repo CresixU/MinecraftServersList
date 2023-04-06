@@ -422,7 +422,7 @@
             })
 
             function SendData() {
-                if( !ValidateInput('#link') || !ValidateInput('#serverId') || !ValidateInput('#method') || !ValidateInput('#daysToReserve')) {
+                if( !ValidateInput('#link') || !ValidateSelect('#serverId') || !ValidateSelect('#method') || !ValidateInput('#daysToReserve')) {
                     alert("Uzupełnij wymagane pola");
                     return;
                 }
@@ -499,7 +499,7 @@
                 $('#modal_renew-id').val(adId)
             }
             async function ButtonAdExtendAction() {
-                if( !ValidateInput('#modal_renew-id') || !ValidateInput('#modal_method') || !ValidateInput('#modal_daysToReserve')) {
+                if( !ValidateInput('#modal_renew-id') || !ValidateSelect('#modal_method') || !ValidateInput('#modal_daysToReserve')) {
                     alert("Uzupełnij wymagane pola");
                     return;
                 }
