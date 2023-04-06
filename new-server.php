@@ -67,7 +67,7 @@
                                         <p>Przed przejściem do wypełniania dalszej częsci formularza ustaw swojemu serwerowi następujący MOTD (Message of the day - Wiadomość dnia)</p>
                                         <h3 id="desired-motd">www.minecraft-list.pl#<span id="user-name"></span></h3>
                                         <p>Weryfikacja jest konieczna, aby pewne było, że serwer, który dodajesz na listę należy do Ciebie</p>
-                                        <button class="simple-button" onclick="CheckServerMotd()">Sprawdź MOTD</button>
+                                        <!--<button class="simple-button" onclick="CheckServerMotd()">Sprawdź MOTD</button>-->
                                         <p id="motd-response"></p>
                                     </div>
                                     <div>
@@ -315,7 +315,7 @@
 
             //Create Server
             function CreateNewServer(token) {
-                if(!CheckServerMotd()) return;
+                //if(!CheckServerMotd()) return;
 
                 var servername = $('#addserver-servername').val();
                 var ip = $('#addserver-ip').val();

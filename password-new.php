@@ -113,10 +113,12 @@
                     data: '{"hash": "'+hash+'","newPassword": "'+pass1+'", "passwordConfirm": "'+pass2+'"}',
                     success: function(data, textStatus, xhr) {
                         console.log("Success: "+xhr.status + " " +textStatus);
+                        window.location.replace("index.php");
                     },
                     complete: function(xhr, textStatus) {
                         console.log("Complete: "+xhr.status + " " +textStatus);
                         console.log("Complete: "+xhr.responseJSON.message);
+                        alert(xhr.responseJSON.message);
                     } 
                 })
             }
