@@ -68,6 +68,12 @@
     color: var(--header-color) !important;
     background-color: var(--border-color) !important;
 }
+.ck.ck-link-actions {
+    background-color: #100f0f;
+}
+.ck-button__label {
+    color: var(--elements-color);
+}
 /* Editor */
 .ck-editor__editable {
     background-color: var(--bg-color) !important;
