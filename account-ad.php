@@ -274,7 +274,7 @@
                                         </div>
                                         <div id="createAd-response"></div>
                                         <div>
-                                            <input type="button" value="Zakup baner" class="simple-button mx-auto" onclick="SendData()">
+                                            <input type="button" value="Zakup baner" class="btn-green mx-auto" onclick="SendData()">
                                         </div>
                                     </form>
                                 </div>
@@ -350,7 +350,6 @@
             }
 
             function ShowAds() {
-
                 $.ajax({
                     url: api_url+'/api/v1/banner/own/',
                     xhrFields: {
@@ -365,10 +364,7 @@
                         i++;
                     })
                     GenerateEmptyAds();
-                })
-
-
-                
+                })   
             }
 
 
