@@ -229,7 +229,7 @@
                                                 </td>
                                             </tr>
                                         </table>
-                                        <button class="simple-button" onclick="ModalEdit()">Zaaktualizuj dane</button>
+                                        <button class="btn-green" onclick="ModalEdit()">Zaaktualizuj dane</button>
                                     </div>
                                 </div>
                             </div>

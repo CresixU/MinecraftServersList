@@ -98,8 +98,8 @@
                                             <label for="edit-facebook-server" style="font-size:70%; color: #b9b9b9; position: relative; top: -5px">Adres URL musi zawierać <b>https://</b> na początku.</label>
                                         </div>
                                         <div>
-                                            <input type="checkbox" id="addserver-ping-versions">
-                                            <label for="addserver-ping-versions" class="checkbox-label">Ręcznie dodam wersję serwera</label>
+                                            <input type="checkbox" id="edit-ping-versions">
+                                            <label for="edit-ping-versions" class="checkbox-label">Ręcznie dodam wersję serwera</label>
                                             <p class="mb-0" style="opacity: 0.5; font-size: 13px;">Jeśli ta opcja jest odznaczona, nasz system zrobi to automatycznie</p>
                                         </div>
                                         <div id="server-versions-div" style="display: none;">
@@ -121,7 +121,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <button type="button" class="btn btn-green mx-auto d-block mt-5 mb-3" style="color: #dfd7cc;" onclick="OnEditModalAction(event)">Zapisz</button>
+                                    <button type="button" class="btn btn-green mx-auto d-block mt-5 mb-3" style="color: #dfd7cc;" onclick="OnEditAction(event)">Zapisz</button>
                                 </div>
                             </div>
                         </div>
@@ -150,14 +150,17 @@
         <script src="js/ckeditor.js"></script>
         <script src="js/validator.js"></script>
         <script>
+            $('.demo1').tokenize2({sortable: true});
+            $('.demo2').tokenize2({sortable: true});
+        </script>
+        <script>
             var api_url = "<?php echo $api ?>";
             var data;
             var userData;
             var gamemodes = [];
             var versions = [];
             $('#nav-konto').addClass('active');
-            $('.demo1').tokenize2({sortable: true});
-            $('.demo2').tokenize2({sortable: true});
+            
 
             $.ajax({
                 url: api_url+'/api/v1/auth/logged/',
@@ -190,16 +193,16 @@
                 AddGameModesToInput(thisServer)
                 
             }
-            function OnEditModalAction(e) {
+            function OnEditAction(e) {
                 e.preventDefault();
                 grecaptcha.ready(function() {
                     grecaptcha.execute('6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl', {action: 'submit'}).then(function(token) {
-                        ModalEditAction(token)
+                        EditAction(token)
                     });
                 });
             }
-            function ModalEditAction(token) {
-                if( !ValidateInput('#addserver-servername') || !ValidateInput('#addserver-ip') || !ValidateInput('#addserver-port')) {
+            function EditAction(token) {
+                if( !ValidateInput('#edit-servername') || !ValidateInput('#edit-ip') || !ValidateInput('#edit-port')) {
                     alert("Uzupełnij wymagane pola");
                     return;
                 }
@@ -212,7 +215,7 @@
                 var facebookServer = $('#edit-facebook-server').val();
                 var desc = editor.getData();
                 GetGameModesFromInput();
-                var pingVersions = $('#addserver-ping-versions').prop('checked');
+                var pingVersions = $('#edit-ping-versions').prop('checked');
                 if(pingVersions) GetVersionsFromInput();
 
                 $.ajax({
@@ -223,7 +226,8 @@
                         withCredentials: true
                     },
                     contentType: "application/json; charset=utf-8",
-                    data: '{"hostCredentials": {"host": "'+ip+'","port": '+port+',"address": "'+ip+'"},"serverCredentials": {"name": "'+servername+'","description": "'+desc+'","homepage": "'+homepage+'","facebook": "'+facebookServer+'","discord": "'+discordServer+'","isOnlineModeEnabled": '+isOnlineMode+',"pingVersions": '+pingVersions+'},"gameModeCredentials": {"gameModeIds": '+ReturnStringArray(gamemodes)+'},"versionCredentials": {"versions": '+ReturnStringArray(versions)+'}, "gResponse": "'+token+'"}',
+                    //data: '{"hostCredentials": {"host": "'+ip+'","port": '+port+',"address": "'+ip+'"},"serverCredentials": {"name": "'+servername+'","description": "'+desc+'","homepage": "'+homepage+'","facebook": "'+facebookServer+'","discord": "'+discordServer+'","isOnlineModeEnabled": '+isOnlineMode+',"pingVersions": '+pingVersions+'},"gameModeCredentials": {"gameModeIds": '+ReturnStringArray(gamemodes)+'},"versionCredentials": {"versions": '+ReturnStringArray(versions)+'}, "gResponse": "'+token+'"}',
+                    data: JSON.stringify({hostCredentials: {host: ip,port: port,address: ip},serverCredentials: {name: servername,description: desc,homepage: homepage,facebook: facebookServer,discord: discordServer,isOnlineModeEnabled: isOnlineMode,pingVersions: pingVersions},gameModeCredentials: {gameModeIds: gamemodes},versionCredentials: {versions: versions}, gResponse: token}),
                     success: function(data, textStatus, xhr) {
                         console.log("Success: "+xhr.status + " " +textStatus);
                         alert("Zaaktualizowany serwer");
@@ -262,9 +266,9 @@
                     versions[i] = htmlArray[i].attributes[1].textContent;
                 }
             }
-            $('#addserver-ping-versions').on('change', function() {
+            $('#edit-ping-versions').on('change', function() {
                 console.log("Git");
-                if($('#addserver-ping-versions').prop('checked'))
+                if($('#edit-ping-versions').prop('checked'))
                     $('#server-versions-div').css('display','block');
                 else 
                     $('#server-versions-div').css('display','none');
@@ -288,7 +292,7 @@
                 $('li.token[data-value="'+id+'"]').remove();
             }
 
-            async function GetMinecraftAllGameModes() {
+            function GetMinecraftAllGameModes() {
                 $.ajax({
                     url: api_url+'/api/v2/game-modes/?status=ACCEPTED',
                     xhrFields: {
@@ -309,8 +313,8 @@
                 return str;
             }
 
-            async function GetOwnerServers() {
-                await $.ajax({
+            function GetOwnerServers() {
+                $.ajax({
                     url: api_url+'/api/v1/servers/own/',
                     xhrFields: {
                         withCredentials: true

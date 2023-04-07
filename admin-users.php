@@ -316,7 +316,7 @@
             function ChangePage(currentPage) {
                 $('#pagination-list').empty();
                 var startPage = 1;
-                var maxPages = Math.ceil(data.total/sizeRecords);
+                var maxPages = Math.ceil(data.total/size);
                 if(currentPage > 4) startPage = currentPage - 4;
                 if(currentPage+4 < maxPages) maxPages = currentPage+4; 
                 for(var i=startPage; i<=maxPages;i++) {
@@ -330,6 +330,7 @@
             function ModalDelete(userId) {
                 clickedUser = data.content.find(x => x.id == userId);
                 $('#modal_delete-user-name').text(clickedUser.login);
+                $('#modal_delete-user-id').text(userId);
                 $('#modal_delete').modal('toggle');
             }
             function ModalDeleteAction() {

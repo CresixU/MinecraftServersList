@@ -323,9 +323,9 @@
             })
 
             function SendData() {
-                if( !ValidateInput('#serverId') 
-                || !ValidateInput('#method') 
-                || !ValidateInput('#daysToReserve')) {
+                if( !ValidateSelect('#serverId') 
+                || !ValidateSelect('#method') 
+                || !ValidateSelect('#daysToReserve')) {
                     alert("Uzupełnij wymagane pola");
                     return;
                 }
@@ -344,7 +344,7 @@
                     },
                     contentType: "application/json; charset=utf-8",
                     //data: `{"method": "${paymentMethod}","days": ${days},"serverId": "${server}","promoCode": ${code ? '"'+code+'"' : null}}`,
-                    data: JSON.stringify({method: paymentMethod, days, serverId: server, promoCode: code});
+                    data: JSON.stringify({method: paymentMethod, days, serverId: server, promoCode: code}),
                     success : function(data) {
                     },
                     complete: function(xhr, textStatus) {
@@ -358,7 +358,7 @@
                     } else {
                         alert('Wymagane zezwolenie na wyskakujące okna na stronie. W celu dokonania płatności kliknij w pulsujący zielony guzik');
                     }
-                    $('#form').append($('<div><a href="'+res.payment.url+'" class="btn-green">Przejdź do płatności</a></div>'));
+                    $('#form').append($('<div class="mt-3"><a href="'+res.payment.url+'" class="btn-green">Dokończ płatność</a></div>'));
                 })  
             }
 

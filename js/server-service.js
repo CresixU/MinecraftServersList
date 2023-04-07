@@ -4,6 +4,8 @@ function ReturnServerVersions(versionsArray) {
     var v = versionsArray.map(x => x.minecraftVersion.version);
     var vs = v.join(', ');
     var fv = '>'+v[0]+'?';
+    if(versionsArray.length == 1) fv = v[0];
+    
     var obj = {
         versions: v,
         versionsString: vs,

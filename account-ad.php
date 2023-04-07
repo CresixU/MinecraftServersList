@@ -242,7 +242,7 @@
                                     <p class="second-header">Spersonalizuj baner reklamowy</p>
                                     <form action="" method="post" enctype="multipart/form-data" id="adform" style="max-width: 600px; margin: auto;">
                                         <div>
-                                            <label for="file" class="mb-3" accept="image/png, image/jpeg, image/gif">Wybierz tło baneru <span style="color: #008f04;">(plik 1920x1270px)</span></label>
+                                            <label for="file" class="mb-3" accept="image/png, image/jpeg, image/gif">Wybierz tło baneru <span style="color: #008f04;">(plik 1920x1270px)</span> <span style="color: #2e2e2e; font-size: 80%">(*.jgp, *.jpeg, *.png, *.gif)</span></label>
                                             <input name="file" type="file" id="file">
                                         </div>
                                         <div>
@@ -311,8 +311,9 @@
                     withCredentials: true
                 },
                 complete: function(xhr, textStatus) {
-                    if(xhr.status != "200") 
+                    if(xhr.status != "200") {
                         window.location.replace("auth.php");
+                    }
                 } 
             }).done(res => {
                 userData = res;
@@ -526,7 +527,7 @@
                     } else {
                         alert('Wymagane zezwolenie na wyskakujące okna na stronie. W celu dokonania płatności kliknij w pulsujący zielony guzik');
                     }
-                    $('#modal_renew-button').append($('<div><a href="'+res.payment.url+'" class="btn-green mt-3">Przejdź do płatności</a></div>'));
+                    $('#modal_renew-button').append($('<div class="mt-3"><a href="'+res.payment.url+'" class="btn-green mt-3">Dokończ płatność</a></div>'));
                 }) 
             }
 
