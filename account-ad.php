@@ -242,7 +242,7 @@
                                     <p class="second-header">Spersonalizuj baner reklamowy</p>
                                     <form action="" method="post" enctype="multipart/form-data" id="adform" style="max-width: 600px; margin: auto;">
                                         <div>
-                                            <label for="file" class="mb-3" accept="image/png, image/jpeg, image/gif">Wybierz tło baneru <span style="color: #008f04;">(plik 1920x1270px)</span> <span style="color: #2e2e2e; font-size: 80%">(*.jgp, *.jpeg, *.png, *.gif)</span></label>
+                                            <label for="file" class="mb-3" accept="image/png, image/jpeg, image/gif">Wybierz tło baneru <span style="color: #008f04;">(plik 1920x1270px)</span> <span style="color: #5e5e5e; font-size: 80%">(*.jgp, *.jpeg, *.png, *.gif)</span></label>
                                             <input name="file" type="file" id="file">
                                         </div>
                                         <div>
