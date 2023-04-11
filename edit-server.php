@@ -231,7 +231,7 @@
                     success: function(data, textStatus, xhr) {
                         console.log("Success: "+xhr.status + " " +textStatus);
                         alert("Zaaktualizowany serwer");
-                        window.location.replace("account-servers.php");
+                        //window.location.replace("account-servers.php");
                     },
                     complete: function(xhr, textStatus) {
                         console.log("Complete: "+xhr.status + " " +textStatus);
