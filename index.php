@@ -146,7 +146,7 @@
                                         <div class="head-name">Nazwa Serwera</div>
                                         <div class="head-web">Strona Serwera</div>
                                         <div class="head-players table_filter_button" data-filter="players"><i class="icon icon-players"></i></div>
-                                        <div class="head-points"><i class="icon icon-points"></i></div>
+                                        <div class="head-points table_filter_button" data-filter="points"><i class="icon icon-points"></i></div>
                                         <div class="head-ratio"><i class="icon icon-ratio"></i></div>
                                         <div class="head-mode"><i class="icon icon-online"></i></div>
                                         <div class="head-version"><i class="icon icon-version"></i></div>
@@ -217,14 +217,22 @@
             var isPromoted = false;
             var searchPhrase = "";
             var sizeRecords = 10;
-            var sortBy = 'likes';
+            var sortBy = 'points';
             var filterByLikesASC = false;
             var filterByRatingASC = false;
             var filterByPlayersASC = false;
+            var filterByPointsASC = false;
             var gamemodeFilter = 'Brak';
             var gameversionFilter = 'Brak';
 
             $('#nav-serwery').addClass('active');
+
+            $.ajax({
+                url: api_url+'/api/v1/servers/last-ping/',
+            }).done(res => {
+                var str = 'Ostatnie sprawdzenie: '+res.timestamp.substr(8,2)+'.'+res.timestamp.substr(5,2)+'.'+res.timestamp.substr(0,4)+'  '+res.timestamp.substr(11,5);
+                $('#last-updated-datetime').text(str);
+            })
 
             function GetServers(page,size,promoted,search,sort_by) {
                 currentPage = page;
@@ -252,10 +260,6 @@
                         console.log("empty");
                         return;
                     }
-                    if(data.content[0].serverPingCredentials != null) {
-                        var str = 'Ostatnie sprawdzenie: '+data.content[0].serverPingCredentials.addedAt.substr(8,2)+'.'+data.content[0].serverPingCredentials.addedAt.substr(5,2)+'.'+data.content[0].serverPingCredentials.addedAt.substr(0,4)+'  '+data.content[0].serverPingCredentials.addedAt.substr(11,5);
-                        $('#last-updated-datetime').text(str);
-                    }
 
                     for(var i=0;i<data.content.length;i++) {
                         var currentServer = data.content[i];
@@ -281,7 +285,7 @@
 
                         if(!currentServer.server.onlineModeEnabled) onlineModeIcon = 'icon-no-verified';
 
-                        $('.table-list-content').append($('<a href="./server.php?id='+currentServer.server.id+'"><div class="table-list-row '+promotedClass+'"><div class="body-rank">'+(i+1)+'.</div><div class="body-name">'+currentServer.server.name+'</div><div class="body-web">'+currentServer.server.homepage+'</div><div style="margin-left: 5px;" class="body-players">'+onlinePlayers+'/'+serverSize+' <i style="margin-left: auto; margin-right: 5px;" class="icon '+onlineLight+'"></i></div><div class="body-points">'+currentServer.server.points+'</div><div class="body-ratio">'+serverOnlineRatio+'%</div><div class="body-mode"><i class="icon '+onlineModeIcon+'"></i></div><div class="body-version" title="'+(ReturnServerVersions(currentServer.minecraftServerVersions).versionsString ?? '?')+'">'+(ReturnServerVersions(currentServer.minecraftServerVersions).formatedVersions ?? '?')+'</div><div class="body-verified"><i class="icon icon-no-verified"></i></div><div class="body-likes">'+currentServer.likes.likes+'</div><div class="body-rate"><div class="stars" id="stars_'+i+'"></div><span>'+currentServer.rate.rate+'</span></div></div></a>'));
+                        $('.table-list-content').append($('<a href="./server.php?id='+currentServer.server.id+'"><div class="table-list-row '+promotedClass+'"><div class="body-rank">'+(currentServer.stats.placeInRanking)+'.</div><div class="body-name">'+currentServer.server.name+'</div><div class="body-web">'+currentServer.server.homepage+'</div><div style="margin-left: 5px;" class="body-players">'+onlinePlayers+'/'+serverSize+' <i style="margin-left: auto; margin-right: 5px;" class="icon '+onlineLight+'"></i></div><div class="body-points">'+currentServer.server.points+'</div><div class="body-ratio">'+serverOnlineRatio+'%</div><div class="body-mode"><i class="icon '+onlineModeIcon+'"></i></div><div class="body-version" title="'+(ReturnServerVersions(currentServer.minecraftServerVersions).versionsString ?? '?')+'">'+(ReturnServerVersions(currentServer.minecraftServerVersions).formatedVersions ?? '?')+'</div><div class="body-verified"><i class="icon icon-no-verified"></i></div><div class="body-likes">'+currentServer.likes.likes+'</div><div class="body-rate"><div class="stars" id="stars_'+i+'"></div><span>'+currentServer.rate.rate+'</span></div></div></a>'));
                         ShowStarsRate("stars",i,currentServer.rate.rate);
                     }
                     ChangePage(currentPage);
@@ -356,7 +360,17 @@
                     }
                     else {
                         filterByPlayersASC = true;
-                        sortBy = '+players';
+                        sortBy = 'players';
+                    }
+                }
+                if($(this).data('filter') == 'points') {
+                    if(filterByPointsASC) {
+                        filterByPointsASC = false;
+                        sortBy = '-points';
+                    }
+                    else {
+                        filterByPointsASC = true;
+                        sortBy = 'points';
                     }
                 }
                 GetServers(currentPage,sizeRecords,isPromoted,searchPhrase,sortBy);
