@@ -186,7 +186,7 @@
                                                             <label for="addserver-ping-versions" class="checkbox-label">Ręcznie dodam wersję serwera</label>
                                                             <p class="mb-0" style="opacity: 0.5; font-size: 13px;">Jeśli ta opcja jest odznaczona, nasz system zrobi to automatycznie</p>
                                                         </div>
-                                                        <div id="server-versions-div" style="display: none;">
+                                                        <div id="server-versions-div">
                                                             <label for="server-versions" id="server-versions-label" style="top:0;">Wersję serwera</label>
                                                             <select class="demo1" id="server-versions" multiple>
                                                             </select>
