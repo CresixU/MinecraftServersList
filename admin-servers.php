@@ -397,7 +397,7 @@
             function ChangePage(page) {
                 $('#pagination-list').empty();
                 var startPage = 1;
-                var maxPages = Math.ceil(data.total/sizeRecords);
+                var maxPages = Math.ceil(data.total/size);
                 if(currentPage > 4) startPage = currentPage - 4;
                 if(currentPage+4 < maxPages) maxPages = currentPage+4; 
                 for(var i=startPage; i<=maxPages;i++) {
