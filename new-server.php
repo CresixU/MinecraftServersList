@@ -180,6 +180,7 @@
             var versions = [];
 
             GetMinecraftAllGameModes();
+            GetMinecraftAllVersions();
             $('#nav-serwery').addClass('active');
 
             /*$('#addserver-desc').on('input', function() {

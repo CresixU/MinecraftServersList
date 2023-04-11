@@ -186,8 +186,8 @@
                 //$('#edit-desc').val(thisServer.server.description);
                 editor.setData(thisServer.server.htmlDescription);
   
+                AddGameModesToInput(thisServer);
                 AddGameVersionsToInput(thisServer);
-                AddGameModesToInput(thisServer)
                 
             }
             function OnEditAction(e) {
@@ -237,9 +237,9 @@
             }
 
             //Wersje gry 
-            function AddGameVersionsToInput(thisServer) {
-                if(thisServer.minecraftServerVersions.length == 0) return;
-                var v = thisServer.minecraftServerVersions.map(x => x.minecraftVersion.version);
+            function AddGameVersionsToInput(server) {
+                if(server.minecraftServerVersions.length == 0) return;
+                var v = server.minecraftServerVersions.map(x => x.minecraftVersion.version);
                 console.log(v);
                 v.forEach(x => $('#server-versions-div .tokens-container').prepend($('<li class="token" data-value="'+x+'"><a class="dismiss" onclick="DeleteElement(\''+x+'\')"></a><span>'+x+'</span></li>')));
 
