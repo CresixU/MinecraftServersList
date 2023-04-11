@@ -97,11 +97,11 @@
                                             <input type="text" id="edit-facebook-server" placeholder="http://example.com">
                                             <label for="edit-facebook-server" style="font-size:70%; color: #b9b9b9; position: relative; top: -5px">Adres URL musi zawierać <b>https://</b> na początku.</label>
                                         </div>
-                                        <div>
+                                        <!--<div>
                                             <input type="checkbox" id="edit-ping-versions">
                                             <label for="edit-ping-versions" class="checkbox-label">Ręcznie dodam wersję serwera</label>
                                             <p class="mb-0" style="opacity: 0.5; font-size: 13px;">Jeśli ta opcja jest odznaczona, nasz system zrobi to automatycznie</p>
-                                        </div>
+                                        </div>-->
                                         <div id="server-versions-div" style="display: none;">
                                             <label for="server-versions" id="server-versions-label" style="top:0;">Wersję serwera</label>
                                             <select class="demo1" id="server-versions" multiple>
@@ -150,17 +150,12 @@
         <script src="js/ckeditor.js"></script>
         <script src="js/validator.js"></script>
         <script>
-            $('.demo1').tokenize2({sortable: true});
-            $('.demo2').tokenize2({sortable: true});
-        </script>
-        <script>
             var api_url = "<?php echo $api ?>";
             var data;
             var userData;
             var gamemodes = [];
             var versions = [];
             $('#nav-konto').addClass('active');
-            
 
             $.ajax({
                 url: api_url+'/api/v1/auth/logged/',
@@ -176,6 +171,8 @@
             var serverId = $('#server-id').text();
 
             function ModalEdit() {
+                $('.demo1').tokenize2({sortable: true});
+                $('.demo2').tokenize2({sortable: true});
                 thisServer = data.content.find(x => x.server.id == serverId);
                 
                 $('#edit-servername').val(thisServer.server.name);
@@ -215,8 +212,7 @@
                 var facebookServer = $('#edit-facebook-server').val();
                 var desc = editor.getData();
                 GetGameModesFromInput();
-                var pingVersions = $('#edit-ping-versions').prop('checked');
-                if(pingVersions) GetVersionsFromInput();
+                GetVersionsFromInput();
 
                 $.ajax({
                     type: 'PUT',
@@ -227,7 +223,7 @@
                     },
                     contentType: "application/json; charset=utf-8",
                     //data: '{"hostCredentials": {"host": "'+ip+'","port": '+port+',"address": "'+ip+'"},"serverCredentials": {"name": "'+servername+'","description": "'+desc+'","homepage": "'+homepage+'","facebook": "'+facebookServer+'","discord": "'+discordServer+'","isOnlineModeEnabled": '+isOnlineMode+',"pingVersions": '+pingVersions+'},"gameModeCredentials": {"gameModeIds": '+ReturnStringArray(gamemodes)+'},"versionCredentials": {"versions": '+ReturnStringArray(versions)+'}, "gResponse": "'+token+'"}',
-                    data: JSON.stringify({hostCredentials: {host: ip,port: port,address: ip},serverCredentials: {name: servername,description: desc,homepage: homepage,facebook: facebookServer,discord: discordServer,isOnlineModeEnabled: isOnlineMode,pingVersions: pingVersions},gameModeCredentials: {gameModeIds: gamemodes},versionCredentials: {versions: versions}, gResponse: token}),
+                    data: JSON.stringify({hostCredentials: {host: ip,port: port,address: ip},serverCredentials: {name: servername,description: desc,homepage: homepage,facebook: facebookServer,discord: discordServer,isOnlineModeEnabled: isOnlineMode,pingVersions: false},gameModeCredentials: {gameModeIds: gamemodes},versionCredentials: {versions: versions}, gResponse: token}),
                     success: function(data, textStatus, xhr) {
                         console.log("Success: "+xhr.status + " " +textStatus);
                         alert("Zaaktualizowany serwer");

@@ -94,11 +94,11 @@
                                                 <select class="demo2" id="server-gamemode" multiple>
                                                 </select>
                                             </div>
-                                            <div>
+                                            <!--<div>
                                                 <input type="checkbox" id="addserver-ping-versions">
                                                 <label for="addserver-ping-versions" class="checkbox-label">Ręcznie dodam wersję serwera</label>
                                                 <p class="mb-0" style="opacity: 0.5">Jeśli ta opcja jest odznaczona, nasz system zrobi to automatycznie</p>
-                                            </div>
+                                            </div>-->
                                             <div id="server-versions-div" style="display: none;">
                                                 <label for="server-versions" id="server-versions-label" style="top:0;">Wersję serwera</label>
                                                 <select class="demo1" id="server-versions" multiple>
@@ -326,9 +326,8 @@
                 var facebookServer = $('#addserver-facebook-server').val();
                 //var desc = $('#addserver-desc').val();
                 var desc = editor.getData();
-                var pingVersions = $('#addserver-ping-versions').prop('checked');
                 GetGameModesFromInput();
-                if(pingVersions) GetVersionsFromInput();
+                GetVersionsFromInput();
 
                 $.ajax({
                     type: 'POST',
@@ -339,7 +338,7 @@
                     },
                     contentType: "application/json; charset=utf-8",
                     //data: '{"hostCredentials": {"host": "'+ip+'","port": '+port+',"address": "'+ip+'"},"serverCredentials": {"name": "'+servername+'","description": "'+desc+'","homepage": "'+homepage+'","facebook": "'+facebookServer+'","discord": "'+discordServer+'","isOnlineModeEnabled": '+isOnlineMode+',"pingVersions": '+pingVersions+'},"gameModeCredentials": {"gameModeIds": '+ReturnStringArray(gamemodes)+'},"versionCredentials": {"versions": '+ReturnStringArray(versions)+'}, "gResponse": "'+token+'"}',
-                    data: JSON.stringify({hostCredentials: {host: ip,port: port,address: ip},serverCredentials: {name: servername,description: desc,homepage: homepage,facebook: facebookServer,discord: discordServer,isOnlineModeEnabled: isOnlineMode,pingVersions: pingVersions},gameModeCredentials: {gameModeIds: gamemodes},versionCredentials: {versions: versions}, gResponse: token}),
+                    data: JSON.stringify({hostCredentials: {host: ip,port: port,address: ip},serverCredentials: {name: servername,description: desc,homepage: homepage,facebook: facebookServer,discord: discordServer,isOnlineModeEnabled: isOnlineMode,pingVersions: false},gameModeCredentials: {gameModeIds: gamemodes},versionCredentials: {versions: versions}, gResponse: token}),
                     complete: function(xhr, textStatus) {
                         console.log("Complete: "+xhr.status + " " +textStatus);
                         if(xhr.status == 200) {
