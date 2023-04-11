@@ -322,6 +322,7 @@
             }
             
             GetMinecraftAllGameModes();
+            GetMinecraftAllVersions();
             GetOwnerServers();
             
             
