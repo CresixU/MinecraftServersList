@@ -76,6 +76,11 @@
                 position: relative;
                 top: 10px;
             }
+            label {
+                -webkit-user-select: none; /* Safari */
+                -ms-user-select: none; /* IE 10 and IE 11 */
+                user-select: none; /* Standard syntax */
+            }
             input[type=text],
             input[type=password] {
                 width: 100%;
@@ -141,7 +146,7 @@
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title">Edytowanie serwera</h5>
+                                                    <h5 class="modal-title">Edytowanie profilu</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#modal_edit').modal('toggle');">
                                                     <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -163,7 +168,7 @@
                                                         </div>
                                                         <div class="mt-3">
                                                             <input type="checkbox" id="modal_edit-ad">
-                                                            <label for="modal_edit-ad" class="checkbox-label">Zgoda na marketing</label>
+                                                            <label for="modal_edit-ad" class="checkbox-label">Wyrażam zgodę na dostarczanie przez serwis minecraftlist treści reklamowych na adres e-mail podany przeze mnie podczas rejestracji</label>
                                                         </div>                                                      
                                                     </div>
                                                 </div>
