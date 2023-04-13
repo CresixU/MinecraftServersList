@@ -709,3 +709,7 @@ nav #stats-desc {
 .nav-element:hover:after {
     width: 100%;
 }
+
+.disabled-div {
+    filter: brightness(0.5);
+}

@@ -154,13 +154,13 @@
                                                 <div class="modal-body">
                                                     <p id="modal_edit-user-id"></p>
                                                     <div class="mx-auto" style="max-width: 500px; width: 100%; padding: 20px 15px;">
-                                                        <div>
+                                                        <div class="disabled-div">
                                                             <label for="modal_edit-username">Nazwa użytkownika</label>
-                                                            <input type="text" id="modal_edit-username">
+                                                            <input type="text" id="modal_edit-username" disabled>
                                                         </div>
-                                                        <div>
+                                                        <div class="disabled-div">
                                                             <label for="modal_edit-email">Email</label>
-                                                            <input type="text" id="modal_edit-email">
+                                                            <input type="text" id="modal_edit-email" disabled>
                                                         </div>
                                                         <div>
                                                             <label for="modal_edit-discord">Discord</label>
