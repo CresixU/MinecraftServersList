@@ -242,6 +242,7 @@
                                                     <td>Adres serwera</td>
                                                     <td>Port</td>
                                                     <td>Online mode</td>
+                                                    <td>Promowanie</td>
                                                     <td>Wersja</td>
                                                     <td>Punkty</td>
                                                     <td colspan="3">Akcje</td>
@@ -322,8 +323,10 @@
                     data = res;
                     if(data.content.length == 0) $('#panel-content-servers-p').prepend('Nie dodano jeszcze żadnego serwera na tym koncie. ')
                     var onlineMode = "Tak";
+                    var promoted = "Nie";
                     data.content.forEach(x => {
                         if(!x.server.onlineModeEnabled) onlineMode = "Nie";
+                        if(x.promote != null) promoted = `Tak, ${x.promote.days} dni`;
                         $('#servers-list').append($('<tr><td>'+x.stats.placeInRanking+'</td><td>'+x.server.name+'</td><td>'+x.serverHostCredentials.address+'</td><td>'+x.serverHostCredentials.port+'</td><td>'+onlineMode+'</td><td class="version" title="'+(ReturnServerVersions(x.minecraftServerVersions).versionsString ?? '?')+'">'+(ReturnServerVersions(x.minecraftServerVersions).formatedVersions ?? '?')+'</td><td>'+x.server.points+'</td><td><button onclick="ModalDelete(\''+x.server.id+'\',\''+x.server.name+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><a href=\'edit-server.php?id='+x.server.id+'\'><button><i class="bi bi-pencil-square"></i></button></a></td><td><a href="server.php?id='+x.server.id+'"><i class="bi bi-card-image"></i></a></td></tr>'))
                     })
                     ;
