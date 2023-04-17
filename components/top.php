@@ -27,7 +27,12 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-6" style="display: flex;">
+                <div>
+                    <a href="https://mineserv.eu" target="_blank">
+                        <img src="./img/partners/mineserv.png" alt="">
+                    </a>
+                </div>
                 <div class="facebook-likebox">
                     <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-width="100" data-layout="button_count" data-action="like" data-size="large" data-share="false"></div>
                 </div>
