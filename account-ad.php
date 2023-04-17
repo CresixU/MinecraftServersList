@@ -250,12 +250,6 @@
                                             <input name="link"  type="text" id="link">
                                         </div>
                                         <div>
-                                            <label for="serverId" style="top:0;">Serwer</label>
-                                            <select id="serverId" name="serverId">
-                                                <option value="Brak" selected disabled>Wybierz</option>
-                                            </select>
-                                        </div>
-                                        <div>
                                             <label for="method" style="top:0;">Forma płatności</label>
                                             <select id="method" class="calculate-price" name="method">
                                                 <option value="Brak" selected disabled>Wybierz</option>
@@ -423,7 +417,7 @@
             })
 
             function SendData() {
-                if( !ValidateInput('#link') || !ValidateSelect('#serverId') || !ValidateSelect('#method') || !ValidateInput('#daysToReserve')) {
+                if( !ValidateInput('#link') || !ValidateSelect('#method') || !ValidateInput('#daysToReserve')) {
                     alert("Uzupełnij wymagane pola");
                     return;
                 }
