@@ -216,7 +216,7 @@
             var currentPage = 0;
             var isPromoted = false;
             var searchPhrase = "";
-            var sizeRecords = 10;
+            var sizeRecords = 20;
             var sortBy = 'points';
             var filterByLikesASC = false;
             var filterByRatingASC = false;
