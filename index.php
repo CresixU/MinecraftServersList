@@ -279,6 +279,7 @@
 
                             if(currentServer.serverPingCredentials.timesOffline > 0) {
                                 serverOnlineRatio = (currentServer.serverPingCredentials.timesOnline / currentServer.serverPingCredentials.timesOffline).toFixed(2);
+                                if(serverOnlineRatio > 100) serverOnlineRatio = 100.00;
                             }
                         }
                         

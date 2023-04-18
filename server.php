@@ -274,7 +274,10 @@
                     $('#server-data-status').html($('<i class="icon '+onlineLight+'"></i> <span style="display:block; float: left;">'+data.serverPingCredentials.onlinePlayers+'/'+data.serverPingCredentials.serverSize+'</span>'));
                     $('#server-data-last-online').text(data.serverPingCredentials.addedAt.substr(8,2)+'.'+data.serverPingCredentials.addedAt.substr(5,2)+'.'+data.serverPingCredentials.addedAt.substr(0,4)+'  '+data.serverPingCredentials.addedAt.substr(11,5));
                     if(data.serverPingCredentials.timesOffline > 0)
+                    {
                         serverOnlineRatio = (data.serverPingCredentials.timesOnline / data.serverPingCredentials.timesOffline).toFixed(2);
+                        if(serverOnlineRatio > 100) serverOnlineRatio = 100.00;
+                    } 
                 }
                 else {
                     $('#server-data-status').html($('<i class="icon icon-off"></i> <span style="display:block; float: left;">0/0</span>'));
