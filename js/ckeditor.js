@@ -1,5 +1,5 @@
-/*var editor;
-
+var editor;
+/*
 ClassicEditor
     .create( document.querySelector( '#editor' ) )
     .then( newEditor => {
@@ -151,4 +151,9 @@ ClassicEditor
             'FormatPainter',
             'TableOfContents'
         ]
-    });
+    }).then( newEditor => {
+        editor = newEditor;
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
