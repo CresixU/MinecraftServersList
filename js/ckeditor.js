@@ -15,7 +15,7 @@ ClassicEditor
             items: [
                 'heading', '|',
                 'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
-                'bulletedList', 'numberedList', 'todoList', '|',
+                'bulletedList', 'numberedList', '|',
                 'outdent', 'indent', '|',
                 'undo', 'redo',
                 '-',
