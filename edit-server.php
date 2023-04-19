@@ -144,7 +144,8 @@
         <script type="text/javascript" src="js/password-requirements.js"></script>
         <script type="text/javascript" src="js/server-service.js"></script>
         <script src="https://www.google.com/recaptcha/api.js?render=6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl"></script>
-        <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+        <!--<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>-->
+        <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/super-build/ckeditor.js"></script>
         <script src="js/ckeditor.js"></script>
         <script src="js/validator.js"></script>
         <script>
@@ -162,7 +163,7 @@
                 },
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") {
-                        window.location.replace("auth.php");
+                        //window.location.replace("auth.php");
                     }
                 }
             });
@@ -225,7 +226,7 @@
                     success: function(data, textStatus, xhr) {
                         console.log("Success: "+xhr.status + " " +textStatus);
                         alert("Zaaktualizowany serwer");
-                        //window.location.replace("account-servers.php");
+                        window.location.replace("account-servers.php");
                     },
                     complete: function(xhr, textStatus) {
                         console.log("Complete: "+xhr.status + " " +textStatus);

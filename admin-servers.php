@@ -466,7 +466,10 @@
                     xhrFields: {
                         withCredentials: true
                     },
-                }).done(alert("Usunięto serwer "+id));
+                }).done(res => {
+                    alert("Usunięto serwer "+id);
+                    location.reload();
+                });
             }
 
             function ModalEdit(serverId) {
