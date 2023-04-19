@@ -83,3 +83,15 @@
 blockquote {
     border-color: var(--border-color) !important;
 }
+
+/* Button text */
+.ck-button__label {
+    color: var(--elements-color);
+}
+
+.ck.ck-splitbutton.ck-splitbutton_open > .ck-button:not(.ck-on):not(.ck-disabled):not(:hover),
+.ck.ck-splitbutton:hover > .ck-button:not(.ck-on):not(.ck-disabled):not(:hover),
+.ck-button:not(.ck-on):not(.ck-disabled):not(:hover),
+.ck.ck-splitbutton:hover>.ck-button:not(.ck-on):not(.ck-disabled):not(:hover) {
+    background-color: var(--bg-color) !important;
+}
