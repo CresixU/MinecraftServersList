@@ -186,7 +186,6 @@
                 $('#edit-facebook-server').val(thisServer.server.facebook);
                 //$('#edit-desc').val(thisServer.server.description);
                 editor.setData(thisServer.server.htmlDescription);
-  
                 AddGameModesToInput(thisServer);
                 AddGameVersionsToInput(thisServer);
                 

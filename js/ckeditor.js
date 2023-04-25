@@ -157,3 +157,24 @@ ClassicEditor
     .catch( error => {
         console.error( error );
     } );
+
+const observer = new MutationObserver(mutations => {
+    if (document.querySelector('.ck-editor__main')) {
+        const originImageElement = document.querySelector("[data-cke-tooltip-text='Insert image']");
+        const clone = originImageElement.cloneNode(true);
+        const insertImageByUrlButton = document.querySelector(".ck-splitbutton__arrow[data-cke-tooltip-text='Insert image']");
+    
+        originImageElement.replaceWith(clone);
+        clone.addEventListener('click', () => {
+        insertImageByUrlButton.click();
+        });
+    
+    
+        observer.disconnect();
+    }
+    });
+    
+    observer.observe(document.body, {
+    childList: true,
+    subtree: true
+    });
