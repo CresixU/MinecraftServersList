@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
         <link rel="stylesheet" href="autocomplete/tokenize2.css">
         <link rel="stylesheet" href="css/ckeditor.css">
+        <link rel="stylesheet" href="css/loader.css">
         <style>
             body {
                 color: #dfd7cc;
@@ -48,6 +49,7 @@
         <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v11.0&appId=915876171902531&autoLogAppEvents=1" nonce="k7fGxMia"></script>
         <?php require_once("components/top.php"); ?>
         <main>
+            <div class="loader-box"><div class="loader"></div><p>Trwa ładowanie<br>Proszę czekać</p></div>
             <div class="container">
                 <div class="row">
                     <div class="col col-12">
@@ -260,6 +262,7 @@
         
                 grecaptcha.ready(function() {
                     grecaptcha.execute('6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl', {action: 'submit'}).then(function(token) {
+                        $('.loader-box').css('display','block');
                         CreateNewServer(token);
                     });
                 });
@@ -341,6 +344,7 @@
                     complete: function(xhr, textStatus) {
                         console.log("Complete: "+xhr.status + " " +textStatus);
                         if(xhr.status == 200) {
+                            $('.loader-box').css('display','none');
                             alert('Serwer został dodany');
                             window.location.replace("index.php");
                         }

@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
         <link rel="stylesheet" href="autocomplete/tokenize2.css">
         <link rel="stylesheet" href="css/ckeditor.css">
+        <link rel="stylesheet" href="css/loader.css">
         <style>
             body {
                 color: #dfd7cc;
@@ -53,6 +54,7 @@
         <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v11.0&appId=915876171902531&autoLogAppEvents=1" nonce="k7fGxMia"></script>
         <?php require_once("components/top.php"); ?>
         <main>
+            <div class="loader-box"><div class="loader"></div><p>Trwa ładowanie<br>Proszę czekać</p></div>
             <?php echo "<span id='server-id' style='display: none;'>" . $_GET['id']."</span>";?>
             <div class="container">
                 <div class="row">
@@ -163,7 +165,7 @@
                 },
                 complete: function(xhr, textStatus) {
                     if(xhr.status != "200") {
-                        //window.location.replace("auth.php");
+                        window.location.replace("auth.php");
                     }
                 }
             });
@@ -202,6 +204,7 @@
                     alert("Uzupełnij wymagane pola");
                     return;
                 }
+                $('.loader-box').css('display','block');
                 var servername = $('#edit-servername').val();
                 var ip = $('#edit-ip').val();
                 var port = $('#edit-port').val();
@@ -225,6 +228,7 @@
                     data: JSON.stringify({hostCredentials: {host: ip,port: port,address: ip},serverCredentials: {name: servername,description: desc,homepage: homepage,facebook: facebookServer,discord: discordServer,isOnlineModeEnabled: isOnlineMode,pingVersions: false},gameModeCredentials: {gameModeIds: gamemodes},versionCredentials: {versions: versions}, gResponse: token}),
                     success: function(data, textStatus, xhr) {
                         console.log("Success: "+xhr.status + " " +textStatus);
+                        $('.loader-box').css('display','none');
                         alert("Zaaktualizowany serwer");
                         window.location.replace("account-servers.php");
                     },
