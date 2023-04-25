@@ -165,8 +165,9 @@ const observer = new MutationObserver(mutations => {
         const insertImageByUrlButton = document.querySelector(".ck-splitbutton__arrow[data-cke-tooltip-text='Insert image']");
     
         originImageElement.replaceWith(clone);
+        clone.classList.remove("ck-disabled");
         clone.addEventListener('click', () => {
-        insertImageByUrlButton.click();
+            insertImageByUrlButton.click();
         });
     
     
