@@ -117,7 +117,7 @@
                                     <a href="account.php">Profil</a>
                                 </div>
                                 <div class="col">
-                                    <a href="account-servers.php">Serwery</a>
+                                    <a href="account-servers.php">Twoje Serwery</a>
                                 </div>
                                 <div class="col">
                                     <a href="account-history.php">Historia konta</a>
