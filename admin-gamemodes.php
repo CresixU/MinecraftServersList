@@ -236,7 +236,8 @@
                     },
                     complete: function(xhr, textStatus) {
                         console.log("Complete: "+xhr.status + " " +textStatus);
-                        alert(xhr.responseJSON.message);
+                        if(xhr.responseJSON.message != undefined)
+                            alert(xhr.responseJSON.message);
                     } 
                 }).done(res => {
                     ShowGamemodes();
@@ -257,7 +258,8 @@
                     complete: function(xhr, textStatus) {
                         console.log("Complete: "+xhr.status + " " +textStatus);
                         console.log("Complete: "+xhr.responseJSON.message);
-                        alert(xhr.responseJSON.message);
+                        if(xhr.responseJSON.message != undefined)
+                            alert(xhr.responseJSON.message);
                     } 
                 }).done(res => {
                     ShowGamemodes();
