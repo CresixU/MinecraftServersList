@@ -343,8 +343,8 @@
                     data: JSON.stringify({hostCredentials: {host: ip,port: port},serverCredentials: {name: servername,description: desc,homepage: homepage,facebook: facebookServer,discord: discordServer,isOnlineModeEnabled: isOnlineMode,pingVersions: false},gameModeCredentials: {gameModeIds: gamemodes},versionCredentials: {versions: versions}, gResponse: token}),
                     complete: function(xhr, textStatus) {
                         console.log("Complete: "+xhr.status + " " +textStatus);
+                        $('.loader-box').css('display','none');
                         if(xhr.status == 200) {
-                            $('.loader-box').css('display','none');
                             alert('Serwer został dodany');
                             window.location.replace("index.php");
                         }
