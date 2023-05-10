@@ -529,7 +529,7 @@
                     },
                     contentType: "application/json; charset=utf-8",
                     //data: '{"hostCredentials": {"host:" "'+ip+'","port": "'+port+'",},"serverCredentials": {"name": "'+servername+'","description": "'+desc+'","homepage": "'+homepage+'","facebook": "'+facebookServer+'","discord": "'+discordServer+'""isOnlineModeEnabled": '+isOnlineMode+',},"gameModeCredentials": {"internalGameModes": '+gamemodes+',}, "gResponse": "'+token+'",}',
-                    data: JSON.stringify({hostCredentials: {host: ip,port: port,address: ip},serverCredentials: {name: servername,description: desc,homepage: homepage,facebook: facebookServer,discord: discordServer,isOnlineModeEnabled: isOnlineMode,pingVersions: false},gameModeCredentials: {gameModeIds: gamemodes},versionCredentials: {versions: versions}, gResponse: token}),
+                    data: JSON.stringify({hostCredentials: {host: ip,port: port},serverCredentials: {name: servername,description: desc,homepage: homepage,facebook: facebookServer,discord: discordServer,isOnlineModeEnabled: isOnlineMode,pingVersions: false},gameModeCredentials: {gameModeIds: gamemodes},versionCredentials: {versions: versions}, gResponse: token}),
                     success: function(data, textStatus, xhr) {
                         console.log("Success: "+xhr.status + " " +textStatus);
                         alert("Pomyślnie edytowano serwer");
