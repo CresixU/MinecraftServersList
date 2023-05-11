@@ -161,7 +161,7 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <td><input id="input-ip" type="text" placeholder="np. 1.1.1.1:1234"></td>
+                                                    <td><input id="input-ip" type="text" placeholder="np. 192.0.0.1:80"></td>
                                                     <td><button onclick="AddBlockedIp()">Dodaj</button></td>
                                                 </tr>
                                             </tfoot>
@@ -241,7 +241,7 @@
                 }).done(res => {
                     data2 = res;
                     $('#blocked-ip-count').text(data2.length);
-                    data2.forEach(x => $('#blocked-list-ip').append($('<tr><td>'+x.ip+'</td><td><button onclick="ModalDeleteIp(\''+x.id+'\')"><i class="bi bi-trash3-fill"></i></button></td></tr>')))
+                    data2.forEach(x => $('#blocked-list-ip').append($('<tr><td>'+x.ip+':'+x.port+'</td><td><button onclick="ModalDeleteIp(\''+x.id+'\')"><i class="bi bi-trash3-fill"></i></button></td></tr>')))
                 })
             };
 
@@ -303,7 +303,7 @@
             function AddBlockedIp() {
                 var fullip = $('#input-ip').val();
                 var ip;
-                var port = null;
+                var port = 80;
                 if(fullip.includes(':'))
                 {
                     var tab = fullip.split(':');
