@@ -161,7 +161,7 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <td><input id="input-ip" type="text" placeholder="1.1.1.1"></td>
+                                                    <td><input id="input-ip" type="text" placeholder="np. 1.1.1.1:1234"></td>
                                                     <td><button onclick="AddBlockedIp()">Dodaj</button></td>
                                                 </tr>
                                             </tfoot>
