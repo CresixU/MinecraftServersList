@@ -177,7 +177,7 @@
                 thisServer = data.content.find(x => x.server.id == serverId);
                 
                 $('#edit-servername').val(thisServer.server.name);
-                $('#edit-ip').val(thisServer.serverHostCredentials.address);
+                $('#edit-ip').val(thisServer.serverHostCredentials.host);
                 $('#edit-port').val(thisServer.serverHostCredentials.port);
                 if(thisServer.server.onlineModeEnabled) $('#edit-onlinemode').prop('checked', true);
                 $('#edit-website').val(thisServer.server.homepage);

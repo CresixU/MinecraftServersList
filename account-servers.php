@@ -325,7 +325,7 @@
                     data.content.forEach(x => {
                         if(!x.server.onlineModeEnabled) onlineMode = "Nie";
                         if(x.promote != null) promoted = `Tak, ${x.promote.days} dni`;
-                        $('#servers-list').append($('<tr><td>'+x.stats.placeInRanking+'</td><td>'+x.server.name+'</td><td>'+x.serverHostCredentials.address+'</td><td>'+x.serverHostCredentials.port+'</td><td>'+onlineMode+'</td><td class="version" title="'+(ReturnServerVersions(x.minecraftServerVersions).versionsString ?? '?')+'">'+(ReturnServerVersions(x.minecraftServerVersions).formatedVersions ?? '?')+'</td><td>'+x.server.points+'</td><td><button onclick="ModalDelete(\''+x.server.id+'\',\''+x.server.name+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><a href=\'edit-server.php?id='+x.server.id+'\'><button><i class="bi bi-pencil-square"></i></button></a></td><td><a href="server.php?id='+x.server.id+'"><i class="bi bi-card-image"></i></a></td></tr>'))
+                        $('#servers-list').append($('<tr><td>'+x.stats.placeInRanking+'</td><td>'+x.server.name+'</td><td>'+x.serverHostCredentials.host+'</td><td>'+x.serverHostCredentials.port+'</td><td>'+onlineMode+'</td><td class="version" title="'+(ReturnServerVersions(x.minecraftServerVersions).versionsString ?? '?')+'">'+(ReturnServerVersions(x.minecraftServerVersions).formatedVersions ?? '?')+'</td><td>'+x.server.points+'</td><td><button onclick="ModalDelete(\''+x.server.id+'\',\''+x.server.name+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><a href=\'edit-server.php?id='+x.server.id+'\'><button><i class="bi bi-pencil-square"></i></button></a></td><td><a href="server.php?id='+x.server.id+'"><i class="bi bi-card-image"></i></a></td></tr>'))
                     })
                     ;
                 })
@@ -337,7 +337,7 @@
             }
             function ReturnServerValue(x) {
                 if(!x) return "";
-                return x.address;
+                return x.host;
             }
             function ReturnPaymentValue(x) {
                 if(!x) return "";
@@ -369,7 +369,7 @@
                 thisServer = data.content.find(x => x.server.id == serverId);
                 
                 $('#modal_edit-servername').val(thisServer.server.name);
-                $('#modal_edit-ip').val(thisServer.serverHostCredentials.address);
+                $('#modal_edit-ip').val(thisServer.serverHostCredentials.host);
                 $('#modal_edit-port').val(thisServer.serverHostCredentials.port);
                 if(thisServer.server.onlineModeEnabled) $('#modal_edit-onlinemode').prop('checked', true);
                 $('#modal_edit-website').val(thisServer.server.homepage);

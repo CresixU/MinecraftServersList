@@ -476,7 +476,7 @@
                 thisServer = data.content.find(x => x.server.id == serverId);
                 
                 $('#modal_edit-servername').val(thisServer.server.name);
-                $('#modal_edit-ip').val(thisServer.serverHostCredentials.address);
+                $('#modal_edit-ip').val(thisServer.serverHostCredentials.host);
                 $('#modal_edit-port').val(thisServer.serverHostCredentials.port);
                 if(thisServer.server.onlineModeEnabled) $('#modal_edit-onlinemode').prop('checked', true);
                 $('#modal_edit-website').val(thisServer.server.homepage);
@@ -557,8 +557,8 @@
                         var oldIp = "?";
                         var newIp = "?";
                         var payment = "?";
-                        if(x.oldHostCredentials) oldIp = x.oldHostCredentials.address;
-                        if(x.newHostCredentials) newIp = x.newHostCredentials.address;
+                        if(x.oldHostCredentials) oldIp = x.oldHostCredentials.host;
+                        if(x.newHostCredentials) newIp = x.newHostCredentials.host;
                         if(x.payment) payment = x.payment.method+' '+x.payment.price;
                         $('#table-history-list').append($('<tr><td>'+t+'</td><td>'+x.user.login+'</td><td>'+x.type+'</td><td>'+oldIp+'</td><td>'+newIp+'</td><td>'+payment+'</td></tr>'))
                     })

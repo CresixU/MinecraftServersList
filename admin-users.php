@@ -406,7 +406,7 @@
             }
             function ReturnServerValue(x) {
                 if(!x) return "-";
-                return x.address;
+                return x.host;
             }
             function ReturnPaymentValue(x) {
                 if(!x) return "-";

@@ -267,7 +267,7 @@
             .done(res => {
                 data = res;
                 $('#server-data-name').text(data.server.name);
-                $('#server-data-ip').text(data.serverHostCredentials.address);
+                $('#server-data-ip').text(data.serverHostCredentials.host);
                 $('#server-data-port').text(data.serverHostCredentials.port);
                 if(data.serverPingCredentials != null) {
                     if(!data.serverPingCredentials.isOnline) onlineLight = 'icon-off';
