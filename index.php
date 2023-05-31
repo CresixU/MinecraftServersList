@@ -233,8 +233,9 @@
             })
 
             function GetServers(page,size,promoted,search,sort_by) {
-                currentPage = page;
-                if(data && page >= Math.ceil(data.total/size)) currentPage = Math.ceil(data.total/size)-1;
+                //currentPage = page;
+                //if(data && page >= Math.ceil(data.total/size)) currentPage = Math.ceil(data.total/size)-1;
+                if(data && page <= data.total) currentPage = page
                 if(search=='' || search == null) search = "";
                 var apiUrl;
                 sizeRecords = size;
@@ -411,7 +412,8 @@
             function ChangePage(page) {
                 $('#pagination-list').empty();
                 var startPage = 1;
-                var maxPages = Math.ceil(data.total/sizeRecords);
+                //var maxPages = Math.ceil(data.total/sizeRecords);
+                var maxPages = data.total;
                 if(currentPage > 4) startPage = currentPage - 4;
                 if(currentPage+4 < maxPages) maxPages = currentPage+4; 
                 for(var i=startPage; i<=maxPages;i++) {
