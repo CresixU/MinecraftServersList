@@ -414,7 +414,7 @@
                 var startPage = 1;
                 //var maxPages = Math.ceil(data.total/sizeRecords);
                 var maxPages = data.total;
-                if(currentPage > 4) startPage = currentPage - 4;
+                if(currentPage > 4) startPage = currentPage - 3;
                 if(currentPage+4 < maxPages) maxPages = currentPage+4; 
                 for(var i=startPage; i<=maxPages;i++) {
                     if(i==currentPage+1) 
@@ -472,13 +472,13 @@
             function FilterByGamemode(gamemode) {
                 gamemodeFilter = gamemode;
                 $('#gamemode-selected-filter').text(gamemodeFilter);
-                GetServers(currentPage,sizeRecords,isPromoted,searchPhrase,sortBy);
+                GetServers(0,sizeRecords,isPromoted,searchPhrase,sortBy);
             }
 
             function FilterByGameversion(version) {
                 gameversionFilter = version;
                 $('#gameversion-selected-filter').text(gameversionFilter);
-                GetServers(currentPage,sizeRecords,isPromoted,searchPhrase,sortBy);
+                GetServers(0,sizeRecords,isPromoted,searchPhrase,sortBy);
             }
 
         </script>

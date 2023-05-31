@@ -284,8 +284,7 @@
             //Users
             function GetUsers(page) {
                 if(page<0) page = 0;
-                currentPage = page;
-                if(data && page >= Math.ceil(data.total/size)) currentPage = Math.ceil(data.total/size)-1;
+                if(data && page <= data.total) currentPage = page
                 var apiUrl;
                 console.log(currentPage)
                 apiUrl = api_url+'/api/v1/users/?page='+currentPage+'&size=10&search='+searchPhrase;
