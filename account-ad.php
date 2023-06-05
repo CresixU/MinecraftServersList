@@ -466,6 +466,29 @@
                         else alert('Zaaktualizowano dane');
                     } 
                 })
+                if($(`#edit-ad-file_${id}`) == null) return;
+
+                var fd = new FormData();
+                var files = $('#file')[0].files;
+
+                if(files.length > 0 ){
+
+                    fd.append('file', files[0]);
+
+                    $.ajax({
+                        url:api_url+'/api/v1/banner/'+adId+'/image/',
+                        type:'post',
+                        data:fd,
+                        dataType: 'json',
+                        contentType: false,
+                        processData: false,
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        success: function() {
+                            console.log("image attached");
+                        }
+                    });
             }
             async function ButtonAdStatistics(adId) {
                 $('#modal_stats-table').empty();
