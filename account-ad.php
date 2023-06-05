@@ -473,7 +473,7 @@
 
                 if(files.length > 0 ){
 
-                    fd.append('file', files[0]);
+                    fd.append('file',files[0]);
 
                     $.ajax({
                         url:api_url+'/api/v1/banner/'+adId+'/image/',
@@ -483,13 +483,12 @@
                         contentType: false,
                         processData: false,
                         xhrFields: {
-                            withCredentials: true
-                        },
-                        success: function() {
-                            console.log("image attached");
+                            withCredentials: true,
                         }
                     });
+                }
             }
+
             async function ButtonAdStatistics(adId) {
                 $('#modal_stats-table').empty();
                 await $.ajax({
@@ -510,10 +509,12 @@
                     })
                 $('#modal_stats').modal('toggle'); 
             }
+
             function ButtonAdExtend(adId) {
                 $('#modal_renew').modal('toggle'); 
                 $('#modal_renew-id').val(adId)
             }
+            
             async function ButtonAdExtendAction() {
                 if( !ValidateInput('#modal_renew-id') || !ValidateSelect('#modal_method') || !ValidateInput('#modal_daysToReserve')) {
                     alert("Uzupełnij wymagane pola");
