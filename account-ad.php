@@ -469,7 +469,7 @@
                 if($(`#edit-ad-file_${id}`) == null) return;
 
                 var fd = new FormData();
-                var files = $('#file')[0].files;
+                var files = $(`#edit-ad-file_${id}`)[0].files;
 
                 if(files.length > 0 ){
 
@@ -486,6 +486,9 @@
                             withCredentials: true,
                         }
                     });
+                }
+                else {
+                    console.log("no file");
                 }
             }
 
@@ -514,7 +517,7 @@
                 $('#modal_renew').modal('toggle'); 
                 $('#modal_renew-id').val(adId)
             }
-            
+
             async function ButtonAdExtendAction() {
                 if( !ValidateInput('#modal_renew-id') || !ValidateSelect('#modal_method') || !ValidateInput('#modal_daysToReserve')) {
                     alert("Uzupełnij wymagane pola");
