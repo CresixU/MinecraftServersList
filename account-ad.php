@@ -477,7 +477,7 @@
 
                     $.ajax({
                         url:api_url+'/api/v1/banner/'+adId+'/image/',
-                        type:'post',
+                        type:'PATCH',
                         data:fd,
                         dataType: 'json',
                         contentType: false,
