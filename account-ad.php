@@ -295,6 +295,7 @@
             var data;
             var userData;
             var totalAds = 0;
+            var totalOtherAds = 0;
             $('#nav-konto').addClass('active');
 
             $.ajax({
@@ -342,7 +343,7 @@
                 $('#panel-content-create-ad').css('display','block');
             }
 
-            function ShowAds() {
+            /*function ShowAds() {
                 $.ajax({
                     url: api_url+'/api/v1/banner/own/',
                     xhrFields: {
@@ -358,6 +359,47 @@
                     })
                     GenerateEmptyAds();
                 })   
+            }*/
+            async function ShowAds() {
+                await $.ajax({
+                    url: api_url+'/api/v1/banner/own/',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                }).done(res => {
+                    totalAds = res.length;
+                    var i = 0;
+                    res.forEach(x => {
+                        $('.panel-content-ad-storage').append($('<div class="ad-storage-item col col-12 col-lg-6"><div class="row"><div class="col col-12 edit-ad"><label for="edit-ad-link_'+i+'">Link do strony serwera</label><input type="text" id="edit-ad-link_'+i+'" placeholder="Link do strony" class="web-link" value="'+x.link+'"></div><div class="col col-12 edit-ad"><label for="edit-ad-file_'+i+'" style="top: 0">Zmiana baneru (wymiary 1920x1270px)</label><input type="file" id="edit-ad-file_'+i+'" class="pl-3" style="margin-left: 20px;" accept="image/png, image/jpeg, image/gif"></div><div class="col col-12"><p style="text-align: center">Wynajem do '+ReturnStringDate(x.expiresAt)+'<br>'+ReturnRemainDays(x.expiresAt)+'</p></div><div class="col col-12" style="justify-content: center; display: flex;"><button onclick="ButtonAdSave(\''+i+'\',\''+x.id+'\')" class="simple-button mx-3">Zapisz</button><button onclick="ButtonAdStatistics(\''+x.id+'\')" class="simple-button mx-3">Statystyki</button><button onclick="ButtonAdExtend(\''+x.id+'\')" class="simple-button mx-3">Przedłuż</button></div></div></div>'))
+                        i++;
+                    })  
+                })
+
+                await $.ajax({
+                    url: api_url+'/api/v1/banner/?filter=NOT_OWN&random=true',
+                    xhrFields: {
+                        withCredentials: true
+                    }
+                }).done(res => {
+                    totalOtherAds = res.length;
+                    res.forEach(x => {
+                        ('.panel-content-ad-storage').append($('<div class="ad-storage-item col col-12 col-lg-6" style="border-color: grey"><div class="row" style="justify-content: center; display: flex"><div class="col col-12"><p>To miejsce reklamowe jest zajęte</p></div><div class="col col-12"><p style="text-align:center">Możesz je wynająć<br>'+ReturnStringDate(x.expiresAt)+'</p></div></div></div>'));
+                    })
+                })
+
+                await $.ajax({
+                    url: api_url+'/api/v1/banner/settings/',
+                    xhrFields: {
+                        withCredentials: true
+                    }
+                }).done(res => {
+                    var adsLeft = res.maxAds - totalAds - totalOtherAds;
+                    if(adsLeft <= 0) return;
+
+                    for(var i=adsLeft;i>=0;i--) {
+                        $('.panel-content-ad-storage').append($('<div class="ad-storage-item col col-12 col-lg-6"><div class="row" style="justify-content: center; display: flex"><div class="col col-12"><p>To miejsce reklamowe jest wolne, możesz je wynająć</p></div><div class="col col-12"><button class="simple-button" onclick="ShowCreateAd()">Wynajmij</button></div></div></div>'));
+                    }
+                })
             }
 
 
