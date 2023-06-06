@@ -309,6 +309,8 @@
 
                 var fullUrl = api_url+'/api/v1/promote-payments/calculate/?days='+$("#daysToReserve").val()+'&method='+$('#method').val();
                 if($('#promotionalCode').val() != '') fullUrl += '&promotionalCode='+$('#promotionalCode').val();
+                console.log('promotionalCode='+$('#promotionalCode').val());
+                console.log('fullUrl='+fullUrl);
 
                 $.ajax({
                     url: fullUrl,
