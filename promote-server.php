@@ -319,6 +319,9 @@
                     complete: function(xhr, textStatus) {
                         if(xhr.status != 200)
                             $('#calculate-price-message').text(xhr.responseJSON.message);
+                        else {
+                            $('#calculate-price-message').text('');
+                        }
                     }
                 }).done(res=>{
                     $('#calculated-price').text(res.price);
