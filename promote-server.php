@@ -165,6 +165,7 @@
                                         </div>
                                         <div class="mt-3">
                                             <p style="text-align: right">Cena: <span id="calculated-price">0</span> zł</p>
+                                            <span id="calculate-price-message" style="color:red"></span>
                                         </div>
                                         <div id="createAd-response"></div>
                                         <div>
@@ -309,14 +310,16 @@
 
                 var fullUrl = api_url+'/api/v1/promote-payments/calculate/?days='+$("#daysToReserve").val()+'&method='+$('#method').val();
                 if($('#promotionalCode').val() != '') fullUrl += '&promotionalCode='+$('#promotionalCode').val();
-                console.log('promotionalCode='+$('#promotionalCode').val());
-                console.log('fullUrl='+fullUrl);
 
                 $.ajax({
                     url: fullUrl,
                     xhrFields: {
                         withCredentials: true
                     },
+                    complete: function(xhr, textStatus) {
+                        if(xhr.status != 200)
+                            $('#calculate-price-message').text(xhr.responseJSON.message);
+                    }
                 }).done(res=>{
                     $('#calculated-price').text(res.price);
                 })
