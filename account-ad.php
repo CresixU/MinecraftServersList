@@ -383,7 +383,7 @@
                 }).done(res => {
                     totalOtherAds = res.length;
                     res.forEach(x => {
-                        ('.panel-content-ad-storage').append($('<div class="ad-storage-item col col-12 col-lg-6" style="border-color: grey"><div class="row" style="justify-content: center; display: flex"><div class="col col-12"><p>To miejsce reklamowe jest zajęte</p></div><div class="col col-12"><p style="text-align:center">Możesz je wynająć<br>'+ReturnStringDate(x.expiresAt)+'</p></div></div></div>'));
+                        $('.panel-content-ad-storage').append($('<div class="ad-storage-item col col-12 col-lg-6" style="border-color: grey"><div class="row" style="justify-content: center; display: flex"><div class="col col-12"><p>To miejsce reklamowe jest zajęte</p></div><div class="col col-12"><p style="text-align:center">Możesz je wynająć<br>'+ReturnStringDate(x.expiresAt)+'</p></div></div></div>'));
                     })
                 })
 
