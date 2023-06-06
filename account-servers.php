@@ -322,12 +322,14 @@
                     if(data.content.length == 0) $('#panel-content-servers-p').prepend('Nie dodano jeszcze żadnego serwera na tym koncie. ')
                     var onlineMode = "Tak";
                     var promoted = "Nie";
+                    var promoteExpireDate = '';
                     data.content.forEach(x => {
                         if(!x.server.onlineModeEnabled) onlineMode = "Nie";
                         if(x.promote != null) {
                             promoted = `Tak, ${x.promote.daysToExpire} dni`;
+                            promoteExpireDate = ReturnStringDate(x.promote.expiresAt);
                         }
-                        $('#servers-list').append($('<tr><td>'+x.stats.placeInRanking+'</td><td>'+x.server.name+'</td><td>'+x.serverHostCredentials.host+'</td><td>'+x.serverHostCredentials.port+'</td><td>'+onlineMode+'</td><td>'+promoted+'</td><td class="version" title="'+(ReturnServerVersions(x.minecraftServerVersions).versionsString ?? '?')+'">'+(ReturnServerVersions(x.minecraftServerVersions).formatedVersions ?? '?')+'</td><td>'+x.server.points+'</td><td><button onclick="ModalDelete(\''+x.server.id+'\',\''+x.server.name+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><a href=\'edit-server.php?id='+x.server.id+'\'><button><i class="bi bi-pencil-square"></i></button></a></td><td><a href="server.php?id='+x.server.id+'"><i class="bi bi-card-image"></i></a></td></tr>'))
+                        $('#servers-list').append($('<tr><td>'+x.stats.placeInRanking+'</td><td>'+x.server.name+'</td><td>'+x.serverHostCredentials.host+'</td><td>'+x.serverHostCredentials.port+'</td><td>'+onlineMode+'</td><td title="'+promoteExpireDate+'">'+promoted+'</td><td class="version" title="'+(ReturnServerVersions(x.minecraftServerVersions).versionsString ?? '?')+'">'+(ReturnServerVersions(x.minecraftServerVersions).formatedVersions ?? '?')+'</td><td>'+x.server.points+'</td><td><button onclick="ModalDelete(\''+x.server.id+'\',\''+x.server.name+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><a href=\'edit-server.php?id='+x.server.id+'\'><button><i class="bi bi-pencil-square"></i></button></a></td><td><a href="server.php?id='+x.server.id+'"><i class="bi bi-card-image"></i></a></td></tr>'))
                     })
                     ;
                 })
