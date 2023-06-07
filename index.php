@@ -434,7 +434,7 @@
                         $('#ad-servers-list').append($('<div class="col col-6"><div class="banner"><a href="account-ad.php"><button class="simple-button">Wynajmij miejsce reklamowe</button></a></div></div>'));
 
                     res.forEach(x => {
-                        $('#ad-servers-list').append($('<div class="col col-6"><img data-href="'+x.link+'" onclick="BannerClick(event,\''+x.id+'\')" id="'+x.id+'" src="'+api_url+'/resources/'+x.fileName+'"></div>'));
+                        $('#ad-servers-list').append($('<div class="col col-6"><img style="cursor:hover" data-href="'+x.link+'" onclick="BannerClick(event,\''+x.id+'\')" id="'+x.id+'" src="'+api_url+'/resources/'+x.fileName+'"></div>'));
                     })
                 })
             }
