@@ -320,10 +320,10 @@
                 }).done(res => {
                     data = res;
                     if(data.content.length == 0) $('#panel-content-servers-p').prepend('Nie dodano jeszcze żadnego serwera na tym koncie. ')
-                    var onlineMode = "Tak";
-                    var promoted = "Nie";
-                    var promoteExpireDate = '';
                     data.content.forEach(x => {
+                        let onlineMode = "Tak";
+                        let promoted = "Nie";
+                        let promoteExpireDate = '';
                         if(!x.server.onlineModeEnabled) onlineMode = "Nie";
                         if(x.promote != null) {
                             promoted = `Tak, ${x.promote.daysToExpire} dni`;

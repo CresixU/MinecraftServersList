@@ -299,6 +299,7 @@
             var bannerWidth = 0;
             var bannerHeight = 0;
             var availableBannerExtensions = [];
+            var settings;
             $('#nav-konto').addClass('active');
 
             $.ajax({
@@ -354,15 +355,11 @@
                         withCredentials: true
                     }
                 }).done(res => {
-                    var adsLeft = res.maxAds - totalAds - totalOtherAds;
+                    settings = res;
                     bannerWidth = res.configuration.width;
                     bannerHeight = res.configuration.height;
                     allowedBannerExtensions = res.configuration.allowedExtensions;
-                    if(adsLeft <= 0) return;
-
-                    for(var i=adsLeft;i>0;i--) {
-                        $('.panel-content-ad-storage').append($('<div class="ad-storage-item col col-12 col-lg-6"><div class="row" style="justify-content: center; display: flex"><div class="col col-12"><p>To miejsce reklamowe jest wolne, możesz je wynająć</p></div><div class="col col-12"><button class="simple-button" onclick="ShowCreateAd()">Wynajmij</button></div></div></div>'));
-                    }
+                    var adsLeft = settings.maxAds - totalAds - totalOtherAds;
                     $('#ad-image-size').text(`${bannerWidth}x${bannerHeight}`);
                     $('#ad-image-allowed-files').text(allowedBannerExtensions)
                 })
@@ -411,6 +408,11 @@
                         $('.panel-content-ad-storage').append($('<div class="ad-storage-item col col-12 col-lg-6" style="border-color: #601919"><div class="row" style="justify-content: center; display: flex"><div class="col col-12"><p>To miejsce reklamowe jest zajęte</p></div><div class="col col-12"><p style="text-align:center">Możesz je wynająć<br>'+ReturnStringDate(x.expiresAt)+'</p></div></div></div>'));
                     })
                 })
+
+                if(adsLeft <= 0) return;
+                for(var i=adsLeft;i>0;i--) {
+                    $('.panel-content-ad-storage').append($('<div class="ad-storage-item col col-12 col-lg-6"><div class="row" style="justify-content: center; display: flex"><div class="col col-12"><p>To miejsce reklamowe jest wolne, możesz je wynająć</p></div><div class="col col-12"><button class="simple-button" onclick="ShowCreateAd()">Wynajmij</button></div></div></div>'));
+                }
 
             }
 
