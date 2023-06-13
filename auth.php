@@ -298,6 +298,16 @@
                             $('#modal_info-text').text("Potwierdź rejestrację poprzez link wysłany na podany adres mailowy.");
                             $('#register-response').html('');
                             $('#modal_info').modal('toggle');
+                            $('#account-register-name').val('');
+                            $('#account-register-password').val('');
+                            $('#account-register-password2').val('');
+                            $('#account-register-discord').val('');
+                            $('#account-register-email').val('');
+                            $('#account-register-email2').val('');
+                            const WaitSeconds = async () => { await delay(5000); }
+                            WaitSeconds();
+                            location.href = window.location.origin;
+
                         }
                     } 
                 });
