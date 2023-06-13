@@ -372,7 +372,8 @@
                     data = res;
                     if(data.content.length == 0) return;
                     data.content.forEach(x => {
-                        $('#serverId').append($('<option value="'+x.server.id+'">'+x.server.name+'</option>'));   
+                        if(x.promote != null)
+                            $('#serverId').append($('<option value="'+x.server.id+'">'+x.server.name+'</option>'));   
                     });
                 })
             }
