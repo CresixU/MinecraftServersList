@@ -379,7 +379,7 @@
                     var i = 0;
                     res.forEach(x => {
                         if(x.paymentResolved == false) {
-                            await $.ajax({
+                            $.ajax({
                                 url: api_url+`/api/v1/banner-payments/banner/${x.id}/`,
                                 xhrFields: {
                                     withCredentials: true
