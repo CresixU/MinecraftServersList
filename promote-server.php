@@ -370,7 +370,12 @@
                     },
                 }).done(res => {
                     data = res;
-                    if(data.content.length == 0) return;
+                    if(data.content.length == 0) 
+                    {
+                        $('#form').empty();
+                        $('#form').append($('<h2>Wszystkie twoje serwery są już promowane</h2>'))
+                        return;
+                    }
                     data.content.forEach(x => {
                         if(x.promote == null)
                             $('#serverId').append($('<option value="'+x.server.id+'">'+x.server.name+'</option>'));   
