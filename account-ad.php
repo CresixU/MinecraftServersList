@@ -300,6 +300,7 @@
             var bannerHeight = 0;
             var availableBannerExtensions = [];
             var settings;
+            var adsLeft;
             $('#nav-konto').addClass('active');
 
             $.ajax({
@@ -359,7 +360,7 @@
                     bannerWidth = res.configuration.width;
                     bannerHeight = res.configuration.height;
                     allowedBannerExtensions = res.configuration.allowedExtensions;
-                    var adsLeft = settings.maxAds - totalAds - totalOtherAds;
+                    adsLeft = settings.maxAds - totalAds - totalOtherAds;
                     $('#ad-image-size').text(`${bannerWidth}x${bannerHeight}`);
                     $('#ad-image-allowed-files').text(allowedBannerExtensions)
                 })
