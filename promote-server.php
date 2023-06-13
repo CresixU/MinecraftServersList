@@ -372,14 +372,17 @@
                     data = res;
                     if(data.content.length == 0) 
                     {
-                        $('#form').empty();
-                        $('#form').append($('<h2>Wszystkie twoje serwery są już promowane</h2>'))
                         return;
                     }
                     data.content.forEach(x => {
                         if(x.promote == null)
                             $('#serverId').append($('<option value="'+x.server.id+'">'+x.server.name+'</option>'));   
                     });
+                    let isAnyPromoted = data.content.some(x => x.promote != null);
+                    if(isAnyPromoted) {
+                        $('#form').empty();
+                        $('#form').append($('<h2>Wszystkie twoje serwery są już promowane</h2>'))
+                    }
                 })
             }
 
