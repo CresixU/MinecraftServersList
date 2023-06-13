@@ -360,7 +360,6 @@
                     bannerWidth = res.configuration.width;
                     bannerHeight = res.configuration.height;
                     allowedBannerExtensions = res.configuration.allowedExtensions;
-                    adsLeft = settings.maxAds - totalAds - totalOtherAds;
                     $('#ad-image-size').text(`${bannerWidth}x${bannerHeight}`);
                     $('#ad-image-allowed-files').text(allowedBannerExtensions)
                 })
@@ -410,6 +409,8 @@
                     })
                 })
 
+                adsLeft = settings.maxAds - totalAds - totalOtherAds;
+                
                 if(adsLeft <= 0) return;
                 for(var i=adsLeft;i>0;i--) {
                     $('.panel-content-ad-storage').append($('<div class="ad-storage-item col col-12 col-lg-6"><div class="row" style="justify-content: center; display: flex"><div class="col col-12"><p>To miejsce reklamowe jest wolne, możesz je wynająć</p></div><div class="col col-12"><button class="simple-button" onclick="ShowCreateAd()">Wynajmij</button></div></div></div>'));
@@ -453,6 +454,7 @@
                     $('#calculated-price').text(res.price);
                 })
             })
+
             //Modal
             $('.calculate_price2').on('input', function() {
                 if($('#modal_method').val() == null) return;
