@@ -357,13 +357,7 @@
                         if(xhr.status != 200) $('#createAd-response').html($('<p class="mt-3" style="color: red">'+xhr.responseJSON.message+'</p>'));
                     }
                 }).done(res => {
-                    console.log(res);
-                    var win = window.open(res.payment.url, '_blank');
-                    if (win) {
-                        win.focus();
-                    } else {
-                        alert('Wymagane zezwolenie na wyskakujące okna na stronie. W celu dokonania płatności kliknij w pulsujący zielony guzik');
-                    }
+                    location.replace(res.payment.url);
                     $('#form').append($('<div class="mt-3"><a href="'+res.payment.url+'" class="btn-green">Dokończ płatność</a></div>'));
                 })  
             }
