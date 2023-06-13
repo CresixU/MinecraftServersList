@@ -357,7 +357,7 @@
                         if(xhr.status != 200) $('#createAd-response').html($('<p class="mt-3" style="color: red">'+xhr.responseJSON.message+'</p>'));
                     }
                 }).done(res => {
-                    location.replace(res.payment.url);
+                    location.href = res.payment.url;
                     $('#form').append($('<div class="mt-3"><a href="'+res.payment.url+'" class="btn-green">Dokończ płatność</a></div>'));
                 })  
             }
@@ -372,7 +372,7 @@
                     data = res;
                     if(data.content.length == 0) return;
                     data.content.forEach(x => {
-                        if(x.promote != null)
+                        if(x.promote == null)
                             $('#serverId').append($('<option value="'+x.server.id+'">'+x.server.name+'</option>'));   
                     });
                 })

@@ -496,7 +496,7 @@
                         if(xhr.status != 200) $('#createAd-response').html($('<p class="mt-3" style="color: red">'+xhr.responseJSON.message+'</p>'));
                     }
                 }).done(res => {
-                    location.replace(res.paymentUrl);
+                    location.href = res.paymentUrl;
                     $('form').append($('<div><a href="'+res.paymentUrl+'" class="btn-green">Przejdź do płatności</a></div>'));
                 })   
             }
