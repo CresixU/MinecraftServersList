@@ -391,19 +391,23 @@
                     for(var i=0;i<5;i++) {
                         var currentServer = promotedData.content[i];
                         if(!currentServer) return;
-                        var onlineLight = 'icon-on';
-                        var serverOnlineRatio = 100.00;
+                        var onlineLight = 'icon-off';
+                        var serverOnlineRatio = 0.00;
                         var onlineModeIcon = 'icon-verified';
+                        var onlinePlayers = 0;
+                        var serverSize = 0;
                         var starsId;
-                        if(!currentServer.serverPingCredentials.isOnline)  onlineLight = 'icon-off'
-
-                        if(currentServer.serverPingCredentials.timesOffline > 0) {
-                            serverOnlineRatio = (currentServer.serverPingCredentials.timesOnline / currentServer.serverPingCredentials.timesOffline).toFixed(2);
+                        if(currentServer.serverPingCredentials) {
+                            if(currentServer.serverPingCredentials.isOnline)  onlineLight = 'icon-on'
+                            if(currentServer.serverPingCredentials.timesOffline > 0) {
+                                serverOnlineRatio = (currentServer.serverPingCredentials.timesOnline / currentServer.serverPingCredentials.timesOffline).toFixed(2);
+                            }
+                            if(currentServer.serverPingCredentials.onlinePlayers) onlinePlayers = currentServer.serverPingCredentials.onlinePlayers;
+                            if(currentServer.serverPingCredentials.serverSize) serverSize = currentServer.serverPingCredentials.serverSize;
                         }
-
                         if(!currentServer.server.onlineModeEnabled) onlineModeIcon = 'icon-no-verified';
 
-                        $('.promoted-servers-items').append($('<div class="promoted-server-item"><div class="promoted-server-title"><a class="simple-button" href="/server.php?id='+currentServer.server.id+'">'+currentServer.server.name+'</a></div><div class="promoted-server-players"><i class="icon icon-players"></i><div class="server-players-number">'+currentServer.serverPingCredentials.onlinePlayers+'/'+currentServer.serverPingCredentials.serverSize+'</div><i class="icon '+onlineLight+'"></i></div><div class="promoted-server-rate"><i class="icon icon-rate"></i><div class="rate-number">'+currentServer.rate.rate+'</div><div class="stars" id="starsP_'+i+'"> </div> </div><div class="promoted-server-mode"><i class="icon icon-www"></i><div class="promoted-server-status">Online mode: <i class="icon '+onlineModeIcon+'"></i></div></div><div class="promoted-server-version"><i class="icon icon-version"></i><div class="version-number" title="'+ReturnServerVersions(currentServer.minecraftServerVersions).versionsString+'">Wersja serwera: '+ReturnServerVersions(currentServer.minecraftServerVersions).formatedVersions+'</div></div><div class="promoted-server-web"><div class="server-url"><a href="'+currentServer.server.homepage+'">'+currentServer.server.homepage+'</a></div></div></div>'));
+                        $('.promoted-servers-items').append($('<div class="promoted-server-item"><div class="promoted-server-title"><a class="simple-button" href="/server.php?id='+currentServer.server.id+'">'+currentServer.server.name+'</a></div><div class="promoted-server-players"><i class="icon icon-players"></i><div class="server-players-number">'+onlinePlayers+'/'+serverSize+'</div><i class="icon '+onlineLight+'"></i></div><div class="promoted-server-rate"><i class="icon icon-rate"></i><div class="rate-number">'+currentServer.rate.rate+'</div><div class="stars" id="starsP_'+i+'"> </div> </div><div class="promoted-server-mode"><i class="icon icon-www"></i><div class="promoted-server-status">Online mode: <i class="icon '+onlineModeIcon+'"></i></div></div><div class="promoted-server-version"><i class="icon icon-version"></i><div class="version-number" title="'+ReturnServerVersions(currentServer.minecraftServerVersions).versionsString+'">Wersja serwera: '+ReturnServerVersions(currentServer.minecraftServerVersions).formatedVersions+'</div></div><div class="promoted-server-web"><div class="server-url"><a href="'+currentServer.server.homepage+'">'+currentServer.server.homepage+'</a></div></div></div>'));
                         ShowStarsRate("starsP",i,currentServer.rate.rate);
                     }
                 });
