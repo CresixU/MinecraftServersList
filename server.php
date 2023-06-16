@@ -138,7 +138,7 @@
                     </div>
                 </div>
                 <div class="col-6">
-                    <p class="py-5" id="server-fullip-tocopy"><span id="server-fullip"></span><i class="fa-regular fa-copy" style="color: #fceec7; margin-left: 5px; cursor: pointer;" onclick="CopyOnClick()"></i></p>
+                    <p class="py-5" id="server-fullip-tocopy"><span id="server-fullip" style="font-size: 20px;"></span><i class="fa-regular fa-copy" style="color: #fceec7; margin-left: 5px; cursor: pointer;" onclick="CopyOnClick()"></i></p>
                 </div>
                 
             </div>
