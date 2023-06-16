@@ -124,7 +124,7 @@
                             <div class="star star-full" id="star_4" onclick="Rate(this.id)"></div>
                             <div class="star star-empty" id="star_5" onclick="Rate(this.id)"></div>
                         </div>
-                        <span id="server-rate" style="color: var(--href-color);">4.00</span><br>
+                        <span id="server-rate" style="color: var(--href-color);">Ładowanie danych...</span><br>
                         <span style="color">Kliknij w gwiazdkę by ocenić serwer</span>
                     </div>
                     <div class="py-3">
