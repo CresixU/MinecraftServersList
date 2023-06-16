@@ -329,7 +329,12 @@
                             promoted = `Tak, ${x.promote.daysToExpire} dni`;
                             promoteExpireDate = ReturnStringDate(x.promote.expiresAt);
                         }
-                        $('#servers-list').append($('<tr><td>'+x.stats.placeInRanking+'</td><td>'+x.server.name+'</td><td>'+x.serverHostCredentials.host+'</td><td>'+x.serverHostCredentials.port+'</td><td>'+onlineMode+'</td><td title="'+promoteExpireDate+'">'+promoted+'</td><td class="version" title="'+(ReturnServerVersions(x.minecraftServerVersions).versionsString ?? '?')+'">'+(ReturnServerVersions(x.minecraftServerVersions).formatedVersions ?? '?')+'</td><td>'+x.server.points+'</td><td><button onclick="ModalDelete(\''+x.server.id+'\',\''+x.server.name+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><a href=\'edit-server.php?id='+x.server.id+'\'><button><i class="bi bi-pencil-square"></i></button></a></td><td><a href="server.php?id='+x.server.id+'"><i class="bi bi-card-image"></i></a></td></tr>'))
+                        if(x.server.motdValidated) {
+                            $('#servers-list').append($('<tr><td>'+x.stats.placeInRanking+'</td><td>'+x.server.name+'</td><td>'+x.serverHostCredentials.host+'</td><td>'+x.serverHostCredentials.port+'</td><td>'+onlineMode+'</td><td title="'+promoteExpireDate+'">'+promoted+'</td><td class="version" title="'+(ReturnServerVersions(x.minecraftServerVersions).versionsString ?? '?')+'">'+(ReturnServerVersions(x.minecraftServerVersions).formatedVersions ?? '?')+'</td><td>'+x.server.points+'</td><td><button onclick="ModalDelete(\''+x.server.id+'\',\''+x.server.name+'\')"><i class="bi bi-trash3-fill"></i></button></td><td><a href=\'edit-server.php?id='+x.server.id+'\'><button><i class="bi bi-pencil-square"></i></button></a></td><td><a href="server.php?id='+x.server.id+'"><i class="bi bi-card-image"></i></a></td></tr>'));
+                        }
+                        else {
+                            $('#servers-list').append($('<tr style="filter: brightness(0.5);"><td>'+x.stats.placeInRanking+'</td><td>'+x.server.name+'</td><td>'+x.serverHostCredentials.host+'</td><td>'+x.serverHostCredentials.port+'</td><td>'+onlineMode+'</td><td colspan="5">Serwer oczekuje na weryfikacje</td></tr>'));
+                        }
                     })
                     ;
                 })
