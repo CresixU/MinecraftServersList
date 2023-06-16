@@ -66,7 +66,7 @@
                                     </p>
                                     <div>
                                         <p class="second-header mb-0">Weryfikacja</p>
-                                        <p>Przed przejściem do wypełniania dalszej częsci formularza ustaw swojemu serwerowi następujący MOTD (Message of the day - Wiadomość dnia)</p>
+                                        <p>Przed przejściem do wypełniania dalszej częsci formularza ustaw swojemu serwerowi następujący MOTD (Message of the day - Wiadomość dnia) <br>Wymagany fragment napisany poniżej może znaleźć się gdziekolwiek w MOTD<br>Weryfikacja może potrwać do godziny, upewnij się, że twoje MOTD jest poprawne</p>
                                         <h3 id="desired-motd">www.minecraft-list.pl#<span id="user-name"></span></h3>
                                         <p>Weryfikacja jest konieczna, aby pewne było, że serwer, który dodajesz na listę należy do Ciebie</p>
                                         <!--<button class="simple-button" onclick="CheckServerMotd()">Sprawdź MOTD</button>-->
@@ -345,7 +345,7 @@
                         console.log("Complete: "+xhr.status + " " +textStatus);
                         $('.loader-box').css('display','none');
                         if(xhr.status == 200) {
-                            alert('Serwer został dodany');
+                            alert('Serwer został poddany weryfikacji, po jej zakończenu zostanie dodany. Potrwa ona maksymalnie godzine');
                             window.location.replace("index.php");
                         }
                         else alert(xhr.responseJSON.message);
