@@ -432,7 +432,7 @@
         }
         
         function CopyOnClick() {
-            navigator.clipboard.writeText(data.serverHostCredentials.host+':'data.serverHostCredentials.port);
+            navigator.clipboard.writeText(data.serverHostCredentials.host+':'+data.serverHostCredentials.port);
             console.log('Content copied to clipboard');
 
             //alert('Skopiowano ip serwera');
