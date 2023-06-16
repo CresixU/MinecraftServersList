@@ -53,6 +53,7 @@
             #ad-servers-list img {
                 width: 100%;
                 height: 110px;
+                cursor: pointer;
             }
             .server-url a {
                 text-decoration: none;
