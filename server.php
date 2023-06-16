@@ -275,7 +275,7 @@
                 $('#server-data-name').text(data.server.name);
                 $('#server-data-ip').text(data.serverHostCredentials.host);
                 $('#server-data-port').text(data.serverHostCredentials.port);
-                $('#server-fullip').text(data.serverHostCredentials.host+':'data.serverHostCredentials.port);
+                $('#server-fullip').text(data.serverHostCredentials.host+':'+data.serverHostCredentials.port);
                 if(data.serverPingCredentials != null) {
                     if(!data.serverPingCredentials.isOnline) onlineLight = 'icon-off';
                     $('#server-data-status').html($('<i class="icon '+onlineLight+'"></i> <span style="display:block; float: left;">'+data.serverPingCredentials.onlinePlayers+'/'+data.serverPingCredentials.serverSize+'</span>'));
