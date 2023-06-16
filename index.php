@@ -436,7 +436,7 @@
                 }
             }  
             
-            function ShowAdServers() {
+            async function ShowAdServers() {
                 await $.ajax({
                     url: api_url+'/api/v1/banner/settings/',
                     xhrFields: {
