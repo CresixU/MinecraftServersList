@@ -4,6 +4,7 @@
     <title>MinecraftList</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/35076142fc.js" crossorigin="anonymous"></script>
     
     <style>
         main .container {
@@ -73,6 +74,9 @@
             width: 10px;
             height: 38px;
         } 
+        #server-fullip-tocopy:hover {
+            filter: brightness(1.3);
+        }
     </style>
 
 </head>
@@ -134,7 +138,7 @@
                     </div>
                 </div>
                 <div class="col-6">
-                    <p class="py-5"><span id="server-fullip"></span><i class="fa-regular fa-copy" style="color: #fceec7;" onclick="CopyOnClick()"></i></p>
+                    <p class="py-5" id="server-fullip-tocopy"><span id="server-fullip"></span><i class="fa-regular fa-copy" style="color: #fceec7;" onclick="CopyOnClick()"></i></p>
                 </div>
                 
             </div>
