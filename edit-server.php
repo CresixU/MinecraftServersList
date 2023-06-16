@@ -232,6 +232,9 @@
                     },
                     complete: function(xhr, textStatus) {
                         $('.loader-box').css('display','none');
+                        if(xhr.status != 200) {
+                            alert(textStatus);
+                        }
                         console.log("Complete: "+xhr.status + " " +textStatus);
                         //console.log("Complete: "+xhr.responseJSON.message);
                     } 
