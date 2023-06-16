@@ -233,9 +233,9 @@
                     complete: function(xhr, textStatus) {
                         $('.loader-box').css('display','none');
                         if(xhr.status != 200) {
-                            alert(textStatus);
+                            alert(xhr.responseJSON.message);
                         }
-                        console.log("Complete: "+xhr.status + " " +textStatus);
+                        console.log("Complete: "+xhr.status + " " +textStatus+xhr.responseJSON.message);
                         //console.log("Complete: "+xhr.responseJSON.message);
                     } 
                 });
