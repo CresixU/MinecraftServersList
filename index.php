@@ -239,6 +239,7 @@
                 if(data && page <= data.total) currentPage = page
                 if(search=='' || search == null) search = "";
                 var apiUrl;
+                var settings;
                 sizeRecords = size;
                 isPromoted = promoted;
                 searchPhrase = search;
@@ -436,13 +437,24 @@
             }  
             
             function ShowAdServers() {
-                $.ajax({
+                await $.ajax({
+                    url: api_url+'/api/v1/banner/settings/',
+                    xhrFields: {
+                        withCredentials: true
+                    }
+                }).done(res => {
+                    settings = res;
+                });
+
+                await $.ajax({
                     url: api_url+'/api/v1/banner/?random=true'
                 }).done(res => {
-                    if(res.length % 2 == 0)
-                        $('#ad-servers-list').append($('<div class="col col-6"><div class="banner"><a href="account-ad.php"><button class="simple-button">Wynajmij miejsce reklamowe</button></a></div></div>'), $('<div class="col col-6"><div class="banner"><a href="account-ad.php"><button class="simple-button">Wynajmij miejsce reklamowe</button></a></div></div>'));
-                    else
-                        $('#ad-servers-list').append($('<div class="col col-6"><div class="banner"><a href="account-ad.php"><button class="simple-button">Wynajmij miejsce reklamowe</button></a></div></div>'));
+                    if(res.length < settings.maxAds) {
+                        if(res.length % 2 == 0)
+                            $('#ad-servers-list').append($('<div class="col col-6"><div class="banner"><a href="account-ad.php"><button class="simple-button">Wynajmij miejsce reklamowe</button></a></div></div>'), $('<div class="col col-6"><div class="banner"><a href="account-ad.php"><button class="simple-button">Wynajmij miejsce reklamowe</button></a></div></div>'));
+                        else
+                            $('#ad-servers-list').append($('<div class="col col-6"><div class="banner"><a href="account-ad.php"><button class="simple-button">Wynajmij miejsce reklamowe</button></a></div></div>'));
+                    }
 
                     res.forEach(x => {
                         $('#ad-servers-list').append($('<div class="col col-6"><img style="cursor:hover" data-href="'+x.link+'" onclick="BannerClick(event,\''+x.id+'\')" id="'+x.id+'" src="'+api_url+'/resources/'+x.fileName+'"></div>'));

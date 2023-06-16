@@ -115,22 +115,28 @@
                 <h1 id="server-data-name" style="margin-left: 15px !important;">Ładowanie danych...</h1>
             </div>
             <div class="row mt-2">
-                <div class="body-rate">
-                    <div class="stars" id="stars">
-                        <div class="star star-full" id="star_1" onclick="Rate(this.id)"></div>
-                        <div class="star star-full" id="star_2" onclick="Rate(this.id)"></div>
-                        <div class="star star-full" id="star_3" onclick="Rate(this.id)"></div>
-                        <div class="star star-full" id="star_4" onclick="Rate(this.id)"></div>
-                        <div class="star star-empty" id="star_5" onclick="Rate(this.id)"></div>
+                <div class="col-6">
+                    <div class="body-rate">
+                        <div class="stars" id="stars">
+                            <div class="star star-full" id="star_1" onclick="Rate(this.id)"></div>
+                            <div class="star star-full" id="star_2" onclick="Rate(this.id)"></div>
+                            <div class="star star-full" id="star_3" onclick="Rate(this.id)"></div>
+                            <div class="star star-full" id="star_4" onclick="Rate(this.id)"></div>
+                            <div class="star star-empty" id="star_5" onclick="Rate(this.id)"></div>
+                        </div>
+                        <span id="server-rate" style="color: var(--href-color);">4.00</span><br>
+                        <span style="color">Kliknij w gwiazdkę by ocenić serwer</span>
                     </div>
-                    <span id="server-rate" style="color: var(--href-color);">4.00</span><br>
-                    <span style="color">Kliknij w gwiazdkę by ocenić serwer</span>
-                </div>
-                <div class="py-3">
-                    <div class="table_filter_button px-3" id="like_button">
-                        <span id="server-likes" style="float:left; padding: 10px 0px;"></span><i class="icon icon-likes" style="float:left;"></i> <span style="float:left; padding: 9px 0px;">Lubię to</span>
+                    <div class="py-3">
+                        <div class="table_filter_button px-3" id="like_button">
+                            <span id="server-likes" style="float:left; padding: 10px 0px;"></span><i class="icon icon-likes" style="float:left;"></i> <span style="float:left; padding: 9px 0px;">Lubię to</span>
+                        </div>
                     </div>
                 </div>
+                <div class="col-6">
+                    <p class="py-5"><span id="server-fullip"></span><i class="fa-regular fa-copy" style="color: #fceec7;" onclick="CopyOnClick()"></i></p>
+                </div>
+                
             </div>
             
             <div class="server-data-list mb-5 mt-2" >
@@ -269,6 +275,7 @@
                 $('#server-data-name').text(data.server.name);
                 $('#server-data-ip').text(data.serverHostCredentials.host);
                 $('#server-data-port').text(data.serverHostCredentials.port);
+                $('#server-fullip').text(data.serverHostCredentials.host+':'data.serverHostCredentials.port);
                 if(data.serverPingCredentials != null) {
                     if(!data.serverPingCredentials.isOnline) onlineLight = 'icon-off';
                     $('#server-data-status').html($('<i class="icon '+onlineLight+'"></i> <span style="display:block; float: left;">'+data.serverPingCredentials.onlinePlayers+'/'+data.serverPingCredentials.serverSize+'</span>'));
@@ -425,8 +432,7 @@
         }
         
         function CopyOnClick() {
-            var text = document.getElementById("server-data-ip").innerHTML;
-            navigator.clipboard.writeText(text);
+            navigator.clipboard.writeText(data.serverHostCredentials.host+':'data.serverHostCredentials.port);
             console.log('Content copied to clipboard');
 
             //alert('Skopiowano ip serwera');
