@@ -378,8 +378,8 @@
                         if(x.promote == null)
                             $('#serverId').append($('<option value="'+x.server.id+'">'+x.server.name+'</option>'));   
                     });
-                    let isAnyPromoted = data.content.some(x => x.promote != null);
-                    if(isAnyPromoted) {
+                    let isAnyNotPromoted = data.content.some(x => x.promote == null);
+                    if(!isAnyNotPromoted) {
                         $('#form').empty();
                         $('#form').append($('<h2>Wszystkie twoje serwery są już promowane</h2>'))
                     }
