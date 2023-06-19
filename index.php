@@ -216,10 +216,10 @@
             var isPromoted = false;
             var searchPhrase = "";
             var sizeRecords = 20;
-            var sortBy = 'points';
+            var sortBy = 'players';
             var filterByLikesASC = false;
             var filterByRatingASC = false;
-            var filterByPlayersASC = false;
+            var filterByPlayersASC = true;
             var filterByPointsASC = false;
             var gamemodeFilter = 'Brak';
             var gameversionFilter = 'Brak';
