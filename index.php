@@ -245,7 +245,7 @@
                 searchPhrase = search;
                 sortBy = sort_by;
                 if(currentPage<0) currentPage = 0;
-                apiUrl = api_url+"/api/v1/servers/?page="+currentPage+"&size="+sizeRecords+"&search="+searchPhrase+"&promoted="+isPromoted+"&sort_by="+sortBy;
+                apiUrl = api_url+"/api/v1/servers/?page="+currentPage+"&size="+sizeRecords+"&search="+searchPhrase+"&promoted="+isPromoted+"&sort_by="+sortBy+"&online=true";
                 if(gamemodeFilter != 'Brak') apiUrl += '&game_mode='+gamemodeFilter;
                 if(gameversionFilter != 'Brak') apiUrl += '&version='+gameversionFilter;
                 console.log(apiUrl)
