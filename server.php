@@ -77,6 +77,9 @@
         #server-fullip-tocopy:hover {
             filter: brightness(1.3);
         }
+        #server-data-desc * {
+            max-width: 100%
+        }
     </style>
 
 </head>
