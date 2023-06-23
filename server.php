@@ -141,7 +141,7 @@
                     </div>
                 </div>
                 <div class="col-6">
-                    <p class="py-5" id="server-fullip-tocopy"><span id="server-fullip" style="font-size: 20px;"></span><i class="fa-regular fa-copy" style="color: #fceec7; margin-left: 5px; cursor: pointer;" onclick="CopyOnClick()"></i></p>
+                    <p class="py-5" id="server-fullip-tocopy">Adres do połączenia: <br><span id="server-fullip" style="font-size: 20px;"></span><i class="fa-regular fa-copy" style="color: #fceec7; margin-left: 5px; cursor: pointer;" onclick="CopyOnClick()"></i></p>
                 </div>
                 
             </div>
@@ -237,7 +237,7 @@
             </div>
             <div class="server-data-description my-5">
                 <h2>Opis serwera</h2>
-                <div id="server-data-desc">
+                <div id="server-data-desc editor">
 
                 </div>
             </div>
@@ -313,7 +313,8 @@
                 $('#server-data-rank').text(data.stats.placeInRanking);
                 $('#server-data-added').text(data.server.addedAt.substr(8,2)+'.'+data.server.addedAt.substr(5,2)+'.'+data.server.addedAt.substr(0,4)+'  '+data.server.addedAt.substr(11,5));
                 //$('#server-data-desc').text(data.server.description);
-                $('#server-data-desc').html(data.server.htmlDescription);
+                //$('#server-data-desc').html(data.server.htmlDescription);
+                editor.setData(thisServer.server.htmlDescription);
                 $('#server-rate').text("Ocena: "+data.rate.rate.toFixed(2));
                 $('#server-likes').text(data.likes.likes);
 
@@ -363,7 +364,13 @@
             scales: {
                 y: {
                     beginAtZero: true,
-                    suggestedMin: 0
+                    suggestedMin: 0,
+                    precision: 0,
+                    ticks: {
+                        callback: function(value, index, ticks) {
+                            return Math.floor(value);
+                        }
+                    }
                 }
             }
             }
