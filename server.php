@@ -237,7 +237,7 @@
             </div>
             <div class="server-data-description my-5">
                 <h2>Opis serwera</h2>
-                <div id="server-data-desc editor">
+                <div id="server-data-desc">
 
                 </div>
             </div>
@@ -313,8 +313,7 @@
                 $('#server-data-rank').text(data.stats.placeInRanking);
                 $('#server-data-added').text(data.server.addedAt.substr(8,2)+'.'+data.server.addedAt.substr(5,2)+'.'+data.server.addedAt.substr(0,4)+'  '+data.server.addedAt.substr(11,5));
                 //$('#server-data-desc').text(data.server.description);
-                //$('#server-data-desc').html(data.server.htmlDescription);
-                editor.setData(thisServer.server.htmlDescription);
+                $('#server-data-desc').html($(`${data.server.htmlDescription}`));
                 $('#server-rate').text("Ocena: "+data.rate.rate.toFixed(2));
                 $('#server-likes').text(data.likes.likes);
 
