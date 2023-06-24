@@ -87,6 +87,9 @@ ClassicEditor
         htmlEmbed: {
             showPreviews: true
         },
+        mediaEmbed: {
+            previewsInData: true
+        },
         // https://ckeditor.com/docs/ckeditor5/latest/features/link.html#custom-link-attributes-decorators
         link: {
             decorators: {

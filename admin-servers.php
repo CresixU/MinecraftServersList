@@ -302,7 +302,7 @@
         <script type="text/javascript" src="js/server-service.js"></script>
         <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://www.google.com/recaptcha/api.js?render=6Ldj08kkAAAAAOAR7XBwQsbBnsFMfQFGAwE5qusl"></script>
-        <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/super-build/ckeditor.js"></script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/super-build/ckeditor.js"></script>
         <script src="js/ckeditor.js"></script>
         <script src="js/validator.js"></script>
         <script>
