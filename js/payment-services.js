@@ -7,18 +7,12 @@ function GeneratePaymentTypes() {
 }
 function ReturnPaymentType(type) {
     switch(type) {
-        case 'PAYPAL':
-            return "PayPal";
         case 'PAYSAFECARD':
             return "PaySafeCard";
-        case 'G2APAY':
-            return "G2A Pay";
         case 'JUST_PAY':
-            return "Just Pay";
+            return "SMS+";
         case 'CASH_BILL_TRANSFER':
-            return "Przelew gotówkowy";
-        case 'SMS_CASH_BILL':
-            return "SMS";
+            return "Przelew";
         default:
             return 'Error';
     }
