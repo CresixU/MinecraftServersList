@@ -56,7 +56,7 @@
 <script>
     var statsHidden = true;
     var api_url = "<?php echo $api ?>";
-    $.ajax({
+    /*$.ajax({
         url: api_url+'/api/v1/auth/logged/',
         xhrFields: {
             withCredentials: true
@@ -67,7 +67,7 @@
             $('#nav-konto').html($('<a href="account.php">Konto</a>'));
             $('nav .menu ul').css('max-width','480px !important');
         }
-    })
+    })*/
 
     function Logout() {
         $.ajax({

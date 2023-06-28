@@ -100,6 +100,30 @@
         <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v11.0&appId=915876171902531&autoLogAppEvents=1" nonce="k7fGxMia"></script>
         <?php require_once("components/top.php"); ?>
         <main>
+
+
+
+
+                    <!-- Reset password modal -->
+                    <div class="modal fade" id="modal_info" tabindex="-1" role="dialog" aria-labelledby="modal_info" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Ważny komunikat</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#modal_info').modal('toggle');" style="color: white">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>W związku z przenoszeniem danych na nasz nowy system, prosimy aby podczas logowania użyć opcji przypomnienia hasła i postępować zgodnie z wskazówkami.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="$('#modal_info').modal('toggle');" style="background-color: rgb(40, 120, 31);border-color: rgb(22 72 17);">Zrozumiałem</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
             <div class="container">
                 <div class="row">
                     <div class="col-12">
@@ -506,6 +530,8 @@
                 GetServers(0,sizeRecords,isPromoted,searchPhrase,sortBy);
             }
 
+            var myModal = new bootstrap.Modal(document.getElementById('modal_info'));
+            myModal.show();
         </script>
     </body>
 </html>
