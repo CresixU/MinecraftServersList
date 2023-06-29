@@ -530,8 +530,20 @@
                 GetServers(0,sizeRecords,isPromoted,searchPhrase,sortBy);
             }
 
-            var myModal = new bootstrap.Modal(document.getElementById('modal_info'));
-            myModal.show();
+            function doOnce() {
+                if (
+                    !document.cookie
+                    .split("; ")
+                    .find((row) => row.startsWith("migrationInfoAccepted"))
+                ) {
+                    document.cookie =
+                    "migrationInfoAccepted=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; SameSite=None; Secure";
+
+                    var myModal = new bootstrap.Modal(document.getElementById('modal_info'));
+                    myModal.show();
+                }
+            }
+            doOnce()
         </script>
     </body>
 </html>
