@@ -115,10 +115,10 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>W związku z przenoszeniem danych na nasz nowy system, prosimy aby podczas logowania użyć opcji przypomnienia hasła i postępować zgodnie z wskazówkami.</p>
+                                    <p>W związku z przenoszeniem danych na nasz nowy system, prosimy aby podczas logowania użyć opcji <a href="auth.php">przypomnienia hasła</a> i postępować zgodnie z wskazówkami.</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="$('#modal_info').modal('toggle');" style="background-color: rgb(40, 120, 31);border-color: rgb(22 72 17);">Zrozumiałem</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="AcceptMigrationInfo()" style="background-color: rgb(40, 120, 31);border-color: rgb(22 72 17);">Zrozumiałem</button>
                                 </div>
                             </div>
                         </div>
@@ -271,7 +271,7 @@
                 searchPhrase = search;
                 sortBy = sort_by;
                 if(currentPage<0) currentPage = 0;
-                apiUrl = api_url+"/api/v1/servers/?page="+currentPage+"&size="+sizeRecords+"&search="+searchPhrase+"&promoted="+isPromoted+"&sort_by="+sortBy+"&online=true";
+                apiUrl = api_url+"/api/v1/servers/?page="+currentPage+"&size="+sizeRecords+"&search="+searchPhrase+"&promoted="+isPromoted+"&sort_by="+sortBy;
                 if(gamemodeFilter != 'Brak') apiUrl += '&game_mode='+gamemodeFilter;
                 if(gameversionFilter != 'Brak') apiUrl += '&version='+gameversionFilter;
                 console.log(apiUrl)
@@ -530,20 +530,19 @@
                 GetServers(0,sizeRecords,isPromoted,searchPhrase,sortBy);
             }
 
-            function doOnce() {
-                if (
-                    !document.cookie
-                    .split("; ")
-                    .find((row) => row.startsWith("migrationInfoAccepted"))
-                ) {
-                    document.cookie =
-                    "migrationInfoAccepted=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; SameSite=None; Secure";
+            function AcceptMigrationInfo() {
+                localStorage.setItem("migrationInfoAccepted", true);
+                $('#modal_info').modal('toggle');
+            }
 
+            function ShowModalMigration() {
+                if(localStorage.getItem("migrationInfoAccepted") != 'true') {
                     var myModal = new bootstrap.Modal(document.getElementById('modal_info'));
                     myModal.show();
                 }
             }
-            doOnce()
+
+            ShowModalMigration()
         </script>
     </body>
 </html>
