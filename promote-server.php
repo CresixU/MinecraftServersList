@@ -325,7 +325,7 @@
                         }
                     }
                 }).done(res=>{
-                    $('#calculated-price').text(res.price);
+                    $('#calculated-price').text(Math.round(res.price*100)/100);
                 })
             })
 
